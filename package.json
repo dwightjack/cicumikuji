@@ -1,0 +1,29 @@
+{
+  "name": "cicugram",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "wmr",
+    "build": "wmr build",
+    "serve": "wmr serve"
+  },
+  "author": "Marco Solazzi",
+  "license": "MIT",
+  "prettier": {
+    "trailingComma": "all",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true
+  },
+  "devDependencies": {
+    "prettier": "2.2.1",
+    "wmr": "^1.1.0"
+  },
+  "dependencies": {
+    "goober": "^2.0.28",
+    "idb-keyval": "^5.0.2",
+    "ky": "^0.26.0",
+    "preact": "^10.5.12",
+    "remeda": "0.0.27"
+  }
+}
