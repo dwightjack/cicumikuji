@@ -34,6 +34,7 @@ export function App() {
   const { isLoading, error, fetcher, data } = useFetch<FrameItem[]>(
     'https://www.instagram.com/graphql/query/',
     fetchOptions,
+    [],
   );
   useEffect(fetcher, []);
   useEffect(reload, [data]);
