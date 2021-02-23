@@ -9,8 +9,7 @@ export interface FetchOptions extends Options {
 
 async function cachedFetch<Response = unknown>(url: URL, options: Options) {
   const data = await ky(url, options).json<Response>();
-  const value = { data, timestamp: Date.now() };
-  await set(url.href, value);
+  await set(url.href, { data, timestamp: Date.now() });
   return data;
 }
 
@@ -39,20 +38,18 @@ export function useFetch<Response = unknown>(
   const [isLoading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<Response>(initial);
   const [error, setError] = useState(null);
+
   const url = new URL(uri);
   url.search = new URLSearchParams(params).toString();
+
   function fetcher() {
     setLoading(true);
     fromCache<Response>(url)
-      .then((data) => {
-        return data ?? cachedFetch<Response>(url, options);
-      })
+      .then((data) => data ?? cachedFetch<Response>(url, options))
       .then(transform)
       .then(setData)
       .catch(setError)
-      .finally(() => {
-        setLoading(false);
-      });
+      .finally(() => setLoading(false));
   }
   return { isLoading, error, data, fetcher };
 }

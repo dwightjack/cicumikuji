@@ -1,17 +1,5 @@
 import * as R from 'remeda';
-
-interface Caption {
-  edges: {
-    node: { text: string };
-  }[];
-}
-
-export interface FrameItem {
-  src: string;
-  caption: string;
-  datetime: string;
-  formatted: string;
-}
+import { Caption, FrameItem } from '../types';
 
 export function tap<T = unknown>(fn: (data: T) => void) {
   return (data: T) => {

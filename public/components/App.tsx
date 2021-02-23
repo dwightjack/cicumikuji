@@ -1,8 +1,13 @@
+import { setup } from 'goober';
 import { createGlobalStyles } from 'goober/global';
+import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 import { useFetch } from '../hooks/fetch';
-import { parseData, FrameItem, sampleUniq } from '../utils';
-import { Frame } from './Frame';
+import { parseData, sampleUniq } from '../utils';
+import { FrameItem } from '../types';
+import { Frame } from './Frame/Frame';
+import theme from '../shared/theme';
+setup(h);
 
 const GlobalStyles = createGlobalStyles`
   *,
@@ -14,6 +19,7 @@ const GlobalStyles = createGlobalStyles`
   body {
     font-family: 'Yusei Magic', sans-serif;
     background: #fff;
+    text: ${theme.color.text.primary}
   }
 `;
 
@@ -40,9 +46,7 @@ export function App() {
   useEffect(reload, [data]);
 
   function reload() {
-    setNode((node) => {
-      return sampleUniq(data, node);
-    });
+    setNode((node) => sampleUniq(data, node));
   }
 
   return (
