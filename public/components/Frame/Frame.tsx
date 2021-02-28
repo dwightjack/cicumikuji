@@ -8,6 +8,8 @@ import {
   BgImage,
 } from './Frame.styles';
 import { useImagePreloader } from '../../hooks/preloader';
+import { useCSSProps } from '../../hooks/style';
+import { useCallback, useLayoutEffect } from 'preact/hooks';
 
 interface FrameProps extends FrameItem {
   onClick?: () => void;
@@ -21,6 +23,14 @@ export function Frame({
   onClick = () => {},
 }: FrameProps) {
   const loaded = useImagePreloader(src);
+  const imageInRef = useCSSProps({
+    scale: 1,
+    rotate: 0,
+    opacity: 1,
+  });
+  const bgImageInRef = useCSSProps({
+    opacity: 1,
+  });
 
   return (
     <Figure>
@@ -28,14 +38,14 @@ export function Frame({
         <p>loading...</p>
       ) : (
         <>
-          <BgImage src={src} alt="" />
-          <MainImage src={src} alt="" />
-          <FigCaption>
+          <BgImage src={src} alt="" ref={bgImageInRef} />
+          <MainImage src={src} alt="" ref={imageInRef} />
+          {/* <FigCaption>
             <p>
               <time dateTime={datetime}>{formatted}</time>
             </p>
             <CaptionText>{caption}</CaptionText>
-          </FigCaption>
+          </FigCaption> */}
         </>
       )}
 

@@ -1,8 +1,9 @@
 import { setup } from 'goober';
 import { createGlobalStyles } from 'goober/global';
 import { h } from 'preact';
-import { useState, useEffect } from 'preact/hooks';
+import { useState, useEffect, useCallback } from 'preact/hooks';
 import { useFetch } from '../hooks/fetch';
+import { useShake } from '../hooks/shake';
 import { parseData, sampleUniq } from '../utils';
 import { FrameItem } from '../types';
 import { Frame } from './Frame/Frame';
@@ -19,7 +20,7 @@ const GlobalStyles = createGlobalStyles`
   body {
     font-family: 'Yusei Magic', sans-serif;
     background: #fff;
-    text: ${theme.color.text.primary}
+    color: ${theme.color.text.primary};
   }
 `;
 
@@ -42,16 +43,21 @@ export function App() {
     fetchOptions,
     [],
   );
+
+  const reload = useCallback(() => {
+    setNode((node) => sampleUniq(data, node));
+  }, [data]);
+
+  const [shakePermission, checkShakePermission] = useShake(reload);
   useEffect(fetcher, []);
   useEffect(reload, [data]);
-
-  function reload() {
-    setNode((node) => sampleUniq(data, node));
-  }
 
   return (
     <main>
       <GlobalStyles />
+      {node && shakePermission === null && (
+        <button onClick={checkShakePermission}>grant permissions</button>
+      )}
       {isLoading && <p>loading...</p>}
       {error && <p>Error: {error}</p>}
       {node && <Frame {...node} onClick={reload} />}
