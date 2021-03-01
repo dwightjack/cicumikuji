@@ -2,7 +2,7 @@ import { styled } from 'goober';
 import { forwardRef } from 'preact/compat';
 import { transparentize } from 'color2k';
 import theme from '../../shared/theme';
-
+import { randomInt } from '../../utils';
 export const Figure = styled('figure')`
   position: relative;
   width: 100vw;
@@ -26,7 +26,8 @@ export const MainImage = styled('img', forwardRef)`
   width: 100%;
   z-index: 1;
   opacity: var(--opacity, 0);
-  transform: scale(var(--scale, 0.5)) rotate(var(--rotate, 30deg));
+  transform: scale(var(--scale, 0.5))
+    rotate(var(--rotate, ${() => randomInt(-150, 100)}deg));
   will-change: transform, opacity;
   transition: opacity 800ms linear,
     transform 300ms cubic-bezier(0.65, 0, 0.35, 1);
