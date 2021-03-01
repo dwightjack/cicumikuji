@@ -7,10 +7,7 @@ import {
   MainImage,
   BgImage,
 } from './Frame.styles';
-import { useImagePreloader } from '../../hooks/preloader';
 import { useCSSProps } from '../../hooks/style';
-import { useCallback, useLayoutEffect } from 'preact/hooks';
-
 interface FrameProps extends FrameItem {
   onClick?: () => void;
 }
@@ -22,7 +19,6 @@ export function Frame({
   formatted,
   onClick = () => {},
 }: FrameProps) {
-  const loaded = useImagePreloader(src);
   const imageInRef = useCSSProps({
     scale: 1,
     rotate: 0,
@@ -34,21 +30,14 @@ export function Frame({
 
   return (
     <Figure>
-      {!loaded ? (
-        <p>loading...</p>
-      ) : (
-        <>
-          <BgImage src={src} alt="" ref={bgImageInRef} />
-          <MainImage src={src} alt="" ref={imageInRef} />
-          {/* <FigCaption>
+      <BgImage src={src} alt="" ref={bgImageInRef} />
+      <MainImage src={src} alt="" ref={imageInRef} />
+      {/* <FigCaption>
             <p>
               <time dateTime={datetime}>{formatted}</time>
             </p>
             <CaptionText>{caption}</CaptionText>
           </FigCaption> */}
-        </>
-      )}
-
       <Reloader onClick={onClick} aria-label="Reload!" />
     </Figure>
   );

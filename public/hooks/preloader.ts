@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'preact/hooks';
+import { useState } from 'preact/hooks';
 
-export function useImagePreloader(src: string) {
+export function useImagePreloader() {
   const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
+  function loader(src: string) {
     setLoaded(false);
     const img = new Image();
     img.src = src;
@@ -12,7 +12,7 @@ export function useImagePreloader(src: string) {
     return () => {
       img.onload = () => {};
     };
-  }, [src]);
+  }
 
-  return loaded;
+  return [loaded, loader] as const;
 }
