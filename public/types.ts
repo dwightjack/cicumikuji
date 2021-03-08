@@ -8,5 +8,6 @@ export interface FrameItem {
   src: string;
   caption: string;
   datetime: string;
+  timestamp: number;
   formatted: string;
 }

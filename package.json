@@ -21,10 +21,13 @@
   },
   "dependencies": {
     "color2k": "^1.2.3",
+    "faunadb": "^4.1.1",
     "goober": "^2.0.33",
+    "got": "^11.8.2",
     "idb-keyval": "^5.0.2",
     "ky": "^0.27.0",
     "preact": "^10.5.12",
+    "ramda": "^0.27.1",
     "remeda": "0.0.27",
     "shake.js": "^1.2.2"
   }

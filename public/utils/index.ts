@@ -12,7 +12,7 @@ function datetime(timestamp: number) {
   const date = new Date(timestamp);
   return {
     datetime: date.toISOString(),
-    formatted: new Intl.DateTimeFormat([]).format(date),
+    timestamp: date.getTime(),
   };
 }
 
