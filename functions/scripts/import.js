@@ -1,24 +1,30 @@
+const { parseToRgba } = require('color2k');
 const admin = require('firebase-admin');
-const { parseEdges } = require('../src/utils');
+const { parseEdges } = require('../lib/utils');
 const edges = require('./db.json');
 
 admin.initializeApp();
 
 const db = admin.firestore();
 
+function importPosts(posts) {
+  // store new posts
+  const postsRef = db.collection('posts');
+
+  const batch = db.batch();
+  for (const post of posts) {
+    const ref = postsRef.doc(post.id);
+    batch.set(ref, post);
+  }
+  return batch.commit();
+}
+
 const parsed = parseEdges(edges.reverse());
 
-// store new posts
-const postsRef = db.collection('posts');
+(async () => {
+  while (parsed.length) {
+    await importPosts(parsed.splice(0, 200));
+  }
 
-const batch = db.batch();
-
-for (const newPost of newPosts) {
-  const ref = postsRef.doc(newPost.id);
-  batch.set(ref, newPost);
-}
-batch
-  .commit()
-  .then(() => console.log('inserted'))
-  .catch((err) => console.error(err))
-  .finally(() => process.exit());
+  console.log('inserted');
+})();

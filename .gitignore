@@ -7,3 +7,4 @@ dist
 **/scripts/db.json
 *.log
 .firebase
+.env
