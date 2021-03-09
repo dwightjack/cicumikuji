@@ -4,6 +4,6 @@ dist
 !.vscode
 # Local Netlify folder
 .netlify
-scripts/db.json
+**/scripts/db.json
 *.log
 .firebase
