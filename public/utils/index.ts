@@ -1,18 +1,7 @@
-import * as R from 'remeda';
-import { Caption, FrameItem } from '../types';
-
 export function tap<T = unknown>(fn: (data: T) => void) {
   return (data: T) => {
     fn(data);
     return data;
-  };
-}
-
-function datetime(timestamp: number) {
-  const date = new Date(timestamp);
-  return {
-    datetime: date.toISOString(),
-    timestamp: date.getTime(),
   };
 }
 
@@ -32,27 +21,6 @@ export function sampleUniq<T = unknown>(
   }
   return item;
 }
-
-const caption = R.createPipe(
-  R.prop<Caption, keyof Caption>('edges'),
-  R.first(),
-  R.pathOr(['node', 'text'], ''),
-);
-
-const parseEdge = ({ node }: any): FrameItem => ({
-  src: R.pipe(node, R.prop('display_url')),
-  caption: caption(node.edge_media_to_caption),
-  ...datetime(node.taken_at_timestamp * 1000),
-});
-
-export const parseData = (data: any) =>
-  R.pipe(
-    data,
-    ({ data }) => data?.user?.edge_owner_to_timeline_media?.edges ?? [],
-    R.reject(({ node }) => !!node.is_video),
-    R.map(parseEdge),
-  );
-
 /**
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random#getting_a_random_integer_between_two_values_inclusive
  */

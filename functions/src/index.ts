@@ -3,6 +3,7 @@ import * as admin from 'firebase-admin';
 import got from 'got';
 import { pluck } from 'ramda';
 import { parseEdges } from './utils';
+import { Post } from './types';
 
 admin.initializeApp();
 
@@ -34,7 +35,7 @@ async function getPosts() {
     .orderBy('timestamp', 'desc')
     .get();
 
-  return docs;
+  return docs.map((doc) => doc.data() as Post);
 }
 
 export const syncPosts = functions.pubsub
@@ -80,3 +81,9 @@ export const syncPosts = functions.pubsub
       console.error(error);
     }
   });
+
+export const fetchPosts = functions.https.onRequest(async (_req, res) => {
+  const posts = await getPosts();
+  // Send back a message that we've successfully written the message
+  res.json({ posts });
+});
