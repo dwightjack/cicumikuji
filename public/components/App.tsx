@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from 'preact/hooks';
 import { useFetch } from '../hooks/fetch';
 import { useShake } from '../hooks/shake';
 import { useImagePreloader } from '../hooks/preloader';
-import { sampleUniq } from '../utils';
+import { sampleUniq } from '../shared/utils';
 import { FrameItem } from '../types';
 import { Frame } from './Frame/Frame';
 import { Loader } from './Loader/Loader';

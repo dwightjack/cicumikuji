@@ -1,10 +1,3 @@
-export function tap<T = unknown>(fn: (data: T) => void) {
-  return (data: T) => {
-    fn(data);
-    return data;
-  };
-}
-
 export const sample = <T = unknown>(array: T[]) =>
   array[Math.floor(Math.random() * array.length)];
 
