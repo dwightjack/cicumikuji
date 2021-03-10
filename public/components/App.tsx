@@ -35,7 +35,6 @@ export function App() {
 
   return (
     <main class={theme}>
-      <ErrorLayer message={'Errrorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'} />
       <GlobalStyles />
       {node && shakePermission === null && (
         <button onClick={checkShakePermission}>grant permissions</button>

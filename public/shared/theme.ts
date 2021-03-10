@@ -21,7 +21,6 @@ export const theme = css`
   /*  Spacing */
   --size-base: 1rem;
 
-  /* Palette */
   --color-green-500: 186 249 142;
   --color-gray-900: 51 51 51;
   --color-red-100: 254 226 226;

@@ -17,4 +17,6 @@ export const ErrorMessage = styled('pre')`
   white-space: pre-wrap;
   word-break: break-all;
   font-size: inherit;
+  max-height: 10em;
+  overflow-y: auto;
 `;

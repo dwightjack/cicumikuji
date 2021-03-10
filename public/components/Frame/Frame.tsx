@@ -33,11 +33,11 @@ export function Frame({
       <BgImage src={src} alt="" ref={bgImageInRef} />
       <MainImage src={src} alt="" ref={imageInRef} />
       {/* <FigCaption>
-            <p>
-              <time dateTime={datetime}>{formatted}</time>
-            </p>
-            <CaptionText>{caption}</CaptionText>
-          </FigCaption> */}
+        <p>
+          <time dateTime={datetime}>{formatted}</time>
+        </p>
+        <CaptionText>{caption}</CaptionText>
+      </FigCaption> */}
       <Reloader onClick={onClick} aria-label="Reload!" />
     </Figure>
   );

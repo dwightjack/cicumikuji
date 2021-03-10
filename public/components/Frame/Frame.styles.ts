@@ -1,6 +1,8 @@
 import { styled } from 'goober';
 import { forwardRef } from 'preact/compat';
 import { randomInt } from '../../shared/utils';
+import { Button } from '../Button/Button';
+import reload from '../../assets/reload.webp';
 
 export const Figure = styled('figure')`
   position: relative;
@@ -12,14 +14,12 @@ export const Figure = styled('figure')`
 
   > * {
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
   }
 `;
 
 export const MainImage = styled('img', forwardRef)`
+  top: 0;
+  left: 0;
   object-fit: contain;
   height: 100%;
   width: 100%;
@@ -33,6 +33,8 @@ export const MainImage = styled('img', forwardRef)`
 `;
 
 export const BgImage = styled('img', forwardRef)`
+  top: 0;
+  left: 0;
   object-fit: cover;
   height: 100%;
   width: 100%;
@@ -49,16 +51,16 @@ export const FigCaption = styled('figcaption')`
   background: rgba(var(--color-background-primary-rgb) / 0.6);
 `;
 
-export const Reloader = styled('button')`
-  display: block;
-  width: 100%;
+export const Reloader = styled(Button)`
+  right: 1rem;
+  bottom: 1rem;
   z-index: 3;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  outline: 0;
+  background-image: url('${reload}');
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 3.5rem;
+  height: 3.5rem;
 `;
 
 export const CaptionText = styled('p')`
