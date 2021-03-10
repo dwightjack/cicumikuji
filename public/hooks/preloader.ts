@@ -1,18 +1,36 @@
-import { useState } from 'preact/hooks';
+import { useRef, useState } from 'preact/hooks';
+import { sampleUniq, preload } from '../shared/utils';
+import { FrameItem } from '../types';
 
-export function useImagePreloader() {
-  const [loaded, setLoaded] = useState(false);
+export type LoadedState = 'idle' | 'loading' | 'loaded' | 'error';
 
-  function loader(src: string) {
-    setLoaded(false);
-    const img = new Image();
-    img.src = src;
+export function useFramePreloader(maxRetry = 5) {
+  const [loadedState, setLoadState] = useState<LoadedState>('idle');
+  const frame = useRef<FrameItem>(null);
+  const count = useRef(maxRetry);
 
-    img.onload = () => setLoaded(true);
-    return () => {
-      img.onload = () => {};
-    };
+  async function loader(
+    data: FrameItem[],
+    node: FrameItem,
+  ): Promise<FrameItem> {
+    setLoadState('loading');
+    frame.current = sampleUniq(data, node);
+    if (frame.current && frame.current.src) {
+      try {
+        await preload(frame.current.src);
+        setLoadState('loaded');
+        return frame.current;
+      } catch (err) {
+        if (count.current > 0) {
+          count.current -= 1;
+          return loader(data, frame.current);
+        }
+        setLoadState('error');
+        throw err;
+      }
+    }
+    return frame.current;
   }
 
-  return [loaded, loader] as const;
+  return [loadedState, loader] as const;
 }

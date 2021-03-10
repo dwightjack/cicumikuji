@@ -2,9 +2,20 @@ import ky, { Options } from 'ky';
 import { set, get } from 'idb-keyval';
 import { useState } from 'preact/hooks';
 
-async function cachedFetch<Response = unknown>(url: string, options?: Options) {
+export interface FetchOptions<T> extends Options {
+  transform?: <T>(data: any) => T;
+  initial?: T;
+}
+
+async function cachedFetch<Response = unknown>(
+  url: string,
+  options?: FetchOptions<Response>,
+) {
   try {
-    const data = await ky.get(url, options).json<Response>();
+    let data = await ky.get(url, options).json();
+    if (typeof options.transform === 'function') {
+      data = options.transform(data);
+    }
     await set(url, { data, timestamp: Date.now() });
     return data;
   } catch (err) {
@@ -30,11 +41,10 @@ async function fromCache<Response = unknown>(
 
 export function useFetch<Response = unknown>(
   url: string,
-  options: Options = {},
-  initial?: Response,
+  options: FetchOptions<Response> = {},
 ) {
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<Response>(initial);
+  const [data, setData] = useState<Response>(options.initial);
   const [error, setError] = useState(null);
 
   function fetcher() {

@@ -9,6 +9,11 @@ export function useShake(eventHandler) {
   }
 
   async function checkPermission() {
+    if (!('DeviceMotionEvent' in window)) {
+      setPermission(false);
+      console.error('Motion event not available');
+      return;
+    }
     if (typeof DeviceMotionEvent.requestPermission !== 'function') {
       setPermission(true);
       return;
@@ -41,6 +46,11 @@ export function useShake(eventHandler) {
   }, [permission, handler]);
 
   useEffect(() => {
+    if (!('DeviceMotionEvent' in window)) {
+      setPermission(false);
+      console.error('Motion event not available');
+      return;
+    }
     if (typeof DeviceMotionEvent.requestPermission !== 'function') {
       setPermission(true);
     }

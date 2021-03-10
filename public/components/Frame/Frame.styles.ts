@@ -1,7 +1,5 @@
 import { styled } from 'goober';
 import { forwardRef } from 'preact/compat';
-import { transparentize } from 'color2k';
-import theme from '../../shared/theme';
 import { randomInt } from '../../shared/utils';
 
 export const Figure = styled('figure')`
@@ -33,6 +31,7 @@ export const MainImage = styled('img', forwardRef)`
   transition: opacity 800ms linear,
     transform 300ms cubic-bezier(0.65, 0, 0.35, 1);
 `;
+
 export const BgImage = styled('img', forwardRef)`
   object-fit: cover;
   height: 100%;
@@ -45,9 +44,9 @@ export const BgImage = styled('img', forwardRef)`
 `;
 
 export const FigCaption = styled('figcaption')`
-  background: ${transparentize(theme.color.background.primary, 0.6)};
   top: auto;
   z-index: 2;
+  background: rgba(var(--color-background-primary-rgb) / 0.6);
 `;
 
 export const Reloader = styled('button')`

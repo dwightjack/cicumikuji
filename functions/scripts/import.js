@@ -1,4 +1,3 @@
-const { parseToRgba } = require('color2k');
 const admin = require('firebase-admin');
 const { parseEdges } = require('../lib/utils');
 const edges = require('./db.json');

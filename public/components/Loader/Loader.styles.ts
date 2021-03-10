@@ -1,4 +1,5 @@
 import { styled, keyframes } from 'goober';
+import { Layer } from '../../shared/styles';
 
 const bounce = keyframes`
   0%   { transform: scale(1,1)      translateY(0); }
@@ -10,17 +11,8 @@ const bounce = keyframes`
   100% { transform: scale(1,1)      translateY(0); }
 `;
 
-export const Container = styled('div')`
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: #fff;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+export const Container = styled(Layer)`
+  --layer-level: 100;
 `;
 
 export const Svg = styled('svg')`

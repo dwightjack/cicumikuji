@@ -1,64 +1,48 @@
-import { setup } from 'goober';
-import { createGlobalStyles } from 'goober/global';
-import { h } from 'preact';
 import { useState, useEffect, useCallback } from 'preact/hooks';
 import { useFetch } from '../hooks/fetch';
 import { useShake } from '../hooks/shake';
-import { useImagePreloader } from '../hooks/preloader';
-import { sampleUniq } from '../shared/utils';
+import { useFramePreloader } from '../hooks/preloader';
 import { FrameItem } from '../types';
 import { Frame } from './Frame/Frame';
+import { ErrorLayer } from './ErrorLayer/ErrorLayer';
 import { Loader } from './Loader/Loader';
-import theme from '../shared/theme';
-
-setup(h);
-
-const GlobalStyles = createGlobalStyles`
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-
-  body {
-    font-family: 'Yusei Magic', sans-serif;
-    background: #fff;
-    color: ${theme.color.text.primary};
-  }
-`;
+import { theme, GlobalStyles } from '../shared/theme';
 
 export function App() {
   const [node, setNode] = useState<FrameItem>(null);
-  const [imgLoaded, imgLoader] = useImagePreloader();
+  const [loadedState, frameLoader] = useFramePreloader(5);
   const { isLoading, error, fetcher, data } = useFetch<FrameItem[]>(
     `/api/fetch-posts`,
-    {},
-    [],
+    {
+      transform: (data) => data?.posts,
+      initial: [],
+    },
   );
 
   const reload = useCallback(() => {
-    setNode((node) => sampleUniq(data, node));
-  }, [data]);
+    frameLoader(data, node)
+      .then((n) => setNode(n))
+      .catch(console.error);
+  }, [data, node]);
 
   const [shakePermission, checkShakePermission] = useShake(reload);
 
   useEffect(fetcher, []);
   useEffect(reload, [data]);
-  useEffect(() => {
-    if (node) {
-      imgLoader(node?.src);
-    }
-  }, [node]);
+
+  const errorMessage =
+    error || (loadedState === 'error' && 'Error loading images!');
 
   return (
-    <main>
+    <main class={theme}>
+      <ErrorLayer message={'Errrorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'} />
       <GlobalStyles />
       {node && shakePermission === null && (
         <button onClick={checkShakePermission}>grant permissions</button>
       )}
-      {(isLoading || !imgLoaded) && <Loader />}
-      {error && <p>Error: {error}</p>}
-      {node && imgLoaded && <Frame {...node} onClick={reload} />}
+      {(isLoading || loadedState === 'loading') && <Loader />}
+      {errorMessage && <ErrorLayer message={errorMessage} />}
+      {node && loadedState === 'loaded' && <Frame {...node} onClick={reload} />}
     </main>
   );
 }
