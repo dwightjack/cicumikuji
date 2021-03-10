@@ -2,24 +2,22 @@ import ky, { Options } from 'ky';
 import { set, get } from 'idb-keyval';
 import { useState } from 'preact/hooks';
 
-export interface FetchOptions extends Options {
-  params?: Record<string, any>;
-  transform?: (data: any) => any;
-}
-
-async function cachedFetch<Response = unknown>(url: URL, options: Options) {
-  const data = await ky(url, options).json<Response>();
-  await set(url.href, { data, timestamp: Date.now() });
-  return data;
+async function cachedFetch<Response = unknown>(url: string, options?: Options) {
+  try {
+    const data = await ky.get(url, options).json<Response>();
+    await set(url, { data, timestamp: Date.now() });
+    return data;
+  } catch (err) {
+    console.log(err);
+    return undefined;
+  }
 }
 
 async function fromCache<Response = unknown>(
-  url: URL,
-  expireLimit: number = 24,
+  url: string,
+  expireLimit: number = 120,
 ) {
-  const value = await get<null | { data: Response; timestamp: number }>(
-    url.href,
-  );
+  const value = await get<null | { data: Response; timestamp: number }>(url);
   if (
     !value ||
     Date.now() >
@@ -31,22 +29,18 @@ async function fromCache<Response = unknown>(
 }
 
 export function useFetch<Response = unknown>(
-  uri: string,
-  { params, transform = (x) => x, ...options }: FetchOptions = {},
+  url: string,
+  options: Options = {},
   initial?: Response,
 ) {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<Response>(initial);
   const [error, setError] = useState(null);
 
-  const url = new URL(uri);
-  url.search = new URLSearchParams(params).toString();
-
   function fetcher() {
     setLoading(true);
     fromCache<Response>(url)
       .then((data) => data ?? cachedFetch<Response>(url, options))
-      .then(transform)
       .then(setData)
       .catch(setError)
       .finally(() => setLoading(false));

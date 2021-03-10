@@ -27,23 +27,12 @@ const GlobalStyles = createGlobalStyles`
   }
 `;
 
-const fetchOptions = {
-  params: {
-    query_hash: '472f257a40c653c64c666ce877d59d2b',
-    variables: JSON.stringify({
-      id: 13856716568,
-      first: 50,
-      after: '',
-    }),
-  },
-};
-
 export function App() {
   const [node, setNode] = useState<FrameItem>(null);
   const [imgLoaded, imgLoader] = useImagePreloader();
   const { isLoading, error, fetcher, data } = useFetch<FrameItem[]>(
-    'https://www.instagram.com/graphql/query/',
-    fetchOptions,
+    `/api/fetch-posts`,
+    {},
     [],
   );
 

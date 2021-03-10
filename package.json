@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "wmr",
+    "start": "wmr -p 8000",
     "build": "wmr build",
-    "serve": "wmr serve"
+    "serve": "wmr serve -p 8000",
+    "firebase:dev": "firebase emulators:start"
   },
   "author": "Marco Solazzi",
   "license": "MIT",
