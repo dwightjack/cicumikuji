@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'preact/hooks';
+import { useState, useEffect, useCallback, useContext } from 'preact/hooks';
 import { useFetch } from '../hooks/fetch';
 import { useShake } from '../hooks/shake';
 import { useFramePreloader } from '../hooks/preloader';
@@ -7,17 +7,16 @@ import { Frame } from './Frame/Frame';
 import { ErrorLayer } from './ErrorLayer/ErrorLayer';
 import { Loader } from './Loader/Loader';
 import { theme, GlobalStyles } from '../shared/theme';
+import { AppStateContext, selectors } from '../providers/appState';
 
 export function App() {
+  const [appState] = useContext(AppStateContext);
   const [node, setNode] = useState<FrameItem>(null);
-  const [loadedState, frameLoader] = useFramePreloader(5);
-  const { isLoading, error, fetcher, data } = useFetch<FrameItem[]>(
-    `/api/fetch-posts`,
-    {
-      transform: (data) => data?.posts,
-      initial: [],
-    },
-  );
+  const frameLoader = useFramePreloader(5);
+  const [data, fetcher] = useFetch<FrameItem[]>(`/api/fetch-posts`, {
+    transform: (data) => data?.posts,
+    initial: [],
+  });
 
   const reload = useCallback(() => {
     frameLoader(data, node)
@@ -30,18 +29,17 @@ export function App() {
   useEffect(fetcher, []);
   useEffect(reload, [data]);
 
-  const errorMessage =
-    error || (loadedState === 'error' && 'Error loading images!');
-
   return (
     <main class={theme}>
       <GlobalStyles />
       {node && shakePermission === null && (
         <button onClick={checkShakePermission}>grant permissions</button>
       )}
-      {(isLoading || loadedState === 'loading') && <Loader />}
-      {errorMessage && <ErrorLayer message={errorMessage} />}
-      {node && loadedState === 'loaded' && <Frame {...node} onClick={reload} />}
+      {appState.loadQueue > 0 && <Loader />}
+      {appState.error && <ErrorLayer message={appState.error} />}
+      {node && selectors.isReady(appState) && (
+        <Frame {...node} onClick={reload} />
+      )}
     </main>
   );
 }

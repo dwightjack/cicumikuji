@@ -4,6 +4,8 @@ export interface Caption {
   }[];
 }
 
+export type AppState = 'idle' | 'loading' | 'loaded' | 'error';
+
 export interface FrameItem {
   src: string;
   caption: string;

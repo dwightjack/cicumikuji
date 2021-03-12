@@ -1,11 +1,10 @@
-import { useRef, useState } from 'preact/hooks';
+import { useContext, useRef } from 'preact/hooks';
+import { AppStateContext } from '../providers/appState';
 import { sampleUniq, preload } from '../shared/utils';
 import { FrameItem } from '../types';
 
-export type LoadedState = 'idle' | 'loading' | 'loaded' | 'error';
-
 export function useFramePreloader(maxRetry = 5) {
-  const [loadedState, setLoadState] = useState<LoadedState>('idle');
+  const [, actions] = useContext(AppStateContext);
   const frame = useRef<FrameItem>(null);
   const count = useRef(maxRetry);
 
@@ -13,24 +12,25 @@ export function useFramePreloader(maxRetry = 5) {
     data: FrameItem[],
     node: FrameItem,
   ): Promise<FrameItem> {
-    setLoadState('loading');
     frame.current = sampleUniq(data, node);
     if (frame.current && frame.current.src) {
+      actions.queue();
       try {
         await preload(frame.current.src);
-        setLoadState('loaded');
         return frame.current;
       } catch (err) {
         if (count.current > 0) {
           count.current -= 1;
           return loader(data, frame.current);
         }
-        setLoadState('error');
+        actions.setError('Error loading images...');
         throw err;
+      } finally {
+        actions.dequeue();
       }
     }
     return frame.current;
   }
 
-  return [loadedState, loader] as const;
+  return loader;
 }
