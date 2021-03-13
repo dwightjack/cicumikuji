@@ -12,9 +12,14 @@ import { AppRoot, GlobalStyles } from '../shared/theme';
 import { AppStateContext } from '../providers/appState';
 
 export function App() {
-  const { $state, isReady, showSplash, isLoading, setStatus } = useContext(
-    AppStateContext,
-  );
+  const {
+    $state,
+    isReady,
+    showSplash,
+    isLoading,
+    isBooted,
+    setStatus,
+  } = useContext(AppStateContext);
   const [node, setNode] = useState<FrameItem>(null);
   const frameLoader = useFramePreloader(5);
   const [data, fetcher] = useFetch<FrameItem[]>(`/api/fetch-posts`, {
@@ -38,8 +43,8 @@ export function App() {
   useEffect(() => {
     setStatus('splash');
   }, [data]);
-  useEffect(() => isReady && bindShake(), [isReady]);
-  useEffect(() => isReady && enableWakeLock(), [isReady]);
+  useEffect(() => isBooted && bindShake(), [isBooted]);
+  useEffect(() => isBooted && enableWakeLock(), [isBooted]);
 
   return (
     <AppRoot>

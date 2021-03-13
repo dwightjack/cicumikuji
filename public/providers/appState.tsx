@@ -6,6 +6,7 @@ export interface State {
   loadQueue: number;
   error: string;
   status: AppStatus;
+  booted: boolean;
 }
 
 export interface Action {
@@ -17,6 +18,7 @@ export interface AppStateContext extends ReturnType<typeof createActions> {
   $state: State;
   isReady: boolean;
   isLoading: boolean;
+  isBooted: boolean;
   showSplash: boolean;
 }
 
@@ -24,6 +26,7 @@ const initialState: State = {
   loadQueue: 0,
   error: '',
   status: 'boot',
+  booted: false,
 };
 
 const createActions = (dispatch: (action: Action) => void) => ({
@@ -31,6 +34,7 @@ const createActions = (dispatch: (action: Action) => void) => ({
   loadComplete: () => dispatch({ type: 'loadQueue', payload: -1 }),
   setError: (payload: string | Error) => dispatch({ type: 'error', payload }),
   setStatus: (payload: AppStatus) => dispatch({ type: 'status', payload }),
+  setBooted: () => dispatch({ type: 'booted' }),
   dispatch,
 });
 
@@ -52,6 +56,11 @@ function reducer(state: State, { type, payload }: Action): State {
         ...state,
         status: payload,
       };
+    case 'booted':
+      return {
+        ...state,
+        booted: true,
+      };
   }
 }
 
@@ -66,6 +75,7 @@ export function AppStateProvider({ children }) {
       isReady: appState.loadQueue === 0 && appState.status === 'play',
       showSplash: appState.status === 'splash',
       isLoading: appState.loadQueue > 0,
+      isBooted: appState.booted,
       ...createActions(dispatch),
     }),
     [appState],

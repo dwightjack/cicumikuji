@@ -1,6 +1,8 @@
 import { Container, ButtonGroup, Title } from './Splash.styles';
 import { Button } from '../Button/Button';
 import { ShakePermission } from '../../hooks/shake';
+import { useContext } from 'preact/hooks';
+import { AppStateContext } from '../../providers/appState';
 export interface SplashProps {
   onGrant: () => void;
   onStart: () => void;
@@ -9,6 +11,12 @@ export interface SplashProps {
 }
 
 export function Splash({ onGrant, onDeny, permission, onStart }: SplashProps) {
+  const { setBooted } = useContext(AppStateContext);
+
+  function start() {
+    onStart();
+    setBooted();
+  }
   return (
     <Container>
       <Title>ちくみくじです！</Title>
@@ -29,7 +37,7 @@ export function Splash({ onGrant, onDeny, permission, onStart }: SplashProps) {
         <p>Once the app has started, shake the device to tell your fortune!</p>
       )}
       {permission !== null && (
-        <Button type="button" onClick={onStart}>
+        <Button type="button" onClick={start}>
           Start!
         </Button>
       )}
