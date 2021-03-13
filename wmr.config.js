@@ -1,5 +1,5 @@
 const db = require('./lib/dev-db.json');
-
+const swPlugin = require('./sw-plugin.js');
 const dbResponse = JSON.stringify(db);
 
 /**
@@ -27,4 +27,5 @@ module.exports = async function (config) {
     config.compress = false;
     config.middleware.push(apiMiddleware);
   }
+  swPlugin(config);
 };
