@@ -20,10 +20,10 @@ export const Figure = styled('figure')`
 export const MainImage = styled('img', forwardRef)`
   top: 0;
   left: 0;
-  object-fit: contain;
   height: 100%;
   width: 100%;
   z-index: 1;
+  object-fit: contain;
   opacity: var(--opacity, 0);
   transform: scale(var(--scale, 0.5))
     rotate(var(--rotate, ${() => randomInt(-150, 100)}deg));
@@ -35,10 +35,9 @@ export const MainImage = styled('img', forwardRef)`
 export const BgImage = styled('img', forwardRef)`
   top: 0;
   left: 0;
-  object-fit: cover;
   height: 100%;
   width: 100%;
-  opacity: 0.5;
+  object-fit: cover;
   filter: blur(5px);
   opacity: var(--opacity, 0);
   will-change: transform, opacity;
@@ -55,14 +54,26 @@ export const Reloader = styled(Button)`
   right: 1rem;
   bottom: 1rem;
   z-index: 3;
+  width: 3.5rem;
+  height: 3.5rem;
   background-image: url('${reload}');
   background-size: 70%;
   background-repeat: no-repeat;
   background-position: center;
-  width: 3.5rem;
-  height: 3.5rem;
 `;
 
 export const CaptionText = styled('p')`
   white-space: pre-wrap;
+`;
+
+export const OmikujiContainer = styled('figcaption', forwardRef)`
+  z-index: 3;
+  top: 2rem;
+  left: 2rem;
+  opacity: var(--opacity, 0);
+  transform: scale(var(--scale, 0.5));
+  will-change: opacity, transform;
+  transition: opacity 500ms cubic-bezier(0.87, 0, 0.13, 1),
+    transform 500ms cubic-bezier(0.87, 0, 0.13, 1);
+  transition-delay: 1000ms;
 `;
