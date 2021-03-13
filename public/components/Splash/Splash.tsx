@@ -26,7 +26,7 @@ export function Splash({ onGrant, onDeny, permission, onStart }: SplashProps) {
         </>
       )}
       {permission === 'granted' && (
-        <p>Shake the device or press the "Start" button!</p>
+        <p>Once the app has started, shake the device to tell your fortune!</p>
       )}
       {permission !== null && (
         <Button type="button" onClick={onStart}>

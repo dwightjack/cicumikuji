@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'preact/hooks';
+import { useCallback, useEffect, useState } from 'preact/hooks';
 import Shake from 'shake.js';
 
 export type ShakePermission = 'granted' | 'denied' | 'na' | null;
@@ -13,7 +13,7 @@ export function useShake(eventHandler: (...args: any[]) => any) {
     localStorage.setItem('shakable', state);
   }
 
-  function deny() {
+  function denyShake() {
     setPermission('denied');
   }
 
@@ -21,7 +21,7 @@ export function useShake(eventHandler: (...args: any[]) => any) {
     requestAnimationFrame(eventHandler);
   }
 
-  async function checkPermission() {
+  async function getShake() {
     if (!('DeviceMotionEvent' in window)) {
       setPermission('denied');
       console.error('Motion event not available');
@@ -41,7 +41,7 @@ export function useShake(eventHandler: (...args: any[]) => any) {
     }
   }
 
-  useEffect(() => {
+  const bindShake = useCallback(() => {
     let shaker: any;
     if (permission === 'granted') {
       shaker = new Shake({
@@ -73,5 +73,5 @@ export function useShake(eventHandler: (...args: any[]) => any) {
     }
   }, []);
 
-  return [permission, checkPermission, deny] as const;
+  return { canShake: permission, getShake, denyShake, bindShake } as const;
 }

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useContext } from 'preact/hooks';
 import { useFetch } from '../hooks/fetch';
 import { useShake } from '../hooks/shake';
 import { useFramePreloader } from '../hooks/preloader';
+import { useWakeLock } from '../hooks/wakeLock';
 import { FrameItem } from '../types';
 import { Frame } from './Frame/Frame';
 import { ErrorLayer } from './ErrorLayer/ErrorLayer';
@@ -30,12 +31,14 @@ export function App() {
       .catch(console.error);
   }, [data, node]);
 
-  const [shakePermission, checkShakePermission, deny] = useShake(reload);
+  const { canShake, getShake, denyShake, bindShake } = useShake(reload);
 
   useEffect(fetcher, []);
   useEffect(() => {
     setStatus('splash');
   }, [data]);
+  useEffect(bindShake, [isReady]);
+  useEffect(useWakeLock, [isReady]);
 
   return (
     <AppRoot>
@@ -44,10 +47,10 @@ export function App() {
       {$state.error && <ErrorLayer message={$state.error} />}
       {showSplash && (
         <Splash
-          onDeny={deny}
-          onGrant={checkShakePermission}
+          onDeny={denyShake}
+          onGrant={getShake}
           onStart={reload}
-          permission={shakePermission}
+          permission={canShake}
         />
       )}
       {node && isReady && <Frame {...node} onClick={reload} />}
