@@ -44,16 +44,16 @@ export function useFetch<Response = unknown>(
   url: string,
   options: FetchOptions<Response> = {},
 ) {
-  const [, actions] = useContext(AppStateContext);
+  const { loadStart, loadComplete, setError } = useContext(AppStateContext);
   const [data, setData] = useState<Response>(options.initial);
 
   function fetcher() {
-    actions.queue();
+    loadStart();
     fromCache<Response>(url)
       .then((data) => data ?? cachedFetch<Response>(url, options))
       .then(setData)
-      .catch(actions.setError)
-      .finally(actions.dequeue);
+      .catch(setError)
+      .finally(loadComplete);
   }
   return [data, fetcher] as const;
 }

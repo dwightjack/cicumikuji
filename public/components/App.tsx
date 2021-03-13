@@ -5,12 +5,15 @@ import { useFramePreloader } from '../hooks/preloader';
 import { FrameItem } from '../types';
 import { Frame } from './Frame/Frame';
 import { ErrorLayer } from './ErrorLayer/ErrorLayer';
+import { Splash } from './Splash/Splash';
 import { Loader } from './Loader/Loader';
 import { theme, GlobalStyles } from '../shared/theme';
-import { AppStateContext, selectors } from '../providers/appState';
+import { AppStateContext } from '../providers/appState';
 
 export function App() {
-  const [appState] = useContext(AppStateContext);
+  const { $state, isReady, showSplash, isLoading, setStatus } = useContext(
+    AppStateContext,
+  );
   const [node, setNode] = useState<FrameItem>(null);
   const frameLoader = useFramePreloader(5);
   const [data, fetcher] = useFetch<FrameItem[]>(`/api/fetch-posts`, {
@@ -19,27 +22,26 @@ export function App() {
   });
 
   const reload = useCallback(() => {
+    if ($state.status !== 'play') {
+      setStatus('play');
+    }
     frameLoader(data, node)
       .then((n) => setNode(n))
       .catch(console.error);
   }, [data, node]);
 
-  const [shakePermission, checkShakePermission] = useShake(reload);
-
   useEffect(fetcher, []);
-  useEffect(reload, [data]);
+  useEffect(() => {
+    setStatus('splash');
+  }, [data]);
 
   return (
     <main class={theme}>
       <GlobalStyles />
-      {node && shakePermission === null && (
-        <button onClick={checkShakePermission}>grant permissions</button>
-      )}
-      {appState.loadQueue > 0 && <Loader />}
-      {appState.error && <ErrorLayer message={appState.error} />}
-      {node && selectors.isReady(appState) && (
-        <Frame {...node} onClick={reload} />
-      )}
+      {isLoading && <Loader />}
+      {$state.error && <ErrorLayer message={$state.error} />}
+      {showSplash && <Splash onStart={reload} />}
+      {node && isReady && <Frame {...node} onClick={reload} />}
     </main>
   );
 }

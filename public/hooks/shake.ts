@@ -1,8 +1,22 @@
 import { useEffect, useState } from 'preact/hooks';
 import Shake from 'shake.js';
 
-export function useShake(eventHandler) {
-  const [permission, setPermission] = useState<boolean>(null);
+type ShakePermission = 'granted' | 'denied' | 'na' | null;
+
+export function useShake(eventHandler: (...args: any[]) => any) {
+  const [permission, setState] = useState<ShakePermission>(
+    localStorage.getItem('shakable') as ShakePermission,
+  );
+
+  function setPermission(state: ShakePermission) {
+    setState(state);
+    console.log('xxx');
+    localStorage.setItem('shakable', state);
+  }
+
+  function deny() {
+    setPermission('denied');
+  }
 
   function handler() {
     requestAnimationFrame(eventHandler);
@@ -10,27 +24,27 @@ export function useShake(eventHandler) {
 
   async function checkPermission() {
     if (!('DeviceMotionEvent' in window)) {
-      setPermission(false);
+      setPermission('denied');
       console.error('Motion event not available');
       return;
     }
     if (typeof DeviceMotionEvent.requestPermission !== 'function') {
-      setPermission(true);
+      setPermission('granted');
       return;
     }
 
     try {
       const permissionState = await DeviceMotionEvent.requestPermission();
-      setPermission(permissionState === 'granted');
+      setPermission(permissionState as ShakePermission);
     } catch (err) {
-      setPermission(false);
+      setPermission('denied');
       console.error(err);
     }
   }
 
   useEffect(() => {
-    let shaker;
-    if (permission) {
+    let shaker: any;
+    if (permission === 'granted') {
       shaker = new Shake({
         threshold: 5,
       });
@@ -46,15 +60,18 @@ export function useShake(eventHandler) {
   }, [permission, handler]);
 
   useEffect(() => {
+    if (permission !== null) {
+      return;
+    }
     if (!('DeviceMotionEvent' in window)) {
-      setPermission(false);
+      setPermission('na');
       console.error('Motion event not available');
       return;
     }
     if (typeof DeviceMotionEvent.requestPermission !== 'function') {
-      setPermission(true);
+      setPermission('granted');
     }
   }, []);
 
-  return [permission, checkPermission] as const;
+  return [permission, checkPermission, deny] as const;
 }

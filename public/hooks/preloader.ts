@@ -4,7 +4,7 @@ import { sampleUniq, preload } from '../shared/utils';
 import { FrameItem } from '../types';
 
 export function useFramePreloader(maxRetry = 5) {
-  const [, actions] = useContext(AppStateContext);
+  const { loadStart, loadComplete, setError } = useContext(AppStateContext);
   const frame = useRef<FrameItem>(null);
   const count = useRef(maxRetry);
 
@@ -14,7 +14,7 @@ export function useFramePreloader(maxRetry = 5) {
   ): Promise<FrameItem> {
     frame.current = sampleUniq(data, node);
     if (frame.current && frame.current.src) {
-      actions.queue();
+      loadStart();
       try {
         await preload(frame.current.src);
         return frame.current;
@@ -23,10 +23,10 @@ export function useFramePreloader(maxRetry = 5) {
           count.current -= 1;
           return loader(data, frame.current);
         }
-        actions.setError('Error loading images...');
+        setError('Error loading images...');
         throw err;
       } finally {
-        actions.dequeue();
+        loadComplete();
       }
     }
     return frame.current;
