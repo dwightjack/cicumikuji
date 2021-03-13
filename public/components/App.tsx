@@ -30,6 +30,8 @@ export function App() {
       .catch(console.error);
   }, [data, node]);
 
+  const [shakePermission, checkShakePermission, deny] = useShake(reload);
+
   useEffect(fetcher, []);
   useEffect(() => {
     setStatus('splash');
@@ -40,7 +42,14 @@ export function App() {
       <GlobalStyles />
       {isLoading && <Loader />}
       {$state.error && <ErrorLayer message={$state.error} />}
-      {showSplash && <Splash onStart={reload} />}
+      {showSplash && (
+        <Splash
+          onDeny={deny}
+          onGrant={checkShakePermission}
+          onStart={reload}
+          permission={shakePermission}
+        />
+      )}
       {node && isReady && <Frame {...node} onClick={reload} />}
     </main>
   );

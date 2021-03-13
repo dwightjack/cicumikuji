@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'preact/hooks';
 import Shake from 'shake.js';
 
-type ShakePermission = 'granted' | 'denied' | 'na' | null;
+export type ShakePermission = 'granted' | 'denied' | 'na' | null;
 
 export function useShake(eventHandler: (...args: any[]) => any) {
   const [permission, setState] = useState<ShakePermission>(
@@ -10,7 +10,6 @@ export function useShake(eventHandler: (...args: any[]) => any) {
 
   function setPermission(state: ShakePermission) {
     setState(state);
-    console.log('xxx');
     localStorage.setItem('shakable', state);
   }
 
@@ -47,6 +46,7 @@ export function useShake(eventHandler: (...args: any[]) => any) {
     if (permission === 'granted') {
       shaker = new Shake({
         threshold: 5,
+        timeout: 2000,
       });
       shaker.start();
       window.addEventListener('shake', handler, false);
