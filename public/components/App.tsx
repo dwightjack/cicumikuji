@@ -38,7 +38,7 @@ export function App() {
     setStatus('splash');
   }, [data]);
   useEffect(bindShake, [isReady]);
-  useEffect(useWakeLock, [isReady]);
+  useEffect(useWakeLock(), [isReady]);
 
   return (
     <AppRoot>
