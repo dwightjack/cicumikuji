@@ -2,12 +2,12 @@ import { styled } from 'goober';
 import { forwardRef } from 'preact/compat';
 import { randomInt } from '../../shared/utils';
 import { Button } from '../Button/Button';
-import reload from '../../assets/reload.webp';
+import reload from '../../assets/reload.png';
 
 export const Figure = styled('figure')`
   position: relative;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   margin: 0;
   padding: 0;
   overflow: hidden;

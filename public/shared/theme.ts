@@ -1,4 +1,4 @@
-import { css, setup } from 'goober';
+import { setup, styled } from 'goober';
 import { createGlobalStyles } from 'goober/global';
 import { h } from 'preact';
 
@@ -11,13 +11,18 @@ export const GlobalStyles = createGlobalStyles`
     box-sizing: border-box;
   }
 
+  html {
+    height: 100%;
+  }
+
   body {
     font-family: 'Yusei Magic', sans-serif;
     background: #fff;
+    height: 100%;
   }
 `;
 
-export const theme = css`
+export const AppRoot = styled('main')`
   /*  Spacing */
   --size-base: 1rem;
 
@@ -50,4 +55,5 @@ export const theme = css`
 
   /* Styles */
   color: var(--color-text-primary);
+  height: 100%;
 `;

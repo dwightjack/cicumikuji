@@ -7,7 +7,7 @@ import { Frame } from './Frame/Frame';
 import { ErrorLayer } from './ErrorLayer/ErrorLayer';
 import { Splash } from './Splash/Splash';
 import { Loader } from './Loader/Loader';
-import { theme, GlobalStyles } from '../shared/theme';
+import { AppRoot, GlobalStyles } from '../shared/theme';
 import { AppStateContext } from '../providers/appState';
 
 export function App() {
@@ -38,7 +38,7 @@ export function App() {
   }, [data]);
 
   return (
-    <main class={theme}>
+    <AppRoot>
       <GlobalStyles />
       {isLoading && <Loader />}
       {$state.error && <ErrorLayer message={$state.error} />}
@@ -51,6 +51,6 @@ export function App() {
         />
       )}
       {node && isReady && <Frame {...node} onClick={reload} />}
-    </main>
+    </AppRoot>
   );
 }
