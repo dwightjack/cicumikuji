@@ -17,10 +17,10 @@ export function Splash({ onGrant, onDeny, permission, onStart }: SplashProps) {
           <p>Press the button below to enable the shake gesture.</p>
           <ButtonGroup>
             <Button type="button" onClick={onGrant}>
-              Grant permissions
+              Enable
             </Button>
             <Button type="button" onClick={onDeny}>
-              Deny
+              Disable
             </Button>
           </ButtonGroup>
         </>
@@ -28,9 +28,11 @@ export function Splash({ onGrant, onDeny, permission, onStart }: SplashProps) {
       {permission === 'granted' && (
         <p>Shake the device or press the "Start" button!</p>
       )}
-      <Button type="button" onClick={onStart}>
-        Start!
-      </Button>
+      {permission !== null && (
+        <Button type="button" onClick={onStart}>
+          Start!
+        </Button>
+      )}
     </Container>
   );
 }

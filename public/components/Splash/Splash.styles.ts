@@ -4,7 +4,10 @@ import { Layer } from '../../shared/styles';
 export const Container = styled(Layer)`
   --layer-level: 90;
   text-align: center;
-  row-gap: 1rem;
+
+  & > * + * {
+    margin-top: 1rem;
+  }
 `;
 
 export const ButtonGroup = styled('div')`
@@ -13,6 +16,10 @@ export const ButtonGroup = styled('div')`
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
+
+  & > * + * {
+    margin: 0.5rem;
+  }
 `;
 
 export const Title = styled('h1')`
