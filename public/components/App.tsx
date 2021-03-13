@@ -32,13 +32,14 @@ export function App() {
   }, [data, node]);
 
   const { canShake, getShake, denyShake, bindShake } = useShake(reload);
+  const enableWakeLock = useWakeLock();
 
   useEffect(fetcher, []);
   useEffect(() => {
     setStatus('splash');
   }, [data]);
-  useEffect(bindShake, [isReady]);
-  useEffect(useWakeLock(), [isReady]);
+  useEffect(() => isReady && bindShake(), [isReady]);
+  useEffect(() => isReady && enableWakeLock(), [isReady]);
 
   return (
     <AppRoot>
