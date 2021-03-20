@@ -68,8 +68,8 @@ export const CaptionText = styled('p')`
 
 export const OmikujiContainer = styled('figcaption', forwardRef)`
   z-index: 3;
-  top: 2rem;
-  left: 2rem;
+  top: 0;
+  left: 0;
   opacity: var(--opacity, 0);
   transform: scale(var(--scale, 0.5));
   will-change: opacity, transform;

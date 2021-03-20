@@ -5,8 +5,13 @@ export const Container = styled(Layer)`
   --layer-level: 90;
   text-align: center;
 
+  & > * {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
   & > * + * {
-    margin-top: 1rem;
+    margin-top: 2rem;
   }
 `;
 

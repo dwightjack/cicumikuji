@@ -1,7 +1,9 @@
 import { Container, ButtonGroup, Title } from './Splash.styles';
 import { Button } from '../Button/Button';
+import { LangSelect } from '../LangSelect/LangSelect';
 import { ShakePermission } from '../../hooks/shake';
 import { useAppState } from '../../providers/appState';
+import { useI18n } from '../../providers/i18n';
 export interface SplashProps {
   onGrant: () => void;
   onStart: () => void;
@@ -11,6 +13,7 @@ export interface SplashProps {
 
 export function Splash({ onGrant, onDeny, permission, onStart }: SplashProps) {
   const { setBooted } = useAppState();
+  const { t } = useI18n();
 
   function start() {
     onStart();
@@ -18,28 +21,27 @@ export function Splash({ onGrant, onDeny, permission, onStart }: SplashProps) {
   }
   return (
     <Container>
-      <Title>ちくみくじです！</Title>
+      <Title>{t('messages.title')}</Title>
       {permission === null && (
         <>
-          <p>Press the button below to enable the shake gesture.</p>
+          <p>{t('messages.activate_shake')}</p>
           <ButtonGroup>
             <Button type="button" onClick={onGrant}>
-              Enable
+              {t('messages.enable')}
             </Button>
             <Button type="button" onClick={onDeny}>
-              Disable
+              {t('messages.disable')}
             </Button>
           </ButtonGroup>
         </>
       )}
-      {permission === 'granted' && (
-        <p>Once the app has started, shake the device to tell your fortune!</p>
-      )}
+      {permission === 'granted' && <p>{t('messages.intro_shake')}</p>}
       {permission !== null && (
         <Button type="button" onClick={start}>
-          Start!
+          {t('messages.start')}
         </Button>
       )}
+      <LangSelect />
     </Container>
   );
 }

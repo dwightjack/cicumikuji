@@ -1,29 +1,20 @@
 import { FrameItem } from '../../types';
 import {
   Figure,
-  FigCaption,
-  CaptionText,
   Reloader,
   MainImage,
   BgImage,
   OmikujiContainer,
 } from './Frame.styles';
 import { useCSSProps } from '../../hooks/style';
-import { sample } from '../../shared/utils';
 import { Omikuji } from '../Omikuji/Omikuji';
+import { useI18n } from '../../providers/i18n';
 
 interface FrameProps extends FrameItem {
   onClick?: () => void;
 }
-const omikuji = ['凶', '小吉', '中吉', '吉', '大吉'];
-
-export function Frame({
-  caption,
-  src,
-  datetime,
-  formatted,
-  onClick = () => {},
-}: FrameProps) {
+export function Frame({ src, onClick = () => {} }: FrameProps) {
+  const { t } = useI18n();
   const omikujiRef = useCSSProps({
     opacity: 1,
     scale: 1,
@@ -52,7 +43,7 @@ export function Frame({
         </p>
         <CaptionText>{caption}</CaptionText>
       </FigCaption> */}
-      <Reloader onClick={onClick} aria-label="Reload!" />
+      <Reloader onClick={onClick} aria-label={t('messages.reload')} />
     </Figure>
   );
 }

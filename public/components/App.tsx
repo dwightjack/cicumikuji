@@ -10,6 +10,7 @@ import { Splash } from './Splash/Splash';
 import { Loader } from './Loader/Loader';
 import { AppRoot, GlobalStyles } from '../shared/theme';
 import { useAppState } from '../providers/appState';
+import { useI18n } from '../providers/i18n';
 
 export function App() {
   const {
@@ -21,6 +22,7 @@ export function App() {
     setStatus,
   } = useAppState();
   const [node, setNode] = useState<FrameItem>(null);
+  const { locale } = useI18n();
   const frameLoader = useFramePreloader(5);
   const [data, fetcher] = useFetch<FrameItem[]>(`/api/fetch-posts`, {
     transform: (data) => data?.posts,
@@ -40,6 +42,9 @@ export function App() {
   const enableWakeLock = useWakeLock();
 
   useEffect(fetcher, []);
+  useEffect(() => {
+    document.documentElement.lang = locale;
+  });
   useEffect(() => {
     setStatus('splash');
   }, [data]);

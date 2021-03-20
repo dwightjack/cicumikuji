@@ -1,33 +1,38 @@
+import { useI18n } from '../../providers/i18n';
 import { sample } from '../../shared/utils';
-import { Root, Title, Quote } from './Omikuji.styles';
+import { Root, Title, Quote, Mark } from './Omikuji.styles';
+
+const genericQuotes = [0, 1, 2, 3, 4];
 
 const omikuji = [
-  { type: '凶', quotes: ['だいころす！', '触らないで！'] },
-  { type: '小吉', quotes: ['触らないで！', 'お風呂したくない！'] },
+  { type: 'low', quotes: [5, 6] },
   {
-    type: '中吉',
-    quotes: ['お風呂したくない！', '人間がいないと最高〜', 'おふとん最高〜'],
+    type: 'little',
+    quotes: [6, 7],
   },
-  { type: '吉', quotes: ['虫うめぇ〜！', 'おふとん最高〜'] },
-  { type: '大吉', quotes: ['虫うめぇ〜！', 'おふとん最高〜'] },
-];
-
-const genericQuotes = [
-  '虫くれ！',
-  'かゆい',
-  'お腹へった',
-  'ねむい〜',
-  '虫まだ？',
+  {
+    type: 'normal',
+    quotes: [7, 8, 10],
+  },
+  { type: 'good', quotes: [9, 10] },
+  { type: 'best', quotes: [9, 10] },
 ];
 
 export function Omikuji() {
+  const { t, locale } = useI18n();
+
   const { type, quotes } = sample(omikuji);
   const quote = sample([...quotes, ...quotes, ...genericQuotes]);
 
   return (
     <Root>
-      <Title>{type}</Title>
-      <Quote>{quote}</Quote>
+      <Title>
+        {locale !== 'ja' && (
+          <Mark lang="ja">{t(`fortune.${type}` as any, '', 'ja')}</Mark>
+        )}
+        <span>{t(`fortune.${type}` as any)}</span>
+      </Title>
+      <Quote>{t(`quotes.${quote}` as any)}</Quote>
     </Root>
   );
 }
