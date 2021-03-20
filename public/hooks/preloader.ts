@@ -1,10 +1,10 @@
-import { useContext, useRef } from 'preact/hooks';
-import { AppStateContext } from '../providers/appState';
+import { useRef } from 'preact/hooks';
+import { useAppState } from '../providers/appState';
 import { sampleUniq, preload } from '../shared/utils';
 import { FrameItem } from '../types';
 
 export function useFramePreloader(maxRetry = 5) {
-  const { loadStart, loadComplete, setError } = useContext(AppStateContext);
+  const { loadStart, loadComplete, setError } = useAppState();
   const frame = useRef<FrameItem>(null);
   const count = useRef(maxRetry);
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useContext } from 'preact/hooks';
+import { useState, useEffect, useCallback } from 'preact/hooks';
 import { useFetch } from '../hooks/fetch';
 import { useShake } from '../hooks/shake';
 import { useFramePreloader } from '../hooks/preloader';
@@ -9,7 +9,7 @@ import { ErrorLayer } from './ErrorLayer/ErrorLayer';
 import { Splash } from './Splash/Splash';
 import { Loader } from './Loader/Loader';
 import { AppRoot, GlobalStyles } from '../shared/theme';
-import { AppStateContext } from '../providers/appState';
+import { useAppState } from '../providers/appState';
 
 export function App() {
   const {
@@ -19,7 +19,7 @@ export function App() {
     isLoading,
     isBooted,
     setStatus,
-  } = useContext(AppStateContext);
+  } = useAppState();
   const [node, setNode] = useState<FrameItem>(null);
   const frameLoader = useFramePreloader(5);
   const [data, fetcher] = useFetch<FrameItem[]>(`/api/fetch-posts`, {

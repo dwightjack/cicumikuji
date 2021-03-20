@@ -1,7 +1,7 @@
 import ky, { Options } from 'ky';
 import { set, get } from 'idb-keyval';
-import { useContext, useState } from 'preact/hooks';
-import { AppStateContext } from '../providers/appState';
+import { useState } from 'preact/hooks';
+import { useAppState } from '../providers/appState';
 
 export interface FetchOptions<T> extends Options {
   transform?: <T>(data: any) => T;
@@ -44,7 +44,7 @@ export function useFetch<Response = unknown>(
   url: string,
   options: FetchOptions<Response> = {},
 ) {
-  const { loadStart, loadComplete, setError } = useContext(AppStateContext);
+  const { loadStart, loadComplete, setError } = useAppState();
   const [data, setData] = useState<Response>(options.initial);
 
   function fetcher() {

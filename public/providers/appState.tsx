@@ -1,5 +1,5 @@
 import { createContext } from 'preact';
-import { useReducer, useMemo } from 'preact/hooks';
+import { useReducer, useMemo, useContext } from 'preact/hooks';
 
 export type AppStatus = 'boot' | 'splash' | 'play' | 'error';
 export interface State {
@@ -64,7 +64,15 @@ function reducer(state: State, { type, payload }: Action): State {
   }
 }
 
-export const AppStateContext = createContext<AppStateContext>(null);
+const AppStateContext = createContext<AppStateContext>(null);
+
+export function useAppState() {
+  const context = useContext(AppStateContext);
+  if (context === undefined) {
+    throw new Error('useAppState must be used within a AppStateProvider');
+  }
+  return context;
+}
 
 export function AppStateProvider({ children }) {
   const [appState, dispatch] = useReducer(reducer, initialState);
