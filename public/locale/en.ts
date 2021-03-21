@@ -15,6 +15,7 @@ export const en: Locale = {
     enable: 'Enable',
     disable: 'Disable',
     language: 'Language:',
+    follow_me: 'Follow me!',
   },
 
   fortune: {

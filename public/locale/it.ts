@@ -16,6 +16,7 @@ export const it: Locale = {
     enable: 'Abilita',
     disable: 'Disabilita',
     language: 'Lingua:',
+    follow_me: 'Seguimi!',
   },
   fortune: {
     low: 'Giornata no',

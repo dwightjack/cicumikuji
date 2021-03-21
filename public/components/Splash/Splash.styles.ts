@@ -29,4 +29,13 @@ export const ButtonGroup = styled('div')`
 
 export const Title = styled('h1')`
   color: var(--color-text-heading);
+  margin-top: auto;
+`;
+
+export const Footer = styled('footer')`
+  margin-top: auto;
+
+  & > a {
+    margin-left: 0.2em;
+  }
 `;

@@ -56,4 +56,8 @@ export const AppRoot = styled('main')`
   /* Styles */
   color: var(--color-text-primary);
   height: 100%;
+
+  a:not([class]) {
+    color: var(--color-text-heading);
+  }
 `;

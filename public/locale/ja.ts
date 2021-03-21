@@ -14,6 +14,7 @@ export const ja: Locale = {
     enable: '有効にする',
     disable: '無効にする',
     language: '言語',
+    follow_me: 'フォローしてね！',
   },
   fortune: {
     low: '凶',

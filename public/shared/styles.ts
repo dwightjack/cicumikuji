@@ -1,6 +1,6 @@
 import { styled } from 'goober';
 
-export const Layer = styled('div')`
+export const Layer = styled('section')`
   position: fixed;
   top: 0;
   right: 0;

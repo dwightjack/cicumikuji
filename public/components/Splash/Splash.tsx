@@ -1,4 +1,4 @@
-import { Container, ButtonGroup, Title } from './Splash.styles';
+import { Container, ButtonGroup, Title, Footer } from './Splash.styles';
 import { Button } from '../Button/Button';
 import { LangSelect } from '../LangSelect/LangSelect';
 import { ShakePermission } from '../../hooks/shake';
@@ -42,6 +42,16 @@ export function Splash({ onGrant, onDeny, permission, onStart }: SplashProps) {
         </Button>
       )}
       <LangSelect />
+      <Footer>
+        {t('messages.follow_me')}
+        <a
+          href="https://www.instagram.com/nikkanchikuchiku/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          @nikkanchikuchiku
+        </a>
+      </Footer>
     </Container>
   );
 }
