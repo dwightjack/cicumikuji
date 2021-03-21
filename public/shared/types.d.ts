@@ -1,3 +1,6 @@
+/**
+ * @see https://stackoverflow.com/a/47058976/1531970
+ */
 export type PathsToStringProps<T> = T extends string
   ? []
   : {
@@ -18,3 +21,29 @@ export type ObjectToPaths<T extends Record<string, any>> = Join<
   PathsToStringProps<T>,
   '.'
 >;
+
+export interface Locale {
+  name: string;
+  messages: Record<
+    | 'title'
+    | 'error'
+    | 'error_detail'
+    | 'lets_reload'
+    | 'reload'
+    | 'activate_shake'
+    | 'intro_shake'
+    | 'start'
+    | 'enable'
+    | 'disable'
+    | 'language',
+    string
+  >;
+  fortune: Record<'low' | 'little' | 'normal' | 'good' | 'best', string>;
+  quotes: string[];
+}
+
+export interface LocaleDb {
+  ja: Locale;
+  en: Locale;
+  it: Locale;
+}

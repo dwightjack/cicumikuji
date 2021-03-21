@@ -1,13 +1,14 @@
 import { createContext } from 'preact';
 import {
   StateUpdater,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from 'preact/hooks';
-import { db, Locale, LocaleDb } from '../shared/locale';
-import { ObjectToPaths } from '../shared/types';
+import { db } from '../locale';
+import { ObjectToPaths, Locale, LocaleDb } from '../shared/types';
 import { set } from 'idb-keyval';
 
 export interface I18nContext {
@@ -17,6 +18,11 @@ export interface I18nContext {
   current: Locale;
   setLocale: StateUpdater<keyof LocaleDb>;
 }
+
+const locales = (Object.keys(db) as (keyof LocaleDb)[]).map((id) => ({
+  id,
+  label: db[id].name,
+}));
 
 const I18nContext = createContext<I18nContext>(null);
 
@@ -29,28 +35,26 @@ export function useI18n() {
 
   const { current = {} as Locale, setLocale, locale, locales, db } = context;
 
-  function t(
-    path: ObjectToPaths<Locale>,
-    def = '',
-    lang?: keyof LocaleDb,
-  ): string {
-    return (
-      path
-        .split('.')
-        .reduce((obj, key) => obj?.[key], lang ? db[lang] : current) ?? def
-    );
-  }
+  const t = useCallback(
+    function t(
+      path: ObjectToPaths<Locale>,
+      def = '',
+      lang?: keyof LocaleDb,
+    ): string {
+      return (
+        path
+          .split('.')
+          .reduce((obj, key) => obj?.[key], lang ? db[lang] : current) ?? def
+      );
+    },
+    [locale, locales],
+  );
 
   return { t, setLocale, locale, locales };
 }
 
 export function I18nProvider({ children, lang }) {
   const [locale, setLocale] = useState<keyof LocaleDb>(lang);
-
-  const locales = (Object.keys(db) as (keyof LocaleDb)[]).map((id) => ({
-    id,
-    label: db[id].name,
-  }));
 
   const i18n = useMemo(
     () => ({
