@@ -2,7 +2,7 @@ import { render } from 'preact';
 import { App } from './components/App';
 import { AppStateProvider } from './providers/appState';
 import { I18nProvider } from './providers/i18n';
-import { inferLocale } from './shared/locale';
+import { inferLocale } from './locale';
 import { get } from 'idb-keyval';
 // @ts-ignore
 import swURL from 'sw:./sw.ts';
