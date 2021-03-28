@@ -8,6 +8,15 @@ import { get } from 'idb-keyval';
 import swURL from 'sw:./sw.ts';
 navigator.serviceWorker.register(swURL);
 
+DeviceMotionEvent.requestPermission = () =>
+  new Promise((resolve) => {
+    if (confirm('ok?')) {
+      resolve('granted');
+      return;
+    }
+    resolve('denied');
+  });
+
 get('locale')
   .then((lang) => lang || inferLocale())
   .then((lang) => {

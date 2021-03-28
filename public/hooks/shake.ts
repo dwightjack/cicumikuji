@@ -4,14 +4,10 @@ import Shake from 'shake.js';
 export type ShakePermission = 'granted' | 'denied' | 'na' | null;
 
 export function useShake(eventHandler: (...args: any[]) => any) {
-  const [permission, setState] = useState<ShakePermission>(
-    localStorage.getItem('shakable') as ShakePermission,
+  let storedPermission = JSON.parse(localStorage.getItem('shakable'));
+  const [permission, setPermission] = useState<ShakePermission>(
+    storedPermission as ShakePermission,
   );
-
-  function setPermission(state: ShakePermission) {
-    setState(state);
-    localStorage.setItem('shakable', state);
-  }
 
   function denyShake() {
     setPermission('denied');
@@ -58,6 +54,10 @@ export function useShake(eventHandler: (...args: any[]) => any) {
       }
     };
   }, [permission, handler]);
+
+  useEffect(() => {
+    localStorage.setItem('shakable', JSON.stringify(permission));
+  }, [permission]);
 
   useEffect(() => {
     if (permission !== null) {

@@ -44,7 +44,7 @@ export function App() {
   useEffect(fetcher, []);
   useEffect(() => {
     document.documentElement.lang = locale;
-  });
+  }, [locale]);
   useEffect(() => {
     setStatus('splash');
   }, [data]);
