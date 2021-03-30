@@ -36,7 +36,10 @@ export interface Locale {
     | 'enable'
     | 'disable'
     | 'language'
-    | 'follow_me',
+    | 'follow_me'
+    | 'update_txt'
+    | 'update'
+    | 'updating',
     string
   >;
   fortune: Record<'low' | 'little' | 'normal' | 'good' | 'best', string>;

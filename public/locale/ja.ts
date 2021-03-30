@@ -15,6 +15,9 @@ export const ja: Locale = {
     disable: '無効にする',
     language: '言語',
     follow_me: 'フォローしてね！',
+    update_txt: 'アプリを更新してください。',
+    update: '更新する',
+    updating: '更新中…',
   },
   fortune: {
     low: '凶',

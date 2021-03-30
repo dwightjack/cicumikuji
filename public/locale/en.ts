@@ -16,6 +16,9 @@ export const en: Locale = {
     disable: 'Disable',
     language: 'Language:',
     follow_me: 'Follow me!',
+    update: 'Update',
+    updating: 'Updating...',
+    update_txt: 'Application update available.',
   },
 
   fortune: {
