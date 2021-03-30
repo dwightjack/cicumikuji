@@ -4,7 +4,16 @@ import Shake from 'shake.js';
 export type ShakePermission = 'granted' | 'denied' | 'na' | null;
 
 export function useShake(eventHandler: (...args: any[]) => any) {
-  let storedPermission = JSON.parse(localStorage.getItem('shakable'));
+  let storedPermission = null;
+
+  try {
+    storedPermission = JSON.parse(localStorage.getItem('shakable'));
+  } catch (err) {
+    console.error(err);
+    //reset
+    localStorage.removeItem('shakable');
+    storedPermission = null;
+  }
   const [permission, setPermission] = useState<ShakePermission>(
     storedPermission as ShakePermission,
   );
