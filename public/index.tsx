@@ -4,9 +4,6 @@ import { AppStateProvider } from './providers/appState';
 import { I18nProvider } from './providers/i18n';
 import { inferLocale } from './locale';
 import { get } from 'idb-keyval';
-// @ts-ignore
-import swURL from 'sw:./sw.ts';
-navigator.serviceWorker.register(swURL);
 
 get('locale')
   .then((lang) => lang || inferLocale())
