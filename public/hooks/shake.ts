@@ -1,22 +1,10 @@
 import { useCallback, useEffect, useState } from 'preact/hooks';
 import Shake from 'shake.js';
 
-export type ShakePermission = 'granted' | 'denied' | 'na' | null;
+export type ShakePermission = 'denied' | 'granted' | 'prompt' | null;
 
 export function useShake(eventHandler: (...args: any[]) => any) {
-  let storedPermission = null;
-
-  try {
-    storedPermission = JSON.parse(localStorage.getItem('shakable'));
-  } catch (err) {
-    console.error(err);
-    //reset
-    localStorage.removeItem('shakable');
-    storedPermission = null;
-  }
-  const [permission, setPermission] = useState<ShakePermission>(
-    storedPermission as ShakePermission,
-  );
+  const [permission, setPermission] = useState<ShakePermission>(null);
 
   function denyShake() {
     setPermission('denied');
@@ -39,7 +27,7 @@ export function useShake(eventHandler: (...args: any[]) => any) {
 
     try {
       const permissionState = await DeviceMotionEvent.requestPermission();
-      setPermission(permissionState as ShakePermission);
+      setPermission(permissionState);
     } catch (err) {
       setPermission('denied');
       console.error(err);
@@ -65,15 +53,11 @@ export function useShake(eventHandler: (...args: any[]) => any) {
   }, [permission, handler]);
 
   useEffect(() => {
-    localStorage.setItem('shakable', JSON.stringify(permission));
-  }, [permission]);
-
-  useEffect(() => {
     if (permission !== null) {
       return;
     }
     if (!('DeviceMotionEvent' in window)) {
-      setPermission('na');
+      setPermission('denied');
       console.error('Motion event not available');
       return;
     }
