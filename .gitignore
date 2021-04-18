@@ -8,3 +8,4 @@ dist
 *.log
 .firebase
 .env
+cicumikuji-firebase-adminsdk.json

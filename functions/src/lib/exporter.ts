@@ -1,33 +1,27 @@
-/**
- * @type {import('got').Got}
- */
-const got = require('got');
+import * as functions from 'firebase-functions';
+import got from 'got';
 
-async function queryApi(after) {
-  const { body, statusCode } = await got(
+export async function queryApi(after?: string) {
+  const cfg = functions.config();
+  const { body } = await got<any>(
     'https://instagram40.p.rapidapi.com/account-medias',
     {
       searchParams: {
-        userid: process.env.INSTAGRAM_USER_ID,
-        first: '80',
+        userid: cfg.instagram.user_id,
+        first: '70',
         after,
       },
       headers: {
-        'x-rapidapi-key': process.env.RAPID_API_KEY,
+        'x-rapidapi-key': cfg.instagram.api_key,
         'x-rapidapi-host': 'instagram40.p.rapidapi.com',
       },
       responseType: 'json',
     },
   );
-  if (statusCode !== 200) {
-    throw new Error(body.message);
-  }
   return body;
 }
 
-const fs = require('fs');
-
-(async () => {
+export async function exporter() {
   const { count, edges, page_info } = await queryApi();
   const posts = [...edges];
   let after = page_info.end_cursor;
@@ -37,16 +31,10 @@ const fs = require('fs');
       after = response.page_info.end_cursor;
       console.log(`Query collected ${response.edges.length} posts`);
       posts.push(...response.edges);
-      console.log({ count, posts: posts.length });
+      console.log(`Stored ${posts.length} posts out of ${count}`);
     } catch (err) {
       console.log(err);
     }
   }
-
-  fs.writeFileSync(
-    __dirname,
-    './db.json',
-    JSON.stringify(posts, null, 2),
-    'utf8',
-  );
-})();
+  return posts;
+}

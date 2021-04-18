@@ -1,42 +1,11 @@
-import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-import got from 'got';
+import * as functions from 'firebase-functions';
 import { pluck } from 'ramda';
 import { parseEdges } from './utils';
-import { Post } from './types';
+import { queryApi } from './lib/exporter';
+import { getPosts, savePosts } from './lib/db';
 
 admin.initializeApp();
-
-const db = admin.firestore();
-
-async function queryApi(after?: string) {
-  const cfg = functions.config();
-  const { body } = await got<any>(
-    'https://instagram40.p.rapidapi.com/account-medias',
-    {
-      searchParams: {
-        userid: cfg.INSTAGRAM_USER_ID,
-        first: '50',
-        after,
-      },
-      headers: {
-        'x-rapidapi-key': cfg.RAPID_API_KEY,
-        'x-rapidapi-host': 'instagram40.p.rapidapi.com',
-      },
-      responseType: 'json',
-    },
-  );
-  return body;
-}
-
-async function getPosts() {
-  const { docs } = await db
-    .collection('posts')
-    .orderBy('timestamp', 'desc')
-    .get();
-
-  return docs.map((doc) => doc.data() as Post);
-}
 
 export const syncPosts = functions.pubsub
   .schedule('every 120 hours')
@@ -62,21 +31,10 @@ export const syncPosts = functions.pubsub
 
         console.log(`${newPosts.length} new posts to store...`);
 
-        // store new posts
-        const postsRef = db.collection('posts');
+        await savePosts(newPosts);
 
-        const batch = db.batch();
-
-        for (const newPost of newPosts) {
-          const ref = postsRef.doc(newPost.id);
-          batch.set(ref, newPost);
-        }
-        await batch.commit();
-
-        // save new query time
         console.log(`Stored!`);
       }
-      console.log(`Query timestamp updated.`);
     } catch (error) {
       console.error(error);
     }
@@ -84,6 +42,5 @@ export const syncPosts = functions.pubsub
 
 export const fetchPosts = functions.https.onRequest(async (_req, res) => {
   const posts = await getPosts();
-  // Send back a message that we've successfully written the message
   res.json({ posts });
 });
