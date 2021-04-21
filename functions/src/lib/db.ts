@@ -18,6 +18,10 @@ export async function getPosts() {
   return docs.map((doc) => doc.data() as Post);
 }
 
+export function getCollection() {
+  return getDb().collection('posts');
+}
+
 async function store(
   posts: Post[],
   postRef: FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData>,

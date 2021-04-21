@@ -5,4 +5,5 @@ export interface Post {
   caption: string;
   datetime: string;
   timestamp: number;
+  local?: true;
 }
