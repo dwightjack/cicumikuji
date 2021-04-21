@@ -35,27 +35,21 @@ async function store(
   await batch.commit();
 }
 
-async function batchStore(
-  posts: Post[],
-  postRef: FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData>,
-  limit: number,
+export async function batchExec(
+  fn: (...args: any[]) => Promise<boolean>,
   resolve: (value?: unknown) => void,
 ) {
-  if (posts.length === 0) {
+  const completed = await fn();
+
+  if (completed) {
     resolve();
     return;
   }
 
-  const newPosts = posts.splice(0, limit);
-
-  await store(newPosts, postRef);
-
-  console.log(`Saved ${newPosts.length} posts...`);
-
   // Recurse on the next process tick, to avoid
   // exploding the stack.
   process.nextTick(() => {
-    batchStore(posts, postRef, limit, resolve);
+    batchExec(fn, resolve);
   });
 }
 
@@ -67,8 +61,17 @@ export async function savePosts(posts: Post[], limit = 300) {
     return;
   }
 
+  const postStack = [...posts];
+
+  const postBatchStore = async () => {
+    const newPosts = postStack.splice(0, limit);
+    await store(newPosts, postsRef);
+    console.log(`Saved ${newPosts.length} posts...`);
+    return postStack.length === 0;
+  };
+
   return new Promise((resolve, reject) => {
-    batchStore(posts, postsRef, limit, resolve).catch(reject);
+    batchExec(postBatchStore, resolve).catch(reject);
   });
 }
 

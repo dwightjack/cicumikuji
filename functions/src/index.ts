@@ -5,14 +5,10 @@ import { parseEdges } from './utils';
 import { queryApi } from './lib/exporter';
 import { createMailer } from './lib/mail';
 import { getPosts, savePosts, getCollection } from './lib/db';
-import got, { GotStream } from 'got';
-import * as stream from 'stream';
-import { promisify } from 'util';
 import { Storage } from '@google-cloud/storage';
+import { uploadPostImage } from './lib/storage';
 
 admin.initializeApp();
-
-const pipeline = promisify(stream.pipeline);
 
 export const syncPosts = functions.pubsub
   .schedule('every 120 hours')
@@ -58,22 +54,27 @@ export const syncPosts = functions.pubsub
   });
 
 export const mirrorImages = functions.pubsub
-  .schedule('every 2 hours')
+  .schedule('every 4 hours')
   .onRun(async () => {
+    const storage = new Storage({
+      projectId: 'cicumikuji',
+    });
     const { docs } = await getCollection()
-      .where('local', '!=', true)
+      .where('local', '==', false)
       .limit(2)
       .get();
 
-    const images = docs.map((doc) => {
-      const id = doc.get('id') as string;
-      const src = doc.get('src') as string;
+    console.log(`Found ${docs.length} posts.`);
 
-      try {
-        await pipeline(got.stream(src) as GotStream);
+    if (docs.length === 0) {
+      console.log('Nothing to process.');
+      return;
+    }
+    const bucket = storage.bucket(functions.config().storage.bucket);
 
-      }
-    });
+    for (const doc of docs) {
+      await uploadPostImage(doc, bucket);
+    }
   });
 
 export const fetchPosts = functions.https.onRequest(async (_req, res) => {
