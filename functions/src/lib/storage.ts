@@ -1,10 +1,11 @@
-import got from 'got';
+import axios from 'axios';
 import * as stream from 'stream';
 import { Bucket } from '@google-cloud/storage';
 
 import { promisify } from 'util';
 
-const pipeline = promisify(stream.pipeline);
+const finished = promisify(stream.finished);
+
 export async function uploadPostImage(
   post: FirebaseFirestore.DocumentData,
   bucket: Bucket,
@@ -16,26 +17,34 @@ export async function uploadPostImage(
   const file = bucket.file(fileName);
 
   try {
-    await pipeline(
-      got.stream(src) as any,
-      file.createWriteStream({
-        public: true,
-        resumable: false,
-        validation: false,
-        contentType: 'auto',
-        metadata: {
-          'Cache-Control': 'public, max-age=31536000',
-        },
-      }),
-    );
-    console.log(`Uploaded ${fileName}!`);
+    const response = await axios({
+      method: 'get',
+      url: src,
+      responseType: 'stream',
+    });
+
+    const writer = file.createWriteStream({
+      public: true,
+      resumable: false,
+      validation: false,
+      contentType: 'auto',
+      metadata: {
+        'Cache-Control': 'public, max-age=31536000',
+      },
+    });
+
+    response.data.pipe(writer);
+
+    await finished(writer);
 
     await post.ref.update({
       local: true,
       originalSrc: src,
       src: file.publicUrl(),
     });
-  } catch (e) {
-    console.error(e);
+
+    console.log(`Uploaded ${fileName}!`);
+  } catch (err) {
+    console.error(err);
   }
 }

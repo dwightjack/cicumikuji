@@ -1,24 +1,23 @@
 import * as functions from 'firebase-functions';
-import got from 'got';
+import axios from 'axios';
 
 export async function queryApi(after?: string) {
   const cfg = functions.config();
-  const { body } = await got<any>(
-    'https://instagram40.p.rapidapi.com/account-medias',
-    {
-      searchParams: {
-        userid: cfg.instagram.user_id,
-        first: '70',
-        after,
-      },
-      headers: {
-        'x-rapidapi-key': cfg.instagram.api_key,
-        'x-rapidapi-host': 'instagram40.p.rapidapi.com',
-      },
-      responseType: 'json',
+
+  const { data } = await axios.request({
+    method: 'GET',
+    url: 'https://instagram40.p.rapidapi.com/account-medias',
+    params: {
+      userid: cfg.instagram.user_id,
+      first: '70',
+      after: '',
     },
-  );
-  return body;
+    headers: {
+      'x-rapidapi-key': cfg.instagram.api_key,
+      'x-rapidapi-host': 'instagram40.p.rapidapi.com',
+    },
+  });
+  return data;
 }
 
 export async function exporter() {
