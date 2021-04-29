@@ -1,5 +1,4 @@
 import * as admin from 'firebase-admin';
-import * as functions from 'firebase-functions';
 import { getCollection } from '../src/lib/db';
 import { Storage } from '@google-cloud/storage';
 import { uploadPostImage } from '../src/lib/storage';
@@ -22,7 +21,9 @@ admin.initializeApp({
 
   console.log(`Found ${docs.length} posts.`);
 
-  const bucket = storage.bucket(functions.config().storage.bucket);
+  const bucket = storage.bucket(
+    require('../cicumikuji-config.json').storage.bucket,
+  );
 
   for (const doc of docs) {
     await uploadPostImage(doc, bucket);

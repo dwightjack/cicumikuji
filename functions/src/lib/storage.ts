@@ -4,7 +4,7 @@ import { Bucket } from '@google-cloud/storage';
 
 import { promisify } from 'util';
 
-const finished = promisify(stream.finished);
+const pipeline = promisify(stream.pipeline);
 
 export async function uploadPostImage(
   post: FirebaseFirestore.DocumentData,
@@ -17,12 +17,6 @@ export async function uploadPostImage(
   const file = bucket.file(fileName);
 
   try {
-    const response = await axios({
-      method: 'get',
-      url: src,
-      responseType: 'stream',
-    });
-
     const writer = file.createWriteStream({
       public: true,
       resumable: false,
@@ -33,9 +27,11 @@ export async function uploadPostImage(
       },
     });
 
-    response.data.pipe(writer);
+    const response = await axios.get(src, {
+      responseType: 'stream',
+    });
 
-    await finished(writer);
+    await pipeline(response.data, writer);
 
     await post.ref.update({
       local: true,

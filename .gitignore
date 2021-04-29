@@ -9,3 +9,4 @@ dist
 .firebase
 .env
 cicumikuji-firebase-adminsdk.json
+cicumikuji-config.json
