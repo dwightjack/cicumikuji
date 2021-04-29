@@ -14,9 +14,24 @@ export async function uploadPostImage(
   const src = post.get('src') as string;
   console.log(`Processing post ${id} (${src})...`);
   const fileName = `posts/${id}.jpg`;
-  const file = bucket.file(fileName);
 
   try {
+    const response = await axios.get(src, {
+      responseType: 'stream',
+    });
+
+    if (response.status !== 200) {
+      await post.ref.update({
+        local: true,
+        skip: `${response.statusText} - ${response.statusText}`,
+      });
+
+      throw new Error(
+        `Error fetching the image: ${response.statusText} - ${response.statusText}`,
+      );
+    }
+
+    const file = bucket.file(fileName);
     const writer = file.createWriteStream({
       public: true,
       resumable: false,
@@ -25,10 +40,6 @@ export async function uploadPostImage(
       metadata: {
         'Cache-Control': 'public, max-age=31536000',
       },
-    });
-
-    const response = await axios.get(src, {
-      responseType: 'stream',
     });
 
     await pipeline(response.data, writer);
