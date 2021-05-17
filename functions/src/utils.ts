@@ -15,11 +15,11 @@ const datetime = R.pipe(
 );
 
 const parseEdge = R.pipe<any, Post>(
-  R.converge(R.mergeRight, [
+  R.converge(Object.assign, [
     R.applySpec({
       id: R.prop<string, string>('id'),
       src: R.prop<string, string>('display_url'),
-      video_url: R.propOr(null, 'video_url'),
+      videoUrl: R.propOr(null, 'video_url'),
       caption: R.pathOr('', [
         'edge_media_to_caption',
         'edges',
@@ -29,6 +29,7 @@ const parseEdge = R.pipe<any, Post>(
       ]),
     }),
     datetime,
+    () => ({ local: false }),
   ]),
 );
 
@@ -36,3 +37,6 @@ export const parseEdges = R.pipe<any[], any[], Post[]>(
   R.pluck('node'),
   R.map(parseEdge),
 );
+
+export const camelCase = (str: string) =>
+  str.replace(/[-_]([a-z])/g, (m) => m[1].toUpperCase());

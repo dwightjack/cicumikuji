@@ -1,8 +1,7 @@
 import * as admin from 'firebase-admin';
 import { getCollection } from '../src/lib/db';
 import { Storage } from '@google-cloud/storage';
-import { uploadPostImage } from '../src/lib/storage';
-
+import { uploadPostResource } from '../src/lib/storage';
 var serviceAccount = require('../cicumikuji-firebase-adminsdk.json');
 
 admin.initializeApp({
@@ -26,6 +25,7 @@ admin.initializeApp({
   );
 
   for (const doc of docs) {
-    await uploadPostImage(doc, bucket);
+    await uploadPostResource(doc, bucket);
+    await uploadPostResource(doc, bucket, { type: 'mp4', field: 'videoUrl' });
   }
 })();

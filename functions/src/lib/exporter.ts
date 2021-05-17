@@ -2,7 +2,15 @@ import * as functions from 'firebase-functions';
 import axios from 'axios';
 
 export async function queryApi(after?: string) {
-  const cfg = functions.config();
+  let cfg: Record<string, any>;
+  if (process.env.FIREBASE_CONFIG) {
+    cfg = functions.config();
+  } else {
+    cfg = require('../../cicumikuji-config.json');
+  }
+
+  try {
+  } catch (err) {}
 
   const { data } = await axios.request({
     method: 'GET',
