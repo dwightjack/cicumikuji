@@ -1,6 +1,15 @@
-const db = require('./lib/dev-db.json');
 const swPlugin = require('./sw-plugin.js');
-const dbResponse = JSON.stringify(db);
+
+
+functino getDB() {
+  try {
+    const db = require('./lib/dev-db.json');
+    return JSON.stringify(db);
+  } catch (err) {
+    console.log(err);
+    return {}
+  }
+}
 
 /**
  * @type {import('polka').Middleware}
@@ -13,7 +22,7 @@ function apiMiddleware(req, res, next) {
 
   setTimeout(() => {
     res.setHeader('content-type', 'application/json');
-    res.end(dbResponse);
+    res.end(getDB());
   }, Math.floor(Math.random() * 1000));
 }
 /**
