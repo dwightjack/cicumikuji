@@ -61,7 +61,7 @@ export const mirrorImages = functions.pubsub
     });
     const { docs } = await getCollection()
       .where('local', '==', false)
-      .limit(2)
+      .limit(6)
       .get();
 
     console.log(`Found ${docs.length} posts.`);

@@ -17,6 +17,7 @@ export function useFramePreloader(maxRetry = 5) {
       loadStart();
       try {
         await preload(frame.current.src);
+        count.current = maxRetry;
         return frame.current;
       } catch (err) {
         if (count.current > 0) {
@@ -24,6 +25,7 @@ export function useFramePreloader(maxRetry = 5) {
           return loader(data, frame.current);
         }
         setError('Error loading images...');
+        count.current = maxRetry;
         throw err;
       } finally {
         loadComplete();

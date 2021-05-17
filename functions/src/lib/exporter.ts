@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions';
 import axios from 'axios';
 
-export async function queryApi(after?: string) {
+export async function queryApi(after: string = '') {
   let cfg: Record<string, any>;
   if (process.env.FIREBASE_CONFIG) {
     cfg = functions.config();
@@ -18,7 +18,7 @@ export async function queryApi(after?: string) {
     params: {
       userid: cfg.instagram.user_id,
       first: '70',
-      after: '',
+      after,
     },
     headers: {
       'x-rapidapi-key': cfg.instagram.api_key,

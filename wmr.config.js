@@ -2,7 +2,7 @@ const swPlugin = require('./sw-plugin.js');
 
 function getDB() {
   try {
-    const db = require('./lib/dev-db.json');
+    const db = require('./dev-db.json');
     return JSON.stringify(db);
   } catch (err) {
     console.log(err);

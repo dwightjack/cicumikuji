@@ -12,7 +12,7 @@ admin.initializeApp({
 (async () => {
   const posts = await getPosts();
   fs.writeFile(
-    resolve(__dirname, '../../lib/dev-db.json'),
+    resolve(__dirname, '../../dev-db.json'),
     JSON.stringify({ posts }, null, 2),
     'utf8',
   );
