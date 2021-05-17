@@ -6,7 +6,7 @@ import { queryApi } from './lib/exporter';
 import { createMailer } from './lib/mail';
 import { getPosts, savePosts, getCollection } from './lib/db';
 import { Storage } from '@google-cloud/storage';
-import { uploadPostImage } from './lib/storage';
+import { uploadPostResource } from './lib/storage';
 
 admin.initializeApp();
 
@@ -73,7 +73,8 @@ export const mirrorImages = functions.pubsub
     const bucket = storage.bucket(functions.config().storage.bucket);
 
     for (const doc of docs) {
-      await uploadPostImage(doc, bucket);
+      await uploadPostResource(doc, bucket);
+      await uploadPostResource(doc, bucket, { type: 'mp4', field: 'videoUrl' });
     }
   });
 
