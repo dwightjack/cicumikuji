@@ -1,13 +1,12 @@
 const swPlugin = require('./sw-plugin.js');
 
-
-functino getDB() {
+function getDB() {
   try {
     const db = require('./lib/dev-db.json');
     return JSON.stringify(db);
   } catch (err) {
     console.log(err);
-    return {}
+    return {};
   }
 }
 
