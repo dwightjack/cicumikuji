@@ -4,7 +4,7 @@ import { pluck } from 'ramda';
 import { parseEdges } from './utils';
 import { queryApi } from './lib/exporter';
 import { createMailer } from './lib/mail';
-import { getPosts, savePosts, getCollection } from './lib/db';
+import { getPosts, savePosts, getCollection, getLocalPosts } from './lib/db';
 import { Storage } from '@google-cloud/storage';
 import { uploadPostResource } from './lib/storage';
 
@@ -54,14 +54,14 @@ export const syncPosts = functions.pubsub
   });
 
 export const mirrorImages = functions.pubsub
-  .schedule('every 4 hours')
+  .schedule('every 1 hours')
   .onRun(async () => {
     const storage = new Storage({
       projectId: 'cicumikuji',
     });
     const { docs } = await getCollection()
       .where('local', '==', false)
-      .limit(6)
+      .limit(5)
       .get();
 
     console.log(`Found ${docs.length} posts.`);
@@ -79,6 +79,6 @@ export const mirrorImages = functions.pubsub
   });
 
 export const fetchPosts = functions.https.onRequest(async (_req, res) => {
-  const posts = await getPosts();
+  const posts = await getLocalPosts();
   res.json({ posts });
 });

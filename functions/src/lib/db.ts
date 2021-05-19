@@ -18,6 +18,21 @@ export async function getPosts() {
   return docs.map((doc) => doc.data() as Post);
 }
 
+/**
+ * List only post with locally stored images
+ */
+export async function getLocalPosts() {
+  const { docs } = await getDb()
+    .collection('posts')
+    .where('local', '==', true)
+    .orderBy('timestamp', 'desc')
+    .get();
+
+  return docs
+    .map((doc) => doc.data() as Post)
+    .filter(({ skip }: Post) => !skip);
+}
+
 export function getCollection() {
   return getDb().collection('posts');
 }
