@@ -54,7 +54,7 @@ export const syncPosts = functions.pubsub
   });
 
 export const mirrorImages = functions.pubsub
-  .schedule('every 1 hours')
+  .schedule('every 60 minutes')
   .onRun(async () => {
     const storage = new Storage({
       projectId: 'cicumikuji',
