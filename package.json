@@ -1,6 +1,6 @@
 {
   "name": "cicumikuji",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "scripts": {
     "start": "wmr -p 8000",
