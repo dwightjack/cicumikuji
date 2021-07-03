@@ -21,7 +21,7 @@
     "ramda": "0.27.1"
   },
   "devDependencies": {
-    "@types/ramda": "0.27.34",
+    "@types/ramda": "0.27.42",
     "firebase-functions-test": "^0.2.0",
     "ts-node": "^9.1.1",
     "typescript": "^3.8.0"
