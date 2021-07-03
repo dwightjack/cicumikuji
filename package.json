@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "goober": "2.0.35",
-    "idb-keyval": "^5.0.2",
+    "idb-keyval": "5.0.6",
     "ky": "^0.27.0",
     "nosleep.js": "^0.12.0",
     "preact": "10.5.13",
