@@ -13,18 +13,18 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "@google-cloud/storage": "5.8.3",
+    "@google-cloud/storage": "5.14.3",
     "axios": "0.21.1",
-    "firebase-admin": "9.5.0",
-    "firebase-functions": "3.13.2",
+    "firebase-admin": "9.11.1",
+    "firebase-functions": "3.15.7",
     "mailgun-js": "0.22.0",
     "ramda": "0.27.1"
   },
   "devDependencies": {
-    "@types/ramda": "0.27.34",
-    "firebase-functions-test": "0.2.3",
-    "ts-node": "10.0.0",
-    "typescript": "4.3.5"
+    "@types/ramda": "0.27.45",
+    "firebase-functions-test": "0.3.2",
+    "ts-node": "10.2.1",
+    "typescript": "4.4.3"
   },
   "private": true
 }
