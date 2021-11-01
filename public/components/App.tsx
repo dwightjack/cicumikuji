@@ -12,8 +12,6 @@ import { ServiceWorker } from './ServiceWorker/ServiceWorker';
 import { AppRoot, GlobalStyles } from '../shared/theme';
 import { useAppState } from '../providers/appState';
 import { useI18n } from '../providers/i18n';
-// @ts-ignore
-import swURL from 'sw:../sw.ts';
 
 export function App() {
   const {
@@ -28,7 +26,7 @@ export function App() {
   const { locale } = useI18n();
   const frameLoader = useFramePreloader(5);
   const [data, fetcher] = useFetch<FrameItem[]>(`/api/fetch-posts`, {
-    transform: (data) => data?.posts,
+    transform: (data) => data?.posts.filter(({ videoUrl }) => !!videoUrl),
     initial: [],
   });
 
@@ -56,7 +54,7 @@ export function App() {
 
   return (
     <AppRoot>
-      <ServiceWorker url={swURL} />
+      {import.meta.env.NODE_ENV === 'production' && <ServiceWorker />}
       <GlobalStyles />
       {isLoading && <Loader />}
       {$state.error && <ErrorLayer message={$state.error} />}

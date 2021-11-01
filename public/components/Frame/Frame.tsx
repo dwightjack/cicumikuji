@@ -8,12 +8,13 @@ import {
 } from './Frame.styles';
 import { useCSSProps } from '../../hooks/style';
 import { Omikuji } from '../Omikuji/Omikuji';
+import { Video } from '../Video/Video';
 import { useI18n } from '../../providers/i18n';
 
 interface FrameProps extends FrameItem {
   onClick?: () => void;
 }
-export function Frame({ src, onClick = () => {} }: FrameProps) {
+export function Frame({ src, onClick = () => {}, videoUrl }: FrameProps) {
   const { t } = useI18n();
   const omikujiRef = useCSSProps({
     opacity: 1,
@@ -28,6 +29,8 @@ export function Frame({ src, onClick = () => {} }: FrameProps) {
     opacity: 1,
   });
 
+  console.log(videoUrl);
+
   return (
     <Figure>
       <OmikujiContainer ref={omikujiRef}>
@@ -35,8 +38,10 @@ export function Frame({ src, onClick = () => {} }: FrameProps) {
       </OmikujiContainer>
 
       <BgImage src={src} alt="" ref={bgImageInRef} />
-      <MainImage src={src} alt="" ref={imageInRef} />
-
+      {/* <MainImage src={src} alt="" ref={imageInRef} /> */}
+      <MainImage as={'div'} ref={imageInRef}>
+        <Video src={videoUrl} poster={src} />
+      </MainImage>
       {/* <FigCaption>
         <p>
           <time dateTime={datetime}>{formatted}</time>

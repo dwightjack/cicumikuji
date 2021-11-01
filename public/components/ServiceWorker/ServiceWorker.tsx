@@ -3,12 +3,14 @@ import { Workbox, messageSW } from 'workbox-window';
 import { useI18n } from '../../providers/i18n';
 import { Button } from '../Button/Button';
 import { Alert, Text } from './ServiceWorker.styles';
+// @ts-ignore
+import swURL from 'sw:../../sw.ts';
 
-export function ServiceWorker({ url }: { url: string }) {
+export function ServiceWorker() {
   const [registration, setRegistration] = useState<ServiceWorkerRegistration>(
     null,
   );
-  const wb = useRef<Workbox>(new Workbox(url));
+  const wb = useRef<Workbox>(new Workbox(swURL));
   const [shouldUpdate, setUpdater] = useState(false);
   const [updating, setUpdating] = useState(false);
   const { t } = useI18n();
