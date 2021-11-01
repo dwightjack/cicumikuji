@@ -1,3 +1,6 @@
+/**
+ * Download firestore DB to a static file (used for development)
+ */
 import { promises as fs } from 'fs';
 import { resolve } from 'path';
 import { getPosts } from '../src/lib/db';

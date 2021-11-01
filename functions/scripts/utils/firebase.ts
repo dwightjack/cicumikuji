@@ -9,7 +9,9 @@ export const serviceAccountFile = resolve(
 
 export async function initialize() {
   if (!existsSync(serviceAccountFile)) {
-    throw new Error(`Service account file ${serviceAccountFile} not found.`);
+    throw new Error(
+      `Service account file ${serviceAccountFile} not found. run "make" to setup your local environment`,
+    );
   }
   const serviceAccount: admin.ServiceAccount = await import(serviceAccountFile);
   admin.initializeApp({

@@ -1,3 +1,6 @@
+/**
+ * Copy Instagram images into GCP storage bucket
+ */
 import { getCollection } from '../src/lib/db';
 import { Storage } from '@google-cloud/storage';
 import { uploadPostResource } from '../src/lib/storage';

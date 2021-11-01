@@ -1,4 +1,6 @@
-import admin from 'firebase-admin';
+/**
+ * Import instagram API formatted posts into firebase db
+ */
 import { parseEdges } from '../src/utils';
 import { savePosts, resetPosts } from '../src/lib/db';
 import edges from './db.json';
