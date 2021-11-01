@@ -1,5 +1,5 @@
 // @ts-ignore
-import * as mailgunJS from 'mailgun-js';
+import mailgunJS from 'mailgun-js';
 import * as functions from 'firebase-functions';
 
 interface sendMailOptions {

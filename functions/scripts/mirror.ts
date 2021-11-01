@@ -1,17 +1,14 @@
-import * as admin from 'firebase-admin';
 import { getCollection } from '../src/lib/db';
 import { Storage } from '@google-cloud/storage';
 import { uploadPostResource } from '../src/lib/storage';
-var serviceAccount = require('../cicumikuji-firebase-adminsdk.json');
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+import { initialize, serviceAccountFile } from './utils/firebase';
+import config from '../cicumikuji-config.json';
 
 (async () => {
+  await initialize();
   const storage = new Storage({
     projectId: 'cicumikuji',
-    keyFilename: require.resolve('../cicumikuji-firebase-adminsdk.json'),
+    keyFilename: serviceAccountFile,
   });
   const { docs } = await getCollection()
     .where('local', '==', false)
@@ -20,9 +17,7 @@ admin.initializeApp({
 
   console.log(`Found ${docs.length} posts.`);
 
-  const bucket = storage.bucket(
-    require('../cicumikuji-config.json').storage.bucket,
-  );
+  const bucket = storage.bucket(config.storage.bucket);
 
   for (const doc of docs) {
     await uploadPostResource(doc, bucket);

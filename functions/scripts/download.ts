@@ -1,18 +1,13 @@
 import { promises as fs } from 'fs';
 import { resolve } from 'path';
-import * as admin from 'firebase-admin';
 import { getPosts } from '../src/lib/db';
-
-var serviceAccount = require('../cicumikuji-firebase-adminsdk.json');
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+import { initialize } from './utils/firebase';
 
 (async () => {
+  await initialize();
   const posts = await getPosts();
   fs.writeFile(
-    resolve(__dirname, '../../dev-db.json'),
+    resolve(process.cwd(), '../dev-db.json'),
     JSON.stringify({ posts }, null, 2),
     'utf8',
   );
