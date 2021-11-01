@@ -38,10 +38,14 @@ export function Frame({ src, onClick = () => {}, videoUrl }: FrameProps) {
       </OmikujiContainer>
 
       <BgImage src={src} alt="" ref={bgImageInRef} />
-      {/* <MainImage src={src} alt="" ref={imageInRef} /> */}
-      <MainImage as={'div'} ref={imageInRef}>
-        <Video src={videoUrl} poster={src} />
-      </MainImage>
+      {videoUrl ? (
+        <MainImage as={'div'} ref={imageInRef}>
+          <Video src={videoUrl} poster={src} />
+        </MainImage>
+      ) : (
+        <MainImage src={src} alt="" ref={imageInRef} />
+      )}
+
       {/* <FigCaption>
         <p>
           <time dateTime={datetime}>{formatted}</time>

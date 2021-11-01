@@ -20,6 +20,8 @@ export const it: Locale = {
     update_txt: 'Aggiornamento disponibile.',
     update: 'Aggiorna',
     updating: 'Aggiornamento...',
+    play_video: 'Avvia il video',
+    pause_video: 'Metti in pausa il video',
   },
   fortune: {
     low: 'Giornata no',

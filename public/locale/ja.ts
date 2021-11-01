@@ -18,6 +18,8 @@ export const ja: Locale = {
     update_txt: 'アプリを更新してください。',
     update: '更新する',
     updating: '更新中…',
+    play_video: '動画をスタートする',
+    pause_video: '動画を止まる',
   },
   fortune: {
     low: '凶',
