@@ -23,7 +23,14 @@ export function Video({ src, poster }: VideoProps) {
   }, [play, videoRef]);
   return (
     <Root>
-      <VideoFrame ref={videoRef} loop poster={poster} preload="metadata">
+      <VideoFrame
+        ref={videoRef}
+        loop
+        poster={poster}
+        playsinline
+        muted
+        preload="metadata"
+      >
         <source src={src} type="video/mp4" />
       </VideoFrame>
       <Control

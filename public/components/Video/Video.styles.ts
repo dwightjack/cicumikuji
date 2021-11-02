@@ -41,6 +41,7 @@ export const Control = styled('button')`
     display: block;
     content: '';
     filter: drop-shadow(2px 2px 1px rgba(var(--color-text-primary-rgb) / 0.4));
+    will-change: transform;
     ${({ isPlaying }) => {
       if (isPlaying) {
         return `
