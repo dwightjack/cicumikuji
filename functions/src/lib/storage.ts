@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as stream from 'stream';
+import stream from 'stream';
 import { Bucket } from '@google-cloud/storage';
 import { Post } from '../types';
 import { camelCase } from '../utils';
@@ -65,7 +65,7 @@ export async function uploadPostResource(
     });
 
     console.log(`Uploaded ${fileName}!`);
-  } catch (error) {
+  } catch (error: any) {
     await errorFallback(src, error.response);
   }
 }

@@ -1,4 +1,4 @@
-import * as admin from 'firebase-admin';
+import admin from 'firebase-admin';
 import { Post } from '../types';
 
 let $db: FirebaseFirestore.Firestore;

@@ -13,4 +13,6 @@ export interface FrameItem {
   videoUrl: null | string;
   timestamp: number;
   formatted: string;
+  id: string;
+  local: boolean;
 }

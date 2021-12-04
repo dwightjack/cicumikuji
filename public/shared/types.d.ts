@@ -39,7 +39,9 @@ export interface Locale {
     | 'follow_me'
     | 'update_txt'
     | 'update'
-    | 'updating',
+    | 'updating'
+    | 'play_video'
+    | 'pause_video',
     string
   >;
   fortune: Record<'low' | 'little' | 'normal' | 'good' | 'best', string>;

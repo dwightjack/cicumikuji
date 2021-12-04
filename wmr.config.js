@@ -1,4 +1,4 @@
-const swPlugin = require('./sw-plugin.js');
+const swPlugin = require('@wmrjs/service-worker');
 
 function getDB() {
   try {
