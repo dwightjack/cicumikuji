@@ -14,19 +14,13 @@ import { useAppState } from '../providers/appState';
 import { useI18n } from '../providers/i18n';
 
 export function App() {
-  const {
-    $state,
-    isReady,
-    showSplash,
-    isLoading,
-    isBooted,
-    setStatus,
-  } = useAppState();
+  const { $state, isReady, showSplash, isLoading, isBooted, setStatus } =
+    useAppState();
   const [node, setNode] = useState<FrameItem>(null);
   const { locale } = useI18n();
   const frameLoader = useFramePreloader(5);
   const [data, fetcher] = useFetch<FrameItem[]>(`/api/fetch-posts`, {
-    transform: (data) => data?.posts.filter(({ videoUrl }) => !!videoUrl),
+    transform: (data) => data?.posts,
     initial: [],
   });
 
