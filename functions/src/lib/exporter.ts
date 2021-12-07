@@ -1,46 +1,64 @@
 import * as functions from 'firebase-functions';
 import axios from 'axios';
 
-export async function queryApi(after: string = '') {
-  let cfg: Record<string, any>;
+function getConfig(): Record<string, any> {
   if (process.env.FIREBASE_CONFIG) {
-    cfg = functions.config();
+    return functions.config();
   } else {
-    cfg = require('../../cicumikuji-config.json');
+    return require('../../cicumikuji-config.json');
   }
+}
 
-  try {
-  } catch (err) {}
-
+async function queryApi(url: string, params = {}) {
+  const cfg = getConfig();
   const { data } = await axios.request({
     method: 'GET',
-    url: 'https://instagram40.p.rapidapi.com/account-medias',
-    params: {
-      userid: cfg.instagram.user_id,
-      first: '70',
-      after,
-    },
+    url,
+    params,
     headers: {
       'x-rapidapi-key': cfg.instagram.api_key,
-      'x-rapidapi-host': 'instagram40.p.rapidapi.com',
+      'x-rapidapi-host': 'instagram85.p.rapidapi.com',
     },
   });
   return data;
 }
 
+export async function queryInfo() {
+  const { data } = await queryApi(
+    'https://instagram85.p.rapidapi.com/account/nikkanchikuchiku/info',
+  );
+  return data;
+}
+
+export async function queryPosts(pageId: string = '') {
+  const postParams: Record<string, any> = { by: 'username' };
+  if (pageId) {
+    postParams.pageId = pageId;
+  }
+  const { data: edges, meta } = await queryApi(
+    'https://instagram85.p.rapidapi.com/account/nikkanchikuchiku',
+    postParams,
+  );
+  return { edges, meta };
+}
+
 export async function exporter() {
-  const { count, edges, page_info } = await queryApi();
+  const { edges, meta } = await queryPosts();
+  const info = await queryInfo();
   const posts = [...edges];
-  let after = page_info.end_cursor;
-  while (count > posts.length) {
+  let next = meta.has_next;
+  let pageId = meta.next_page;
+  while (next) {
     try {
-      const response = await queryApi(after);
-      after = response.page_info.end_cursor;
+      const response = await queryPosts(pageId);
+      next = response.meta.has_next;
+      pageId = response.meta.next_page;
       console.log(`Query collected ${response.edges.length} posts`);
       posts.push(...response.edges);
-      console.log(`Stored ${posts.length} posts out of ${count}`);
+      console.log(`Stored ${posts.length} posts out of ${info.figures.posts}`);
     } catch (err) {
       console.log(err);
+      return posts;
     }
   }
   return posts;

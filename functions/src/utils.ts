@@ -1,11 +1,11 @@
 import R from 'ramda';
-import { Post } from './types';
+import { Post, Edge } from './types';
 
 /**
  * @param {Object} node
  */
 const datetime = R.pipe(
-  R.prop<string, number>('taken_at_timestamp'),
+  R.pathOr(0, ['created_time', 'unix']),
   R.multiply(1000),
   R.constructN(1, Date),
   R.applySpec({
@@ -14,29 +14,24 @@ const datetime = R.pipe(
   }),
 );
 
-const parseEdge = R.pipe<any, Post>(
+const parseEdge = R.pipe<Edge, Post>(
   R.converge(Object.assign, [
     R.applySpec({
       id: R.prop<string, string>('id'),
-      src: R.prop<string, string>('display_url'),
-      videoUrl: R.propOr(null, 'video_url'),
-      caption: R.pathOr('', [
-        'edge_media_to_caption',
-        'edges',
-        0,
-        'node',
-        'text',
-      ]),
+      src: R.path<string>(['images', 'original', 'high']),
+      videoUrl: R.ifElse(
+        R.propEq('type', 'video'),
+        R.pathOr(null, ['videos', 'standard']),
+        () => null,
+      ),
+      caption: R.propOr('', 'caption'),
     }),
     datetime,
     () => ({ local: false }),
   ]),
 );
 
-export const parseEdges = R.pipe<any[], any[], Post[]>(
-  R.pluck('node'),
-  R.map(parseEdge),
-);
+export const parseEdges = R.map(parseEdge);
 
 export const camelCase = (str: string) =>
   str.replace(/[-_]([a-z])/g, (m) => m[1].toUpperCase());

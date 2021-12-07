@@ -2,7 +2,7 @@ import admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import { pluck } from 'ramda';
 import { parseEdges } from './utils';
-import { queryApi } from './lib/exporter';
+import { queryInfo, queryPosts } from './lib/exporter';
 import { createMailer } from './lib/mail';
 import { getPosts, savePosts, getCollection, getLocalPosts } from './lib/db';
 import { Storage } from '@google-cloud/storage';
@@ -17,12 +17,13 @@ export const syncPosts = functions.pubsub
     try {
       console.log('Refreshing data...');
 
-      const [storedPosts, { count, edges }] = await Promise.all([
+      const [storedPosts, { edges }, { figures }] = await Promise.all([
         getPosts(),
-        queryApi(),
+        queryPosts(),
+        queryInfo(),
       ]);
 
-      const diff = count - storedPosts.length;
+      const diff = figures.posts - storedPosts.length;
 
       console.log(`Found ${diff} new posts.`);
 
