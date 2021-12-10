@@ -17,10 +17,12 @@ export const syncPosts = functions.pubsub
     try {
       console.log('Refreshing data...');
 
-      const [storedPosts, { edges }, { figures }] = await Promise.all([
+      const { figures } = await queryInfo();
+
+      const [storedPosts, { edges }] = await Promise.all([
         getPosts(),
         queryPosts(),
-        queryInfo(),
+        ,
       ]);
 
       const diff = figures.posts - storedPosts.length;
