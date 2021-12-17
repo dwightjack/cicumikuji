@@ -20,6 +20,10 @@ async function queryApi(url: string, params = {}) {
       'x-rapidapi-host': 'instagram85.p.rapidapi.com',
     },
   });
+
+  if (data.code !== 200) {
+    throw new Error(data.message || `Error ${data.code}`);
+  }
   return data;
 }
 
