@@ -5,6 +5,7 @@ async function getConfig(): Promise<Record<string, any>> {
   if (process.env.FIREBASE_CONFIG) {
     return functions.config();
   } else {
+    //@ts-ignore
     return await import('../../cicumikuji-config.json');
   }
 }
