@@ -1,8 +1,7 @@
 import admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import { pluck } from 'ramda';
-import { parseEdges } from './utils';
-import { queryInfo, queryPosts } from './lib/exporter';
+import { scrape } from './lib/scrape';
 import { createMailer } from './lib/mail';
 import { getPosts, savePosts, getCollection, getLocalPosts } from './lib/db';
 import { Storage } from '@google-cloud/storage';
@@ -11,30 +10,27 @@ import { uploadPostResource } from './lib/storage';
 admin.initializeApp();
 
 export const syncPosts = functions.pubsub
-  .schedule('every 120 hours')
+  .schedule('every 72 hours')
   .onRun(async () => {
     const mailer = createMailer();
     try {
       console.log('Refreshing data...');
 
-      const { figures } = await queryInfo();
-
-      const [storedPosts, { edges }] = await Promise.all([
+      const [storedPosts, { edges, count }] = await Promise.all([
         getPosts(),
-        queryPosts(),
-        ,
+        scrape(),
       ]);
 
-      const diff = figures.posts - storedPosts.length;
+      const diff = count - storedPosts.length;
 
       console.log(`Found ${diff} new posts.`);
 
       if (diff > 0) {
         // parse and ensure we don't insert duplicates
         const postIDs = pluck('id', storedPosts);
-        const newPosts = parseEdges(edges.slice(0, diff)).filter(
-          ({ id }) => !postIDs.includes(id),
-        );
+        const newPosts = edges
+          .slice(0, diff)
+          .filter(({ id }) => !postIDs.includes(id));
 
         console.log(`${newPosts.length} new posts to store...`);
 
