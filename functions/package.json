@@ -21,6 +21,8 @@
     "firebase-functions": "3.13.2",
     "mailgun-js": "0.22.0",
     "puppeteer-core": "10.1.0",
+    "puppeteer-extra": "3.2.3",
+    "puppeteer-extra-plugin-stealth": "2.9.0",
     "ramda": "0.27.1"
   },
   "devDependencies": {

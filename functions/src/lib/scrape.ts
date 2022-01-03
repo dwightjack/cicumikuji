@@ -1,6 +1,10 @@
 import * as functions from 'firebase-functions';
 import chromium from 'chrome-aws-lambda';
+import { addExtra } from 'puppeteer-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 
+const puppeteerExtra = addExtra(chromium.puppeteer as any);
+puppeteerExtra.use(StealthPlugin());
 async function getConfig(): Promise<Record<string, any>> {
   if (process.env.FIREBASE_CONFIG) {
     return functions.config();
@@ -12,7 +16,7 @@ async function getConfig(): Promise<Record<string, any>> {
 
 export async function scrape() {
   const cfg = await getConfig();
-  const browser = await chromium.puppeteer.launch({
+  const browser = await puppeteerExtra.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath,
