@@ -9,8 +9,9 @@ import { uploadPostResource } from './lib/storage';
 
 admin.initializeApp();
 
-export const syncPosts = functions.pubsub
-  .schedule('every 72 hours')
+export const syncPosts = functions
+  .runWith({ memory: '2GB' })
+  .pubsub.schedule('every 72 hours')
   .onRun(async () => {
     const mailer = createMailer();
     try {
