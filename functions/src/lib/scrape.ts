@@ -23,7 +23,7 @@ export async function scrape() {
   await page.goto('https://www.instagram.com/accounts/login/');
 
   await page.waitForSelector('[type=submit]', {
-    visible: true,
+    timeout: 60000,
   });
   console.log(`Logging in...`);
 
@@ -31,10 +31,10 @@ export async function scrape() {
   await page.type('[type="password"]', cfg.instagram.password);
 
   await page.click('[type=submit]');
-  await page.waitForSelector('[placeholder=Search]', { visible: true });
+  await page.waitForSelector('[placeholder=Search]', { timeout: 60000 });
   await page.goto('https://www.instagram.com/nikkanchikuchiku/feed/');
   await page.waitForSelector('img', {
-    visible: true,
+    timeout: 60000,
   });
   console.log(`Logged in!`);
 
