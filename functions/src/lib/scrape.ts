@@ -15,11 +15,17 @@ export async function scrape() {
   const cfg = await getConfig();
   const browser = await Promise.resolve(bundledChromium.executablePath).then(
     (executablePath) => {
+      console.log({ executablePath });
       if (!executablePath) {
         // local execution
         return chromium.launch({});
       }
-      return chromium.launch({ executablePath });
+      console.log(`Chromium at ${executablePath}`);
+      return chromium.launch({
+        executablePath,
+        args: bundledChromium.args,
+        headless: true,
+      });
     },
   );
   const page = await browser.newPage();
