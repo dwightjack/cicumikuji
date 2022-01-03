@@ -1,6 +1,5 @@
 import * as functions from 'firebase-functions';
-import { chromium } from 'playwright-chromium';
-import bundledChromium from 'chrome-aws-lambda';
+import chromium from 'chrome-aws-lambda';
 
 async function getConfig(): Promise<Record<string, any>> {
   if (process.env.FIREBASE_CONFIG) {
@@ -13,26 +12,18 @@ async function getConfig(): Promise<Record<string, any>> {
 
 export async function scrape() {
   const cfg = await getConfig();
-  const browser = await Promise.resolve(bundledChromium.executablePath).then(
-    (executablePath) => {
-      console.log({ executablePath });
-      if (!executablePath) {
-        // local execution
-        return chromium.launch({});
-      }
-      console.log(`Chromium at ${executablePath}`);
-      return chromium.launch({
-        executablePath,
-        args: bundledChromium.args,
-        headless: true,
-      });
-    },
-  );
+  const browser = await chromium.puppeteer.launch({
+    args: chromium.args,
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath,
+    headless: chromium.headless,
+    ignoreHTTPSErrors: true,
+  });
   const page = await browser.newPage();
   await page.goto('https://www.instagram.com/accounts/login/');
 
   await page.waitForSelector('[type=submit]', {
-    state: 'visible',
+    visible: true,
   });
   console.log(`Logging in...`);
 
@@ -40,27 +31,26 @@ export async function scrape() {
   await page.type('[type="password"]', cfg.instagram.password);
 
   await page.click('[type=submit]');
-  await page.waitForSelector('[placeholder=Search]', { state: 'visible' });
+  await page.waitForSelector('[placeholder=Search]', { visible: true });
   await page.goto('https://www.instagram.com/nikkanchikuchiku/feed/');
   await page.waitForSelector('img', {
-    state: 'visible',
+    visible: true,
   });
   console.log(`Logged in!`);
 
   // get total posts
-  const count = await page
-    .locator('header span:has-text("posts")')
-    .evaluate((node) => {
-      return node.parentElement?.textContent?.match(/\d+/)?.[0] || '0';
-    });
+  const [countHandler] = await page.$x(`//header//span[contains(., 'posts')]`);
+  const count = await countHandler.evaluate((node) => {
+    return node.parentElement?.textContent?.match(/\d+/)?.[0] || '0';
+  });
 
-  const posts = await page.locator('article a[href^="/p/"]').elementHandles();
+  const posts = await page.$$('article a[href^="/p/"]');
   console.log(`Scraping ${posts.length} posts...`);
   const edges = [];
   for (const post of posts) {
     await post.click();
     await page.waitForSelector('[role="dialog"] img', {
-      state: 'visible',
+      visible: true,
     });
     const postData = await page.evaluate(() => {
       const container = document.querySelector('[role="dialog"]');
