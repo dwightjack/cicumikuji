@@ -1,5 +1,6 @@
 import * as functions from 'firebase-functions';
 import { chromium } from 'playwright-chromium';
+import bundledChromium from 'chrome-aws-lambda';
 
 async function getConfig(): Promise<Record<string, any>> {
   if (process.env.FIREBASE_CONFIG) {
@@ -12,7 +13,15 @@ async function getConfig(): Promise<Record<string, any>> {
 
 export async function scrape() {
   const cfg = await getConfig();
-  const browser = await chromium.launch();
+  const browser = await Promise.resolve(bundledChromium.executablePath).then(
+    (executablePath) => {
+      if (!executablePath) {
+        // local execution
+        return chromium.launch({});
+      }
+      return chromium.launch({ executablePath });
+    },
+  );
   const page = await browser.newPage();
   await page.goto('https://www.instagram.com/accounts/login/');
 
