@@ -43,10 +43,18 @@ export async function scrape() {
   console.log(`Logged in!`);
 
   // get total posts
-  const [countHandler] = await page.$x(`//header//span[contains(., 'posts')]`);
-  const count = await countHandler.evaluate((node) => {
-    return node.parentElement?.textContent?.match(/\d+/)?.[0] || '0';
+  const count = await page.$$eval(`header li`, (nodes: Element[]) => {
+    let text = '0';
+    for (const node of nodes) {
+      const [, match] = node.textContent?.match(/([\d,]+)\s+posts/) || [];
+      if (match) {
+        text = match.replace(/[^\d]+/g, '');
+      }
+    }
+    return text;
   });
+
+  console.log(count);
 
   const posts = await page.$$('article a[href^="/p/"]');
   console.log(`Scraping ${posts.length} posts...`);
