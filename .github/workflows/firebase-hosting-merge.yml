@@ -10,8 +10,15 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: npm ci && npm run build
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.node-version'
+          cache: 'pnpm'
+      - uses: pnpm/action-setup@v2
+
+      - run: pnpm i
+      - run: pnpm run web:build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
@@ -21,9 +28,7 @@ jobs:
         env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
       - name: Build functions
-        run: |
-          cd functions
-          npm ci && npm run build
+        run: pnpm run functions:build
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:

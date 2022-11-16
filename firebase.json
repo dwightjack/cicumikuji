@@ -5,12 +5,12 @@
   },
   "functions": {
     "predeploy": [
-      "pnpm --filter=cicumikuji-functions run build"
+      "pnpm run functions:build"
     ],
     "source": "packages/functions"
   },
   "hosting": {
-    "public": "packages/app/dist",
+    "public": "packages/web/dist",
     "cleanUrls": true,
     "rewrites": [
       {

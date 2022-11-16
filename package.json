@@ -13,8 +13,9 @@
     "singleQuote": true
   },
   "scripts": {
-    "web:start": "pnpm --filter=chikumikuji-web run start",
-    "web:build": "pnpm --filter=chikumikuji-web run build"
+    "web:start": "pnpm --filter=web run start",
+    "web:build": "pnpm --filter=web run build",
+    "functions:build": "pnpm --filter=functions run build"
   },
   "engines": {
     "node": ">=16.13.0",

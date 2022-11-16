@@ -1,6 +1,5 @@
 import admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
-import { pluck } from 'ramda';
 import { scrape } from './lib/scrape';
 import { createMailer } from './lib/mail';
 import { getPosts, savePosts, getCollection, getLocalPosts } from './lib/db';
@@ -28,7 +27,7 @@ export const syncPosts = functions
 
       if (diff > 0) {
         // parse and ensure we don't insert duplicates
-        const postIDs = pluck('id', storedPosts);
+        const postIDs = storedPosts.map(({ id }) => id);
         const newPosts = edges
           .slice(0, diff)
           .filter(({ id }) => !postIDs.includes(id));
