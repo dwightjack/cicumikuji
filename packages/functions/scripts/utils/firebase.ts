@@ -3,8 +3,8 @@ import { resolve } from 'path';
 import admin from 'firebase-admin';
 
 export const serviceAccountFile = resolve(
-  process.cwd(),
-  'cicumikuji-firebase-adminsdk.json',
+  __dirname,
+  '../../cicumikuji-firebase-adminsdk.json',
 );
 
 export async function initialize() {

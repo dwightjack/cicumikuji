@@ -10,7 +10,7 @@ import { initialize } from './utils/firebase';
   await initialize();
   const posts = await getPosts();
   fs.writeFile(
-    resolve(process.cwd(), '../dev-db.json'),
+    resolve(__dirname, '../../web/dev-db.json'),
     JSON.stringify({ posts }, null, 2),
     'utf8',
   );
