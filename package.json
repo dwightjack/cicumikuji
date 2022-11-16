@@ -12,6 +12,10 @@
     "semi": true,
     "singleQuote": true
   },
+  "scripts": {
+    "web:start": "pnpm --filter=chikumikuji-web run start",
+    "web:build": "pnpm --filter=chikumikuji-web run build"
+  },
   "engines": {
     "node": ">=16.13.0",
     "pnpm": ">=7.13.4"
