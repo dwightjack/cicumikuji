@@ -29,8 +29,6 @@ export function Frame({ src, onClick = () => {}, videoUrl }: FrameProps) {
     opacity: 1,
   });
 
-  console.log(videoUrl);
-
   return (
     <Figure>
       <OmikujiContainer ref={omikujiRef}>

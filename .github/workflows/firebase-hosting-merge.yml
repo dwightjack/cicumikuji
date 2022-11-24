@@ -28,9 +28,8 @@ jobs:
           FIREBASE_CLI_PREVIEWS: hostingchannels
       - name: Build functions
         run: pnpm run functions:build
-      - name: Deploy to Firebase
-        uses: w9jds/firebase-action@master
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
         with:
-            args: deploy --only functions
-        env:
-            FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          credentials_json: '${{ secrets.FIREBASE_FUNCTION_SERVICE_ACCOUNT }}'

@@ -1,4 +1,4 @@
-import admin from 'firebase-admin';
+import { initializeApp } from 'firebase-admin/app';
 import * as functions from 'firebase-functions';
 import { scrape } from './lib/scrape';
 import { createMailer } from './lib/mail';
@@ -6,7 +6,7 @@ import { getPosts, savePosts, getCollection, getLocalPosts } from './lib/db';
 import { Storage } from '@google-cloud/storage';
 import { uploadPostResource } from './lib/storage';
 
-admin.initializeApp();
+initializeApp();
 
 export const syncPosts = functions
   .runWith({ memory: '2GB' })

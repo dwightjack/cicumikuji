@@ -1,9 +1,10 @@
 import * as functions from 'firebase-functions';
-import chromium from 'chrome-aws-lambda';
+import chromium from '@sparticuz/chromium';
+import puppeteer from 'puppeteer-core';
 import { addExtra } from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 
-const puppeteerExtra = addExtra(chromium.puppeteer as any);
+const puppeteerExtra = addExtra(puppeteer as any);
 puppeteerExtra.use(StealthPlugin());
 async function getConfig(): Promise<Record<string, any>> {
   if (process.env.FIREBASE_CONFIG) {
