@@ -1,11 +1,11 @@
 import * as functions from 'firebase-functions';
 import chromium from '@sparticuz/chromium';
-import puppeteer from 'puppeteer-core';
-import { addExtra } from 'puppeteer-extra';
+import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
+import RecaptchaPlugin from 'puppeteer-extra-plugin-recaptcha';
 
-const puppeteerExtra = addExtra(puppeteer as any);
-puppeteerExtra.use(StealthPlugin());
+puppeteer.use(StealthPlugin());
+
 async function getConfig(): Promise<Record<string, any>> {
   if (process.env.FIREBASE_CONFIG) {
     return functions.config();
@@ -17,13 +17,28 @@ async function getConfig(): Promise<Record<string, any>> {
 
 export async function scrape() {
   const cfg = await getConfig();
-  const browser = await puppeteerExtra.launch({
-    args: chromium.args,
-    defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath,
-    headless: chromium.headless,
-    ignoreHTTPSErrors: true,
-  });
+
+  puppeteer.use(
+    RecaptchaPlugin({
+      provider: {
+        id: '2captcha',
+        token: cfg.captcha.token,
+      },
+      visualFeedback: true,
+    }),
+  );
+
+  const browser = await puppeteer.launch(
+    process.env.FIREBASE_CONFIG
+      ? {
+          args: chromium.args,
+          defaultViewport: chromium.defaultViewport,
+          executablePath: await chromium.executablePath(),
+          headless: chromium.headless,
+          ignoreHTTPSErrors: true,
+        }
+      : { headless: false },
+  );
   const page = await browser.newPage();
   await page.goto('https://www.instagram.com/accounts/login/');
 
@@ -36,6 +51,24 @@ export async function scrape() {
   await page.type('[type="password"]', cfg.instagram.password);
 
   await page.click('[type=submit]');
+
+  await page.waitForSelector('[type=submit]', {
+    timeout: 60000,
+  });
+
+  try {
+    await page.waitForSelector('#recaptcha-input', { timeout: 60000 });
+    console.log('Captcha hit!');
+    await page.solveRecaptchas();
+    const [button] = await page.$x("//button[contains(text(), 'Next')]");
+    if (button) {
+      // @ts-ignore
+      await button.click();
+    }
+  } finally {
+    console.log("Didn't hit captcha");
+  }
+
   await page.waitForSelector('[placeholder=Search]', { timeout: 60000 });
   await page.goto('https://www.instagram.com/nikkanchikuchiku/feed/');
   await page.waitForSelector('img', {
