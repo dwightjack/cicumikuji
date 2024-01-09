@@ -1,6 +1,3 @@
 {
-  "extends": [
-    "config:base",
-    "group:allNonMajor"
-  ]
+  "extends": ["github>dwightjack/renovate-config"]
 }
