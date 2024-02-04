@@ -5,8 +5,8 @@ importers:
   .:
     devDependencies:
       prettier:
-        specifier: 2.7.1
-        version: 2.7.1
+        specifier: 3.2.5
+        version: 3.2.5
 
   packages/functions:
     dependencies:
@@ -3011,9 +3011,9 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: false
 
-  /prettier@2.7.1:
-    resolution: {integrity: sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==}
-    engines: {node: '>=10.13.0'}
+  /prettier@3.2.5:
+    resolution: {integrity: sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==}
+    engines: {node: '>=14'}
     hasBin: true
     dev: true
 
