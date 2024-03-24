@@ -66,8 +66,8 @@ importers:
         specifier: 6.2.0
         version: 6.2.0
       ky:
-        specifier: 0.32.2
-        version: 0.32.2
+        specifier: 1.2.3
+        version: 1.2.3
       nosleep.js:
         specifier: 0.12.0
         version: 0.12.0
@@ -2500,9 +2500,9 @@ packages:
     dev: false
     optional: true
 
-  /ky@0.32.2:
-    resolution: {integrity: sha512-eBJeF6IXNwX5rksdwBrE2rIJrU2d84GoTvdM7OmmTIwUVXEMd72wIwvT+nyhrqtv7AzbSNsWz7yRsHgVhj1uog==}
-    engines: {node: '>=14.16'}
+  /ky@1.2.3:
+    resolution: {integrity: sha512-2IM3VssHfG2zYz2FsHRUqIp8chhLc9uxDMcK2THxgFfv8pQhnMfN8L0ul+iW4RdBl5AglF8ooPIflRm3yNH0IA==}
+    engines: {node: '>=18'}
     dev: false
 
   /lazy-cache@0.2.7:
