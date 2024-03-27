@@ -10,7 +10,7 @@
   "author": "Marco Solazzi",
   "license": "MIT",
   "devDependencies": {
-    "rollup": "3.2.5",
+    "rollup": "4.13.1",
     "wmr": "3.8.0"
   },
   "dependencies": {
