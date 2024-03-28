@@ -10,7 +10,7 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "@google-cloud/storage": "6.7.0",
+    "@google-cloud/storage": "7.9.0",
     "axios": "1.6.0",
     "@sparticuz/chromium": "108",
     "firebase-admin": "11.3.0",
