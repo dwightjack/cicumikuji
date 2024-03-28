@@ -20,9 +20,9 @@
     "idb-keyval": "6.2.0",
     "ky": "1.2.3",
     "nosleep.js": "0.12.0",
-    "preact": "10.11.2",
+    "preact": "10.20.1",
     "shake.js": "1.2.2",
-    "workbox-recipes": "6.5.4",
-    "workbox-window": "6.5.4"
+    "workbox-recipes": "6.6.0",
+    "workbox-window": "6.6.0"
   }
 }
