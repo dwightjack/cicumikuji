@@ -11,3 +11,4 @@ dist
 cicumikuji-firebase-adminsdk.json
 cicumikuji-config.json
 dev-db.json
+.parcel-cache

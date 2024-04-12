@@ -1,5 +1,5 @@
 import admin from 'firebase-admin';
-import { Post } from '../types';
+import type { Post } from '../types';
 
 let $db: FirebaseFirestore.Firestore;
 function getDb() {
@@ -94,7 +94,7 @@ export async function resetPosts(limit = 100) {
   const collectionRef = getDb().collection('posts');
   const query = collectionRef.orderBy('__name__').limit(limit);
 
-  console.log(`Deleting all posts...`);
+  console.log('Deleting all posts...');
 
   return new Promise((resolve, reject) => {
     deleteQueryBatch(query, resolve).catch(reject);
@@ -111,12 +111,13 @@ async function deleteQueryBatch(
   if (batchSize === 0) {
     // When there are no documents left, we are done
     resolve();
-    console.log(`All posts deleted!`);
+    console.log('All posts deleted!');
     return;
   }
 
   // Delete documents in a batch
   const batch = getDb().batch();
+  // biome-ignore lint/complexity/noForEach: <explanation>
   snapshot.docs.forEach((doc) => {
     batch.delete(doc.ref);
   });

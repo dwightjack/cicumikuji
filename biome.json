@@ -1,0 +1,27 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.6.4/schema.json",
+	"organizeImports": {
+		"enabled": true
+	},
+	"files": {
+		"ignore": [".vscode"]
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"suspicious": {
+				"noExplicitAny": "off"
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"trailingComma": "all",
+			"semicolons": "always",
+			"quoteStyle": "single",
+			"indentStyle": "space",
+			"indentWidth": 2
+		}
+	}
+}

@@ -1,21 +1,16 @@
 {
-	"compileOnSave": false,
 	"compilerOptions": {
-		"jsx": "preserve",
-		"jsxFactory": "preact.h",
-		"jsxFragmentFactory": "preact.Fragment",
-		"allowJs": true,
-		"checkJs": true,
-		// "strict": true,
-		"noEmit": true,
-		"moduleResolution": "node",
-		"target": "ESNext",
-		"module": "esnext",
+		"target": "ES2020",
+		"lib": ["DOM", "ES2020"],
+		"module": "ESNext",
+		"jsx": "react-jsx",
+		"jsxImportSource": "preact",
+		"strict": true,
+		"skipLibCheck": true,
+		"isolatedModules": true,
 		"resolveJsonModule": true,
-		"allowSyntheticDefaultImports": true,
-		"downlevelIteration": true
+		"moduleResolution": "bundler",
+		"useDefineForClassFields": true
 	},
-	"typeAcquisition": {
-		"enable": true
-	}
+	"include": ["src"]
 }
