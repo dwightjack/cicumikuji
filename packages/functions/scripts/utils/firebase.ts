@@ -1,6 +1,8 @@
-import { existsSync } from 'fs';
-import { resolve } from 'path';
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+import * as url from 'node:url';
 import admin from 'firebase-admin';
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 export const serviceAccountFile = resolve(
   __dirname,

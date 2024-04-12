@@ -1,5 +1,5 @@
-import * as functions from 'firebase-functions';
 import chromium from '@sparticuz/chromium';
+import * as functions from 'firebase-functions';
 import puppeteer from 'puppeteer-core';
 import { addExtra } from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
@@ -9,10 +9,9 @@ puppeteerExtra.use(StealthPlugin());
 async function getConfig(): Promise<Record<string, any>> {
   if (process.env.FIREBASE_CONFIG) {
     return functions.config();
-  } else {
-    //@ts-ignore
-    return await import('../../cicumikuji-config.json');
   }
+  //@ts-ignore
+  return await import('../../cicumikuji-config.json');
 }
 
 export async function scrape() {
@@ -30,7 +29,7 @@ export async function scrape() {
   await page.waitForSelector('[type=submit]', {
     timeout: 60000,
   });
-  console.log(`Logging in...`);
+  console.log('Logging in...');
 
   await page.type('[name=username]', cfg.instagram.login);
   await page.type('[type="password"]', cfg.instagram.password);
@@ -41,10 +40,10 @@ export async function scrape() {
   await page.waitForSelector('img', {
     timeout: 60000,
   });
-  console.log(`Logged in!`);
+  console.log('Logged in!');
 
   // get total posts
-  const count = await page.$$eval(`header li`, (nodes: Element[]) => {
+  const count = await page.$$eval('header li', (nodes: Element[]) => {
     let text = '0';
     for (const node of nodes) {
       const [, match] = node.textContent?.match(/([\d,]+)\s+posts/) || [];
@@ -96,6 +95,6 @@ export async function scrape() {
 
   return {
     edges,
-    count: parseInt(count, 10),
+    count: Number.parseInt(count, 10),
   };
 }

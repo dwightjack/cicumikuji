@@ -1,15 +1,11 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  // Set the default
-  "editor.formatOnSave": false,
-  // Enable per-language
-  "[typescriptreact]": {
-    "editor.formatOnSave": true,
-  },
-  "[javascript]": {
-    "editor.formatOnSave": true,
-  },
-  "[typescript]": {
-    "editor.formatOnSave": true,
-  }
+	"editor.defaultFormatter": "biomejs.biome",
+	// Set the default
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"quickfix.biome": "explicit"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	}
 }

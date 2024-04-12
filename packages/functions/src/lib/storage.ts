@@ -1,10 +1,10 @@
+import stream from 'node:stream';
+import type { Bucket } from '@google-cloud/storage';
 import axios from 'axios';
-import stream from 'stream';
-import { Bucket } from '@google-cloud/storage';
-import { Post } from '../types';
+import type { Post } from '../types';
 import { camelCase } from '../utils';
 
-import { promisify } from 'util';
+import { promisify } from 'node:util';
 
 const pipeline = promisify(stream.pipeline);
 

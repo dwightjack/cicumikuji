@@ -1,9 +1,9 @@
+import { Storage } from '@google-cloud/storage';
 import { initializeApp } from 'firebase-admin/app';
 import * as functions from 'firebase-functions';
-import { scrape } from './lib/scrape';
+import { getCollection, getLocalPosts, getPosts, savePosts } from './lib/db';
 import { createMailer } from './lib/mail';
-import { getPosts, savePosts, getCollection, getLocalPosts } from './lib/db';
-import { Storage } from '@google-cloud/storage';
+import { scrape } from './lib/scrape';
 import { uploadPostResource } from './lib/storage';
 
 initializeApp();
@@ -41,7 +41,7 @@ export const syncPosts = functions
           body: `Added ${newPosts.length} new posts.`,
         });
 
-        console.log(`Stored!`);
+        console.log('Stored!');
       }
     } catch (error) {
       mailer({

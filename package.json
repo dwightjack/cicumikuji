@@ -1,27 +1,25 @@
 {
-  "name": "cicumikuji",
-  "packageManager": "pnpm@8.3.1",
-  "version": "1.0.2",
-  "description": "",
-  "author": "Marco Solazzi",
-  "license": "MIT",
-  "private": true,
-  "prettier": {
-    "trailingComma": "all",
-    "tabWidth": 2,
-    "semi": true,
-    "singleQuote": true
-  },
-  "scripts": {
-    "web:start": "pnpm --filter=web run start",
-    "web:build": "pnpm --filter=web run build",
-    "functions:build": "pnpm --filter=functions run build"
-  },
-  "engines": {
-    "node": ">=16.13.0",
-    "pnpm": ">=7.13.4"
-  },
-  "devDependencies": {
-    "prettier": "2.7.1"
-  }
+	"name": "cicumikuji",
+	"packageManager": "pnpm@8.3.1",
+	"version": "1.0.2",
+	"description": "",
+	"author": "Marco Solazzi",
+	"license": "MIT",
+	"private": true,
+	"scripts": {
+		"web:start": "pnpm --filter=web run start",
+		"web:build": "pnpm --filter=web run build",
+		"functions:build": "pnpm --filter=functions run build"
+	},
+	"engines": {
+		"node": ">=16.13.0",
+		"pnpm": ">=7.13.4"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.6.4",
+		"@parcel/packager-raw-url": "2.12.0",
+		"@parcel/transformer-webmanifest": "2.12.0",
+		"lefthook": "^1.6.10",
+		"process": "^0.11.10"
+	}
 }
