@@ -17,7 +17,7 @@
 		"firebase-admin": "11.11.1",
 		"firebase-functions": "4.9.0",
 		"mailgun-js": "0.22.0",
-		"puppeteer": "^19.3.0",
+		"puppeteer": "^22.0.0",
 		"puppeteer-core": "19.11.1",
 		"puppeteer-extra": "3.3.6",
 		"puppeteer-extra-plugin-stealth": "2.11.2"
