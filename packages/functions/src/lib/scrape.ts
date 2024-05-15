@@ -1,3 +1,5 @@
+import { readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 import chromium from '@sparticuz/chromium';
 import * as functions from 'firebase-functions';
 import puppeteer from 'puppeteer-core';
@@ -10,8 +12,9 @@ async function getConfig(): Promise<Record<string, any>> {
   if (process.env.FIREBASE_CONFIG) {
     return functions.config();
   }
-  //@ts-ignore
-  return await import('../../cicumikuji-config.json');
+  return JSON.parse(
+    await readFile(resolve(__dirname, '../../cicumikuji-config.json'), 'utf-8'),
+  );
 }
 
 export async function scrape() {
@@ -19,7 +22,7 @@ export async function scrape() {
   const browser = await puppeteerExtra.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath,
+    executablePath: await chromium.executablePath(),
     headless: chromium.headless,
     ignoreHTTPSErrors: true,
   });
