@@ -15,7 +15,7 @@
 		"axios": "1.6.8",
 		"@sparticuz/chromium": "123",
 		"firebase-admin": "11.11.1",
-		"firebase-functions": "4.9.0",
+		"firebase-functions": "5.0.1",
 		"mailgun-js": "0.22.0",
 		"puppeteer": "^22.0.0",
 		"puppeteer-core": "19.11.1",
