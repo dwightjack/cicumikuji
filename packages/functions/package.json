@@ -2,28 +2,16 @@
 	"name": "@cicumikuji/functions",
 	"scripts": {
 		"build": "tsup",
-		"serve": "npm run build && firebase emulators:start --only functions",
-		"shell": "npm run build && firebase functions:shell",
-		"start": "npm run shell",
 		"lint": "biome check src",
 		"deploy": "firebase deploy --only functions",
 		"logs": "firebase functions:log"
 	},
 	"main": "lib/index.js",
 	"dependencies": {
-		"@google-cloud/storage": "7.11.0",
-		"axios": "1.6.8",
-		"@sparticuz/chromium": "123",
 		"firebase-admin": "11.11.1",
-		"firebase-functions": "5.0.1",
-		"mailgun-js": "0.22.0",
-		"puppeteer": "^22.0.0",
-		"puppeteer-core": "19.11.1",
-		"puppeteer-extra": "3.3.6",
-		"puppeteer-extra-plugin-stealth": "2.11.2"
+		"firebase-functions": "5.0.1"
 	},
 	"devDependencies": {
-		"tsm": "2.3.0",
 		"tsup": "^8.0.0",
 		"typescript": "5.4.5"
 	},

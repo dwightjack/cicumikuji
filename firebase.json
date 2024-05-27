@@ -1,33 +1,31 @@
 {
-  "firestore": {
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
-  },
-  "functions": {
-    "runtime": "nodejs16",
-    "predeploy": [
-      "pnpm run functions:build"
-    ],
-    "ignore": [
-      "node_modules",
-      ".git",
-      "firebase-debug.log",
-      "firebase-debug.*.log"
-    ],
-    "source": "packages/functions"
-  },
-  "hosting": {
-    "public": "packages/web/dist",
-    "cleanUrls": true,
-    "rewrites": [
-      {
-        "source": "/api/fetch-posts",
-        "function": "fetchPosts"
-      },
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  }
+	"firestore": {
+		"rules": "firestore.rules",
+		"indexes": "firestore.indexes.json"
+	},
+	"functions": {
+		"runtime": "nodejs20",
+		"predeploy": ["pnpm run functions:build"],
+		"ignore": [
+			"node_modules",
+			".git",
+			"firebase-debug.log",
+			"firebase-debug.*.log"
+		],
+		"source": "packages/functions"
+	},
+	"hosting": {
+		"public": "packages/web/dist",
+		"cleanUrls": true,
+		"rewrites": [
+			{
+				"source": "/api/fetch-posts",
+				"function": "fetchPosts"
+			},
+			{
+				"source": "**",
+				"destination": "/index.html"
+			}
+		]
+	}
 }
