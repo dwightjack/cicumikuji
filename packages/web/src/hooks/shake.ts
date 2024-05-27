@@ -55,6 +55,7 @@ export function useShake(eventHandler: (...args: any[]) => any) {
     };
   }, [permission, handler]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (permission !== null) {
       return;

@@ -4,10 +4,10 @@ export const Root = styled('p')`
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin: 2rem;
+  margin: 0;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  border-radius: 0.5rem;
+  border-radius: var(--size-radius-md);
   background-color: var(--color-background-highlight);
 
   html:lang(ja) & {

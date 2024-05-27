@@ -5,11 +5,10 @@ export const Root = styled('label')`
   align-items: baseline;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 0.5rem;
 `;
 
 export const Select = styled('select')`
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
   border: 2px solid var(--color-background-primary);
   padding: 0.2rem;
   border-radius: var(--size-radius-sm);

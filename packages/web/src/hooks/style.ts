@@ -1,6 +1,7 @@
 import { useCallback } from 'preact/hooks';
 
 export function useCSSProps(props: Record<string, any>) {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const ref = useCallback((node: HTMLImageElement) => {
     if (node !== null) {
       requestAnimationFrame(() => {

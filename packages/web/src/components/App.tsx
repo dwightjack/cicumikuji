@@ -24,6 +24,7 @@ export function App() {
     initial: [],
   });
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const reload = useCallback(() => {
     if ($state.status !== 'play') {
       setStatus('play');
@@ -41,16 +42,14 @@ export function App() {
   useEffect(() => {
     document.documentElement.lang = locale;
   }, [locale]);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setStatus('splash');
   }, [data]);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (isBooted) {
-      return bindShake();
-    }
-  }, [isBooted]);
-  useEffect(() => {
-    if (isBooted) {
+      bindShake();
       return enableWakeLock();
     }
   }, [isBooted]);

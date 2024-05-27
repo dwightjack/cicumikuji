@@ -12,13 +12,13 @@ export const GlobalStyles = createGlobalStyles`
   }
 
   html {
-    height: 100%;
+    block-size: 100%;
   }
 
   body {
     font-family: 'Yusei Magic', sans-serif;
     background: #fff;
-    height: 100%;
+    block-size: 100%;
   }
 `;
 
@@ -59,10 +59,11 @@ export const AppRoot = styled('main')`
   --color-border-warning: rgb(var(--color-red-900));
 
   --size-radius-sm: calc(var(--size-base) * 0.25);
+  --size-radius-md: calc(var(--size-base) * 0.5);
 
   /* Styles */
   color: var(--color-text-primary);
-  height: 100%;
+  block-size: 100%;
 
   a:not([class]) {
     color: var(--color-text-heading);
