@@ -5,7 +5,4 @@ export default defineConfig({
   clean: true,
   format: 'cjs',
   outDir: 'lib',
-  env: {
-    FIREBASE_CONFIG: 'true',
-  },
 });
