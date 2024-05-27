@@ -6,8 +6,8 @@ import { Button } from '../Button/Button';
 
 export const Figure = styled('figure')`
   position: relative;
-  width: 100vw;
-  height: 100%;
+  inline-size: 100dvi;
+  block-size: 100dvb;
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -18,10 +18,9 @@ export const Figure = styled('figure')`
 `;
 
 export const MainImage = styled('img', forwardRef)`
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
   z-index: 1;
   object-fit: contain;
   opacity: var(--opacity, 0);
@@ -33,10 +32,9 @@ export const MainImage = styled('img', forwardRef)`
 `;
 
 export const BgImage = styled('img', forwardRef)`
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
   object-fit: cover;
   filter: blur(5px);
   opacity: var(--opacity, 0);
@@ -44,32 +42,46 @@ export const BgImage = styled('img', forwardRef)`
   transition: opacity 1000ms linear;
 `;
 
-export const FigCaption = styled('figcaption')`
-  top: auto;
+export const FigCaption = styled('figcaption', forwardRef)`
+  inset-block-end: 1rem;
+  inset-inline-start: 1rem;
   z-index: 2;
-  background: rgba(var(--color-background-primary-rgb) / 0.6);
+  background: rgba(var(--color-background-primary-rgb) / 0.8);
+  padding: 1rem;
+  max-inline-size: 50vw;
+  border-radius: var(--size-radius-md);
+  opacity: var(--opacity, 0);
+  will-change: opacity;
+  transition: opacity 500ms ease-out 1300ms;
+
+  & > p {
+    white-space: pre-wrap;
+    margin-block: 0rem;
+
+    &:not(:last-child) {
+      margin-block-end: 0.5rem;
+    }
+  }
 `;
 
 export const Reloader = styled(Button)`
-  right: 1rem;
-  bottom: 1rem;
+  position: absolute;
+  inset-inline-end: 1rem;
+  inset-block-end: 1rem;
   z-index: 3;
-  width: 3.5rem;
-  height: 3.5rem;
+  inline-size: 3.5rem;
+  aspect-ratio: 1;
   background-image: url('${reload}');
   background-size: 70%;
   background-repeat: no-repeat;
   background-position: center;
 `;
 
-export const CaptionText = styled('p')`
-  white-space: pre-wrap;
-`;
-
-export const OmikujiContainer = styled('figcaption', forwardRef)`
+export const OmikujiContainer = styled('div', forwardRef)`
+  position: absolute;
   z-index: 3;
-  top: 0;
-  left: 0;
+  inset-inline-start: 1rem;
+  inset-block-start: 1rem;
   opacity: var(--opacity, 0);
   transform: scale(var(--scale, 0.5));
   will-change: opacity, transform;

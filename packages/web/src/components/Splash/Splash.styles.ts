@@ -4,14 +4,10 @@ import { Layer } from '../../shared/styles';
 export const Container = styled(Layer)`
   --layer-level: 90;
   text-align: center;
+  row-gap: 2rem;
 
   & > * {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-
-  & > * + * {
-    margin-top: 2rem;
+    margin-block: 0;
   }
 `;
 
@@ -29,13 +25,13 @@ export const ButtonGroup = styled('div')`
 
 export const Title = styled('h1')`
   color: var(--color-text-heading);
-  margin-top: auto;
+  margin-block-start: auto;
 `;
 
 export const Footer = styled('footer')`
-  margin-top: auto;
+  margin-block-start: auto;
 
   & > a {
-    margin-left: 0.2em;
+    margin-inline-start: 0.2em;
   }
 `;

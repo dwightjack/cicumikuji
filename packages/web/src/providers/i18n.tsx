@@ -1,6 +1,7 @@
 import { set } from 'idb-keyval';
 import { type ComponentChildren, createContext } from 'preact';
 import {
+  type Dispatch,
   type StateUpdater,
   useCallback,
   useContext,
@@ -16,7 +17,8 @@ export interface I18nContext {
   locale: string;
   locales: { id: keyof LocaleDb; label: string }[];
   current: Locale;
-  setLocale: StateUpdater<keyof LocaleDb>;
+  setLocale: Dispatch<StateUpdater<keyof LocaleDb>>;
+  formatDate: (date?: number | Date | undefined) => string;
 }
 
 const locales = (Object.keys(db) as (keyof LocaleDb)[]).map((id) => ({
@@ -33,8 +35,16 @@ export function useI18n() {
     throw new Error('useI18n must be used within a I18nProvider');
   }
 
-  const { current = {} as Locale, setLocale, locale, locales, db } = context;
+  const {
+    current = {} as Locale,
+    setLocale,
+    locale,
+    locales,
+    db,
+    formatDate,
+  } = context;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const t = useCallback(
     function t(path: ObjectToPaths<Locale>, def = '', lang?: keyof LocaleDb) {
       return (path
@@ -45,7 +55,7 @@ export function useI18n() {
     [locale, locales],
   );
 
-  return { t, setLocale, locale, locales };
+  return { t, setLocale, locale, locales, formatDate };
 }
 
 export function I18nProvider({
@@ -54,16 +64,17 @@ export function I18nProvider({
 }: { children: ComponentChildren; lang: keyof LocaleDb }) {
   const [locale, setLocale] = useState<keyof LocaleDb>(lang);
 
-  const i18n = useMemo(
-    () => ({
+  const i18n = useMemo(() => {
+    const intl = Intl.DateTimeFormat(locale, { timeZone: 'UTC' });
+    return {
       db,
       locale,
       locales,
       current: db[locale],
       setLocale,
-    }),
-    [locale],
-  );
+      formatDate: intl.format.bind(intl),
+    };
+  }, [locale]);
 
   useEffect(() => {
     set('locale', locale);

@@ -14,7 +14,7 @@ export function LangSelect() {
       <span>{t('messages.language')}</span>
       <Select name="lang" onChange={onChange}>
         {locales.map(({ id, label }) => (
-          <option value={id} selected={id === locale}>
+          <option value={id} selected={id === locale} key={id}>
             {label}
           </option>
         ))}

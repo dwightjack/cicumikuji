@@ -3,8 +3,8 @@ import { forwardRef } from 'preact/compat';
 
 export const Root = styled('div')`
   position: relative;
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
   z-index: 1;
 `;
 
@@ -13,8 +13,8 @@ export const VideoFrame = styled('video', forwardRef)`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
 `;
 
 const fadeOut = keyframes`
@@ -27,8 +27,8 @@ export const Control = styled('button')`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
   z-index: 1;
   border: 0;
   border-radius: 0;
@@ -45,8 +45,8 @@ export const Control = styled('button')`
     ${({ isPlaying }) => {
       if (isPlaying) {
         return `
-          width: 3.5rem;
-          height: 5rem;
+          inline-size: 3.5rem;
+          block-size: 5rem;
           border-style: double;
           border-width: 0px 0px 0px 3.5rem;
           border-color: var(--color-background-frame);
@@ -57,8 +57,8 @@ export const Control = styled('button')`
       }
 
       return `
-        width: 0;
-        height: 0;
+        inline-size: 0;
+        block-size: 0;
         border-style: solid;
         border-width: 2.5rem 0 2.5rem 3.5rem;
         border-color: transparent;
