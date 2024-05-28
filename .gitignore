@@ -4,7 +4,6 @@ dist
 !.vscode
 # Local Netlify folder
 .netlify
-**/scripts/*.json
 *.log
 .firebase
 .env
@@ -12,3 +11,4 @@ cicumikuji-firebase-adminsdk.json
 cicumikuji-config.json
 dev-db.json
 .parcel-cache
+**/data/**
