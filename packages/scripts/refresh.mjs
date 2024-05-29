@@ -13,7 +13,12 @@ const serviceAccountFile = resolve(
 );
 
 const DATA_DIR = resolve(__dirname, './data');
-const JSON_FILES_PATH = join(DATA_DIR, 'your_instagram_activity', 'content');
+const POSTS_FILE = join(
+  DATA_DIR,
+  'your_instagram_activity',
+  'content',
+  'posts_1.json',
+);
 
 async function initialize() {
   if (!existsSync(serviceAccountFile)) {
@@ -40,63 +45,84 @@ async function initialize() {
   const bucket = storage.bucket('cicumikuji.appspot.com');
 
   const db = getFirestore();
-  const postRefs = db.collection('dwj');
+  const postRefs = db.collection('posts');
 
   const { docs } = await postRefs
-    // .where('local', '==', true)
-    // .orderBy('timestamp', 'desc')
+    .where('local', '==', true)
+    .orderBy('timestamp', 'desc')
     .get();
 
   /** @type {import('./types.js').Post[]} */
   const posts = docs.map((doc) => doc.data()).filter(({ skip }) => !skip);
+  const timeStamps = posts.map((post) => post.timestamp);
 
   // read the post json files
   /**
    * @type {import('./types.js').Entry[]}
    */
-  const entries = (
-    await Promise.all(
-      readdirSync(JSON_FILES_PATH)
-        .filter((filePath) => /^posts_.+\.json$/.test(filePath))
-        .map(async (fileName) =>
-          JSON.parse(
-            await readFile(resolve(JSON_FILES_PATH, fileName), 'utf-8'),
-          ),
-        ),
-    )
-  )
-    .flat()
-    .flatMap(({ media }) => media);
+  const entries = JSON.parse(await readFile(POSTS_FILE, 'utf-8')).slice(0, 1);
 
-  // const batch = db.batch();
+  const batch = db.batch();
+
+  console.log(`Found ${entries.length} posts.`);
 
   for (const entry of entries) {
-    // here, upload the image
+    const timestamp =
+      (entry.creation_timestamp || entry.media.at(0)?.creation_timestamp) *
+      1000;
 
-    const imageSrcPath = join(DATA_DIR, entry.uri);
+    if (timeStamps.includes(timestamp)) {
+      console.warn(
+        `Matched a post already saved (datetime: ${new Date(
+          timestamp,
+        ).toISOString()})`,
+      );
+      continue;
+    }
+    /**
+     * Extract the title:
+     * - for images, it's in the first media object: entry.media[0].title
+     * - for videos, it's in the root object: entry.title
+     */
+    // here, upload the image
+    const title =
+      entry.title || entry.media.map(({ title }) => title).filter(Boolean)[0];
+
+    // only use the first photo from the set
+    const src = entry.media
+      .map(({ uri }) => uri)
+      .filter((uri) => uri?.endsWith('.jpg'))[0];
+
+    if (!src) {
+      continue;
+    }
+
+    const imageSrcPath = join(DATA_DIR, src);
     if (!existsSync(imageSrcPath)) {
       console.warn(`File ${imageSrcPath} not found`);
       continue;
     }
     const ext = extname(imageSrcPath);
-    // const [uploadFile] = await bucket.upload(imageSrcPath, {
-    //   destination: `posts/${entry.creation_timestamp}${ext}`,
-    // });
+    const [uploadFile] = await bucket.upload(imageSrcPath, {
+      destination: `post-${timestamp}${ext}`,
+      public: true,
+    });
+    const docRef = postRefs.doc();
 
     const newPost = {
-      src: 'uploadFile.publicUrl()',
-      id: entry.creation_timestamp,
+      src: uploadFile.publicUrl(),
+      id: docRef.id,
       videoUrl: null,
-      caption: Buffer.from(entry.title, 'latin1').toString('utf-8'),
-      datetime: new Date(entry.creation_timestamp).toISOString(),
-      timestamp: entry.creation_timestamp,
+      caption: Buffer.from(title, 'latin1').toString('utf-8'),
+      datetime: new Date(timestamp).toISOString(),
+      timestamp,
       local: true,
     };
 
-    console.log(newPost);
-
-    const docRef = postRefs.doc();
     batch.set(docRef, newPost);
+    console.log(
+      `Pushed post: ${docRef.id} - ${new Date(timestamp).toISOString()}`,
+    );
   }
 
   batch.commit();

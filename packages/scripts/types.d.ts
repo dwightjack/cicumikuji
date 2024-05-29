@@ -11,7 +11,7 @@ export interface Post {
   originalVideoUrl?: string;
 }
 
-export interface Entry {
+export interface Media {
   uri: string;
   creation_timestamp: number;
   media_metadata: {
@@ -24,6 +24,11 @@ export interface Entry {
   cross_post_source: {
     source_app: string;
   };
+}
+
+export interface Entry {
+  media: Media[];
+  title?: string;
 }
 
 export interface PhotoMetadata {
