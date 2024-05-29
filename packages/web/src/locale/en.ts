@@ -21,6 +21,8 @@ export const en: Locale = {
     update_txt: 'Application update available.',
     play_video: 'Play video',
     pause_video: 'Pause video',
+    show_more: 'more...',
+    close: 'close',
   },
 
   fortune: {

@@ -68,4 +68,5 @@ export const AppRoot = styled('main')`
   a:not([class]) {
     color: var(--color-text-heading);
   }
+
 `;

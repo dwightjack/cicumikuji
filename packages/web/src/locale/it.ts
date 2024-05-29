@@ -22,6 +22,8 @@ export const it: Locale = {
     updating: 'Aggiornamento...',
     play_video: 'Avvia il video',
     pause_video: 'Metti in pausa il video',
+    show_more: 'altro...',
+    close: 'chiudi',
   },
   fortune: {
     low: 'Giornata no',

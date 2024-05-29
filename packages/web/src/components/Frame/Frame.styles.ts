@@ -43,13 +43,12 @@ export const BgImage = styled('img', forwardRef)`
 `;
 
 export const ExpandCaption = styled('button')`
-  all: unset;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
   display: inline-block;
   text-decoration: underline;
-
-  &[hidden] {
-    display: none;
-  }
 `;
 
 export const FigCaption = styled('figcaption', forwardRef)`

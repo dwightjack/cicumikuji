@@ -1,5 +1,5 @@
-import { useState } from 'preact/hooks';
 import { useCSSProps } from '../../hooks/style';
+import { useToggle } from '../../hooks/toggle';
 import { useI18n } from '../../providers/i18n';
 import type { FrameItem } from '../../types';
 import { Omikuji } from '../Omikuji/Omikuji';
@@ -18,6 +18,8 @@ interface FrameProps extends FrameItem {
   onClick?: () => void;
 }
 
+const CAPTION_LIMIT = 20;
+
 export function Frame({
   src,
   datetime,
@@ -26,7 +28,7 @@ export function Frame({
   videoUrl,
 }: FrameProps) {
   const { t, formatDate } = useI18n();
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, toggleExpanded] = useToggle();
   const omikujiRef = useCSSProps({
     opacity: 1,
     scale: 1,
@@ -44,7 +46,8 @@ export function Frame({
     opacity: 1,
   });
 
-  const isLongCaption = caption.length > 0;
+  const isLongCaption = caption.length > CAPTION_LIMIT;
+  const shortCaption = caption.slice(0, CAPTION_LIMIT);
 
   return (
     <>
@@ -66,20 +69,16 @@ export function Frame({
             <time dateTime={datetime}>{formatDate(Date.parse(datetime))}</time>
           </p>
           <p>
-            {isLongCaption ? (
-              <>
-                {`${caption.slice(0, 20)} `}
-                <ExpandCaption
-                  hidden={expanded || !isLongCaption}
-                  type="button"
-                  onClick={() => setExpanded(true)}
-                >
-                  もっと見る...
-                </ExpandCaption>
-              </>
-            ) : (
-              caption
-            )}{' '}
+            {!isLongCaption || expanded ? caption : shortCaption}{' '}
+            {isLongCaption && (
+              <ExpandCaption
+                aria-expanded={expanded}
+                type="button"
+                onClick={toggleExpanded}
+              >
+                {expanded ? t('messages.close') : t('messages.show_more')}
+              </ExpandCaption>
+            )}
           </p>
         </FigCaption>
       </Figure>
