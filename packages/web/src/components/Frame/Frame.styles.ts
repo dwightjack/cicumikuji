@@ -57,7 +57,7 @@ export const FigCaption = styled('figcaption', forwardRef)`
   z-index: 4;
   background: rgba(var(--color-background-primary-rgb) / 0.8);
   padding: 1rem;
-  max-inline-size: 50vw;
+  max-inline-size: 50dvi;
   min-inline-size: 1rem;
   min-block-size: 1rem;
   border-radius: var(--size-radius-md);
@@ -68,9 +68,9 @@ export const FigCaption = styled('figcaption', forwardRef)`
   ${({ expanded }) =>
     expanded
       ? `
-    max-inline-size: calc(100vw - 4rem);
-    min-inline-size: calc(100vw - 4rem);
-    min-block-size: calc(100vh - 4rem);
+    max-inline-size: calc(100dvi - 4rem);
+    min-inline-size: calc(100dvi - 4rem);
+    min-block-size: calc(100dvb - 4rem);
     translate: 1rem -1rem;
     overflow: auto;
     background: rgba(var(--color-background-primary-rgb));
