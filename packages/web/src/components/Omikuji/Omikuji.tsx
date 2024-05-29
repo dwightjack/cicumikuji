@@ -1,8 +1,9 @@
+import { useMemo } from 'preact/hooks';
 import { useI18n } from '../../providers/i18n';
 import { sample } from '../../shared/utils';
 import { Mark, Quote, Root, Title } from './Omikuji.styles';
 
-const genericQuotes = [0, 1, 2, 3, 4];
+const genericQuotes = [0, 1, 2, 3, 4] as const;
 
 const omikuji = [
   { type: 'low', quotes: [5, 6] },
@@ -16,21 +17,23 @@ const omikuji = [
   },
   { type: 'good', quotes: [9, 10] },
   { type: 'best', quotes: [9, 10] },
-];
+] as const;
 
 export function Omikuji() {
   const { t, locale } = useI18n();
-
-  const { type, quotes } = sample(omikuji);
-  const quote = sample([...quotes, ...quotes, ...genericQuotes]);
+  const [type, quote] = useMemo(() => {
+    const { type, quotes } = sample(omikuji);
+    const quote = sample([...quotes, ...quotes, ...genericQuotes]);
+    return [type, quote];
+  }, []);
 
   return (
     <Root>
       <Title>
         {locale !== 'ja' && (
-          <Mark lang="ja">{t(`fortune.${type}` as any, '', 'ja')}</Mark>
+          <Mark lang="ja">{t(`fortune.${type}`, '', 'ja')}</Mark>
         )}
-        <span>{t(`fortune.${type}` as any)}</span>
+        <span>{t(`fortune.${type}`)}</span>
       </Title>
       <Quote>{t(`quotes.${quote}` as any)}</Quote>
     </Root>

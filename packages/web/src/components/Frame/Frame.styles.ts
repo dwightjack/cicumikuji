@@ -42,25 +42,49 @@ export const BgImage = styled('img', forwardRef)`
   transition: opacity 1000ms linear;
 `;
 
+export const ExpandCaption = styled('button')`
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  display: inline-block;
+  text-decoration: underline;
+`;
+
 export const FigCaption = styled('figcaption', forwardRef)`
   inset-block-end: 1rem;
   inset-inline-start: 1rem;
-  z-index: 2;
+  z-index: 4;
   background: rgba(var(--color-background-primary-rgb) / 0.8);
   padding: 1rem;
-  max-inline-size: 50vw;
+  max-inline-size: 50dvi;
+  min-inline-size: 1rem;
+  min-block-size: 1rem;
   border-radius: var(--size-radius-md);
   opacity: var(--opacity, 0);
   will-change: opacity;
-  transition: opacity 500ms ease-out 1300ms;
+  transition: all 250ms cubic-bezier(.84,.21,.41,.88) 0ms, opacity 500ms ease-out 1300ms;
+  line-height: 1.5;
+  ${({ expanded }) =>
+    expanded
+      ? `
+    max-inline-size: calc(100dvi - 4rem);
+    min-inline-size: calc(100dvi - 4rem);
+    min-block-size: calc(100dvb - 4rem);
+    translate: 1rem -1rem;
+    overflow: auto;
+    background: rgba(var(--color-background-primary-rgb));
+    box-shadow: 2px 2px 1px 1px rgba(var(--color-text-primary-rgb) / 0.4);
+  `
+      : ''}
 
-  & > p {
+  & > * {
     white-space: pre-wrap;
-    margin-block: 0rem;
+    margin: 0rem;
+  }
 
-    &:not(:last-child) {
-      margin-block-end: 0.5rem;
-    }
+  & > :not(:last-child) {
+    margin-block-end: 0.5rem;
   }
 `;
 

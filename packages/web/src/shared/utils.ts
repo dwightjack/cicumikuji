@@ -1,4 +1,4 @@
-export const sample = <T = unknown>(array: T[]) =>
+export const sample = <T = unknown>(array: T[] | readonly T[]) =>
   array[Math.floor(Math.random() * array.length)];
 
 export function sampleUniq<T = unknown>(

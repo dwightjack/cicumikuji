@@ -1,10 +1,12 @@
 import { useCSSProps } from '../../hooks/style';
+import { useToggle } from '../../hooks/toggle';
 import { useI18n } from '../../providers/i18n';
 import type { FrameItem } from '../../types';
 import { Omikuji } from '../Omikuji/Omikuji';
 import { Video } from '../Video/Video';
 import {
   BgImage,
+  ExpandCaption,
   FigCaption,
   Figure,
   MainImage,
@@ -16,6 +18,8 @@ interface FrameProps extends FrameItem {
   onClick?: () => void;
 }
 
+const CAPTION_LIMIT = 20;
+
 export function Frame({
   src,
   datetime,
@@ -24,6 +28,7 @@ export function Frame({
   videoUrl,
 }: FrameProps) {
   const { t, formatDate } = useI18n();
+  const [expanded, toggleExpanded] = useToggle();
   const omikujiRef = useCSSProps({
     opacity: 1,
     scale: 1,
@@ -41,8 +46,8 @@ export function Frame({
     opacity: 1,
   });
 
-  const shortCaption =
-    caption.length > 20 ? `${caption.slice(20)}...` : caption;
+  const isLongCaption = caption.length > CAPTION_LIMIT;
+  const shortCaption = caption.slice(0, CAPTION_LIMIT);
 
   return (
     <>
@@ -59,11 +64,22 @@ export function Frame({
           <MainImage src={src} alt="" ref={imageInRef} />
         )}
 
-        <FigCaption ref={captionInRef}>
+        <FigCaption ref={captionInRef} expanded={expanded}>
           <p>
             <time dateTime={datetime}>{formatDate(Date.parse(datetime))}</time>
           </p>
-          <p>{shortCaption}</p>
+          <p>
+            {!isLongCaption || expanded ? caption : shortCaption}{' '}
+            {isLongCaption && (
+              <ExpandCaption
+                aria-expanded={expanded}
+                type="button"
+                onClick={toggleExpanded}
+              >
+                {expanded ? t('messages.close') : t('messages.show_more')}
+              </ExpandCaption>
+            )}
+          </p>
         </FigCaption>
       </Figure>
       <Reloader onClick={onClick} aria-label={t('messages.reload')} />

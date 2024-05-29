@@ -20,6 +20,8 @@ export const ja: Locale = {
     updating: '更新中…',
     play_video: '動画をスタートする',
     pause_video: '動画を止まる',
+    show_more: 'もっと見る...',
+    close: '閉じる',
   },
   fortune: {
     low: '凶',
