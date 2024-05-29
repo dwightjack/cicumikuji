@@ -60,7 +60,7 @@ async function initialize() {
   /**
    * @type {import('./types.js').Entry[]}
    */
-  const entries = JSON.parse(await readFile(POSTS_FILE, 'utf-8')).slice(0, 1);
+  const entries = JSON.parse(await readFile(POSTS_FILE, 'utf-8'));
 
   const batch = db.batch();
 
