@@ -10,14 +10,13 @@ import type { FrameItem } from '../types';
 import { ErrorLayer } from './ErrorLayer/ErrorLayer';
 import { Frame } from './Frame/Frame';
 import { Loader } from './Loader/Loader';
-// import { ServiceWorker } from './ServiceWorker/ServiceWorker';
 import { Splash } from './Splash/Splash';
 
 export function App() {
   const { $state, isReady, showSplash, isLoading, isBooted, setStatus } =
     useAppState();
   const [node, setNode] = useState<FrameItem | null>(null);
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
   const frameLoader = useFramePreloader(5);
   const [data, fetcher] = useFetch<FrameItem[]>('/api/fetch-posts', {
     transform: (data) => data?.posts,
@@ -56,7 +55,6 @@ export function App() {
 
   return (
     <AppRoot>
-      {/* {process.env.NODE_ENV === 'production' && <ServiceWorker />} */}
       {/* @ts-ignore */}
       <GlobalStyles />
       {isLoading && <Loader />}

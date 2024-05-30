@@ -16,8 +16,6 @@ export const ja: Locale = {
     language: '言語',
     follow_me: 'フォローしてね！',
     update_txt: 'アプリを更新してください。',
-    update: '更新する',
-    updating: '更新中…',
     play_video: '動画をスタートする',
     pause_video: '動画を止まる',
     show_more: 'もっと見る...',

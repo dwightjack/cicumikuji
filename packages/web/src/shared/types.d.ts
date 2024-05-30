@@ -38,8 +38,6 @@ export interface Locale {
     | 'language'
     | 'follow_me'
     | 'update_txt'
-    | 'update'
-    | 'updating'
     | 'play_video'
     | 'pause_video'
     | 'show_more'
