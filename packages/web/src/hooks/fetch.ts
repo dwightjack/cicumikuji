@@ -9,30 +9,26 @@ export interface FetchOptions<T> extends Options {
 }
 
 async function cachedFetch<Response = unknown>(
+  key: string,
   url: string,
   options?: FetchOptions<Response>,
 ) {
-  try {
-    let data = await ky.get(url, options).json<Response>();
-    if (typeof options?.transform === 'function') {
-      data = options.transform(data);
-    }
-    await set(url, { data, timestamp: Date.now() });
-    return data;
-  } catch (err) {
-    console.log(err);
-    return undefined;
+  let data = await ky.get(url, options).json<Response>();
+  if (typeof options?.transform === 'function') {
+    data = options.transform(data);
   }
+  await set(key, { data, timestamp: Date.now() });
+  return data;
 }
 
 async function fromCache<Response = unknown>(
-  url: string,
+  key: string,
   { expireLimit = 120, force = false } = {},
 ) {
   if (force) {
     return undefined;
   }
-  const value = await get<null | { data: Response; timestamp: number }>(url);
+  const value = await get<null | { data: Response; timestamp: number }>(key);
   if (
     !value ||
     Date.now() >
@@ -44,6 +40,7 @@ async function fromCache<Response = unknown>(
 }
 
 export function useFetch<Response = unknown>(
+  key: string,
   url: string,
   options: FetchOptions<Response> = {},
 ) {
@@ -52,8 +49,8 @@ export function useFetch<Response = unknown>(
 
   function fetcher(force = false) {
     loadStart();
-    fromCache<Response>(url, { force })
-      .then((result) => result ?? cachedFetch<Response>(url, options))
+    fromCache<Response>(key, { force })
+      .then((result) => result ?? cachedFetch<Response>(key, url, options))
       .then(setData)
       .catch(setError)
       .finally(loadComplete);

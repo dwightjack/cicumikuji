@@ -1,8 +1,6 @@
 import { styled } from 'goober';
 import { forwardRef } from 'preact/compat';
-import reload from '../../assets/reload.png';
 import { randomInt } from '../../shared/utils';
-import { Button } from '../Button/Button';
 
 export const Figure = styled('figure')`
   position: relative;
@@ -86,19 +84,6 @@ export const FigCaption = styled('figcaption', forwardRef)`
   & > :not(:last-child) {
     margin-block-end: 0.5rem;
   }
-`;
-
-export const Reloader = styled(Button)`
-  position: absolute;
-  inset-inline-end: 1rem;
-  inset-block-end: 1rem;
-  z-index: 3;
-  inline-size: 3.5rem;
-  aspect-ratio: 1;
-  background-image: url('${reload}');
-  background-size: 70%;
-  background-repeat: no-repeat;
-  background-position: center;
 `;
 
 export const OmikujiContainer = styled('div', forwardRef)`

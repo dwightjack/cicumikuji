@@ -11,22 +11,13 @@ import {
   Figure,
   MainImage,
   OmikujiContainer,
-  Reloader,
 } from './Frame.styles';
 
-interface FrameProps extends FrameItem {
-  onClick?: () => void;
-}
+interface FrameProps extends FrameItem {}
 
 const CAPTION_LIMIT = 20;
 
-export function Frame({
-  src,
-  datetime,
-  caption,
-  onClick = () => {},
-  videoUrl,
-}: FrameProps) {
+export function Frame({ src, datetime, caption, videoUrl }: FrameProps) {
   const { t, formatDate } = useI18n();
   const [expanded, toggleExpanded] = useToggle();
   const omikujiRef = useCSSProps({
@@ -82,7 +73,6 @@ export function Frame({
           </p>
         </FigCaption>
       </Figure>
-      <Reloader onClick={onClick} aria-label={t('messages.reload')} />
     </>
   );
 }

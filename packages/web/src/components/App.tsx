@@ -1,16 +1,33 @@
+import { styled } from 'goober';
 import { useCallback, useEffect, useState } from 'preact/hooks';
+import reload from '../assets/reload.png';
 import { useFetch } from '../hooks/fetch';
 import { useFramePreloader } from '../hooks/preloader';
 import { useShake } from '../hooks/shake';
 import { useWakeLock } from '../hooks/wakeLock';
 import { useAppState } from '../providers/appState';
 import { useI18n } from '../providers/i18n';
+import { POST_API_KEY } from '../shared/constants';
 import { AppRoot, GlobalStyles } from '../shared/theme';
 import type { FrameItem } from '../types';
+import { Button } from './Button/Button';
 import { ErrorLayer } from './ErrorLayer/ErrorLayer';
 import { Frame } from './Frame/Frame';
 import { Loader } from './Loader/Loader';
 import { Splash } from './Splash/Splash';
+
+export const Reloader = styled(Button)`
+  position: absolute;
+  inset-inline-end: 1rem;
+  inset-block-end: 1rem;
+  z-index: 3;
+  inline-size: 3.5rem;
+  aspect-ratio: 1;
+  background-image: url('${reload}');
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: center;
+`;
 
 export function App() {
   const { $state, isReady, showSplash, isLoading, isBooted, setStatus } =
@@ -18,10 +35,14 @@ export function App() {
   const [node, setNode] = useState<FrameItem | null>(null);
   const { locale, t } = useI18n();
   const frameLoader = useFramePreloader(5);
-  const [data, fetcher] = useFetch<FrameItem[]>('/api/fetch-posts', {
-    transform: (data) => data?.posts,
-    initial: [],
-  });
+  const [data, fetcher] = useFetch<FrameItem[]>(
+    POST_API_KEY,
+    '/api/fetch-posts',
+    {
+      transform: (data) => data?.posts,
+      initial: [],
+    },
+  );
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const reload = useCallback(() => {
@@ -67,7 +88,8 @@ export function App() {
           permission={canShake}
         />
       )}
-      {node && isReady && <Frame {...node} onClick={reload} />}
+      {node && isReady && <Frame {...node} />}
+      <Reloader onClick={reload} aria-label={t('messages.reload')} />
     </AppRoot>
   );
 }

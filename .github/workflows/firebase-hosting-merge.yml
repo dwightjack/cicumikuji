@@ -17,7 +17,7 @@ jobs:
           node-version-file: '.node-version'
           cache: 'pnpm'
       - run: pnpm i
-      - run: pnpm run web:build
+      - run: HASH="$GITHUB_SHA" pnpm run web:build
       - uses: FirebaseExtended/action-hosting-deploy@d482eb942f549f059116ec36b191860128553142 # v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
