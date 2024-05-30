@@ -25,7 +25,13 @@ async function cachedFetch<Response = unknown>(
   }
 }
 
-async function fromCache<Response = unknown>(url: string, expireLimit = 120) {
+async function fromCache<Response = unknown>(
+  url: string,
+  { expireLimit = 120, force = false } = {},
+) {
+  if (force) {
+    return undefined;
+  }
   const value = await get<null | { data: Response; timestamp: number }>(url);
   if (
     !value ||
@@ -44,9 +50,9 @@ export function useFetch<Response = unknown>(
   const { loadStart, loadComplete, setError } = useAppState();
   const [data, setData] = useState<Response | undefined>(options.initial);
 
-  function fetcher() {
+  function fetcher(force = false) {
     loadStart();
-    fromCache<Response>(url)
+    fromCache<Response>(url, { force })
       .then((result) => result ?? cachedFetch<Response>(url, options))
       .then(setData)
       .catch(setError)

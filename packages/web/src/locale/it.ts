@@ -18,8 +18,6 @@ export const it: Locale = {
     language: 'Lingua:',
     follow_me: 'Seguimi!',
     update_txt: 'Aggiornamento disponibile.',
-    update: 'Aggiorna',
-    updating: 'Aggiornamento...',
     play_video: 'Avvia il video',
     pause_video: 'Metti in pausa il video',
     show_more: 'altro...',
