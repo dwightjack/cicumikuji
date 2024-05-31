@@ -1,6 +1,6 @@
 import { useCSSProps } from '../../hooks/style';
-import { useToggle } from '../../hooks/toggle';
 import { useI18n } from '../../providers/i18n';
+import { useToggle } from '../../signals/toggle';
 import type { FrameItem } from '../../types';
 import { Omikuji } from '../Omikuji/Omikuji';
 import { Video } from '../Video/Video';
@@ -19,21 +19,14 @@ const CAPTION_LIMIT = 20;
 
 export function Frame({ src, datetime, caption, videoUrl }: FrameProps) {
   const { t, formatDate } = useI18n();
-  const [expanded, toggleExpanded] = useToggle();
+  const [expanded, toggle] = useToggle();
   const omikujiRef = useCSSProps({
     opacity: 1,
     scale: 1,
   });
-  const imageInRef = useCSSProps({
+  const figureRef = useCSSProps({
     scale: 1,
     rotate: 0,
-    opacity: 1,
-  });
-  const bgImageInRef = useCSSProps({
-    opacity: 1,
-  });
-
-  const captionInRef = useCSSProps({
     opacity: 1,
   });
 
@@ -45,17 +38,17 @@ export function Frame({ src, datetime, caption, videoUrl }: FrameProps) {
       <OmikujiContainer ref={omikujiRef}>
         <Omikuji />
       </OmikujiContainer>
-      <Figure>
-        <BgImage src={src} alt="" ref={bgImageInRef} />
+      <Figure ref={figureRef}>
+        <BgImage src={src} alt="" />
         {videoUrl ? (
-          <MainImage as={'div'} ref={imageInRef}>
+          <MainImage as={'div'}>
             <Video src={videoUrl} poster={src} />
           </MainImage>
         ) : (
-          <MainImage src={src} alt="" ref={imageInRef} />
+          <MainImage src={src} alt="" />
         )}
 
-        <FigCaption ref={captionInRef} expanded={expanded.value}>
+        <FigCaption expanded={expanded.value}>
           <p>
             <time dateTime={datetime}>{formatDate(Date.parse(datetime))}</time>
           </p>
@@ -65,7 +58,7 @@ export function Frame({ src, datetime, caption, videoUrl }: FrameProps) {
               <ExpandCaption
                 aria-expanded={expanded}
                 type="button"
-                onClick={toggleExpanded}
+                onClick={toggle}
               >
                 {expanded.value ? t('messages.close') : t('messages.show_more')}
               </ExpandCaption>
