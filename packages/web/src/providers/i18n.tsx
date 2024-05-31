@@ -1,23 +1,21 @@
+import {
+  type ReadonlySignal,
+  type Signal,
+  useComputed,
+  useSignal,
+  useSignalEffect,
+} from '@preact/signals';
 import { set } from 'idb-keyval';
 import { type ComponentChildren, createContext } from 'preact';
-import {
-  type Dispatch,
-  type StateUpdater,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'preact/hooks';
+import { useCallback, useContext } from 'preact/hooks';
 import { db } from '../locale';
 import type { Locale, LocaleDb, ObjectToPaths } from '../shared/types';
 
 export interface I18nContext {
   db: LocaleDb;
-  locale: string;
+  locale: Signal<string>;
   locales: { id: keyof LocaleDb; label: string }[];
   current: Locale;
-  setLocale: Dispatch<StateUpdater<keyof LocaleDb>>;
   formatDate: (date?: number | Date | undefined) => string;
 }
 
@@ -26,7 +24,9 @@ const locales = (Object.keys(db) as (keyof LocaleDb)[]).map((id) => ({
   label: db[id].name,
 }));
 
-const I18nContext = createContext<I18nContext | undefined>(undefined);
+const I18nContext = createContext<ReadonlySignal<I18nContext> | undefined>(
+  undefined,
+);
 
 export function useI18n() {
   const context = useContext(I18nContext);
@@ -37,12 +37,11 @@ export function useI18n() {
 
   const {
     current = {} as Locale,
-    setLocale,
     locale,
     locales,
     db,
     formatDate,
-  } = context;
+  } = context.value;
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const t = useCallback(
@@ -52,33 +51,32 @@ export function useI18n() {
         .reduce((obj, key) => (obj as any)?.[key], lang ? db[lang] : current) ??
         def) as unknown as string;
     },
-    [locale, locales],
+    [locale.value, locales],
   );
 
-  return { t, setLocale, locale, locales, formatDate };
+  return { t, locale, locales, formatDate };
 }
 
 export function I18nProvider({
   children,
   lang,
 }: { children: ComponentChildren; lang: keyof LocaleDb }) {
-  const [locale, setLocale] = useState<keyof LocaleDb>(lang);
+  const locale = useSignal<keyof LocaleDb>(lang);
 
-  const i18n = useMemo(() => {
-    const intl = Intl.DateTimeFormat(locale, { timeZone: 'UTC' });
+  const i18n = useComputed(() => {
+    const intl = Intl.DateTimeFormat(locale.value, { timeZone: 'UTC' });
     return {
       db,
-      locale,
       locales,
-      current: db[locale],
-      setLocale,
+      locale,
+      current: db[locale.value],
       formatDate: intl.format.bind(intl),
     };
-  }, [locale]);
+  });
 
-  useEffect(() => {
-    set('locale', locale);
-  }, [locale]);
+  useSignalEffect(() => {
+    set('locale', locale.value);
+  });
 
   return <I18nContext.Provider value={i18n}>{children}</I18nContext.Provider>;
 }

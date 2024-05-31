@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useState } from 'preact/hooks';
+import { useSignal, useSignalEffect } from '@preact/signals';
 // @ts-ignore
 import Shake from 'shake.js';
 
 export type ShakePermission = 'denied' | 'granted' | 'prompt' | null;
 
 export function useShake(eventHandler: (...args: any[]) => any) {
-  const [permission, setPermission] = useState<ShakePermission>(null);
+  const permission = useSignal<ShakePermission>(null);
 
   function denyShake() {
-    setPermission('denied');
+    permission.value = 'denied';
   }
 
   function handler() {
@@ -17,12 +17,12 @@ export function useShake(eventHandler: (...args: any[]) => any) {
 
   async function getShake() {
     if (!('DeviceMotionEvent' in window)) {
-      setPermission('denied');
+      permission.value = 'denied';
       console.error('Motion event not available');
       return;
     }
     if (typeof (DeviceMotionEvent as any).requestPermission !== 'function') {
-      setPermission('granted');
+      permission.value = 'granted';
       return;
     }
 
@@ -30,16 +30,16 @@ export function useShake(eventHandler: (...args: any[]) => any) {
       const permissionState = await (
         DeviceMotionEvent as any
       ).requestPermission();
-      setPermission(permissionState);
+      permission.value = permissionState;
     } catch (err) {
-      setPermission('denied');
+      permission.value = 'denied';
       console.error(err);
     }
   }
 
-  const bindShake = useCallback(() => {
+  function bindShake() {
     let shaker: any;
-    if (permission === 'granted') {
+    if (permission.value === 'granted') {
       shaker = new Shake({
         threshold: 5,
         timeout: 2000,
@@ -53,22 +53,21 @@ export function useShake(eventHandler: (...args: any[]) => any) {
         shaker.stop();
       }
     };
-  }, [permission, handler]);
+  }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    if (permission !== null) {
+  useSignalEffect(() => {
+    if (permission.value !== null) {
       return;
     }
     if (!('DeviceMotionEvent' in window)) {
-      setPermission('denied');
+      permission.value = 'denied';
       console.error('Motion event not available');
       return;
     }
     if (typeof (DeviceMotionEvent as any).requestPermission !== 'function') {
-      setPermission('granted');
+      permission.value = 'granted';
     }
-  }, []);
+  });
 
   return { canShake: permission, getShake, denyShake, bindShake } as const;
 }

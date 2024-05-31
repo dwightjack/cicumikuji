@@ -1,6 +1,6 @@
+import { useSignal } from '@preact/signals';
 import { get, set } from 'idb-keyval';
 import ky, { type Options } from 'ky';
-import { useState } from 'preact/hooks';
 import { useAppState } from '../providers/appState';
 
 export interface FetchOptions<T> extends Options {
@@ -44,14 +44,16 @@ export function useFetch<Response = unknown>(
   url: string,
   options: FetchOptions<Response> = {},
 ) {
-  const { loadStart, loadComplete, setError } = useAppState();
-  const [data, setData] = useState<Response | undefined>(options.initial);
+  const { loadComplete, loadStart, setError } = useAppState();
+  const data = useSignal<Response | undefined>(options.initial);
 
   function fetcher(force = false) {
     loadStart();
     fromCache<Response>(key, { force })
       .then((result) => result ?? cachedFetch<Response>(key, url, options))
-      .then(setData)
+      .then((result) => {
+        data.value = result;
+      })
       .catch(setError)
       .finally(loadComplete);
   }

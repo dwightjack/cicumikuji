@@ -1,9 +1,9 @@
-import { useState } from 'preact/hooks';
+import { useSignal } from '@preact/signals';
 
 export function useToggle() {
-  const [toggled, setToggle] = useState(false);
+  const toggled = useSignal(false);
   function toggleState() {
-    setToggle((t) => !t);
+    toggled.value = !toggled.value;
   }
   return [toggled, toggleState] as const;
 }

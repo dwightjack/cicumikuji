@@ -4,7 +4,7 @@ import { preload, sampleUniq } from '../shared/utils';
 import type { FrameItem } from '../types';
 
 export function useFramePreloader(maxRetry = 5) {
-  const { loadStart, loadComplete, setError } = useAppState();
+  const { loadComplete, loadStart, setError } = useAppState();
   const frame = useRef<FrameItem | null>(null);
   const count = useRef(maxRetry);
 

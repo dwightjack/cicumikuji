@@ -2,8 +2,8 @@ import { del, get, set } from 'idb-keyval';
 import { render } from 'preact';
 import { App } from '../src/components/App';
 import { inferLocale } from '../src/locale';
-import { AppStateProvider } from '../src/providers/appState';
 import { I18nProvider } from '../src/providers/i18n';
+import { AppStateProvider } from './providers/appState';
 import { POST_API_KEY } from './shared/constants';
 
 async function run() {
@@ -26,11 +26,11 @@ async function run() {
 
   const lang = await get('locale');
   render(
-    <I18nProvider lang={lang || inferLocale()}>
-      <AppStateProvider>
+    <AppStateProvider>
+      <I18nProvider lang={lang || inferLocale()}>
         <App />
-      </AppStateProvider>
-    </I18nProvider>,
+      </I18nProvider>
+    </AppStateProvider>,
     document.body,
   );
 }

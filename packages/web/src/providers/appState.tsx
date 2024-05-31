@@ -1,67 +1,27 @@
+import {
+  type ReadonlySignal,
+  type Signal,
+  batch,
+  computed,
+  signal,
+  useSignal,
+} from '@preact/signals';
 import { type ComponentChildren, createContext } from 'preact';
-import { useContext, useMemo, useReducer } from 'preact/hooks';
+import { useContext } from 'preact/hooks';
 
 export type AppStatus = 'boot' | 'splash' | 'play' | 'error';
-export interface State {
-  loadQueue: number;
-  error: string;
-  status: AppStatus;
-  booted: boolean;
-}
 
-export interface Action {
-  type: keyof State;
-  payload?: any;
-}
-
-export interface AppStateContext extends ReturnType<typeof createActions> {
-  $state: State;
-  isReady: boolean;
-  isLoading: boolean;
-  isBooted: boolean;
-  showSplash: boolean;
-}
-
-const initialState: State = {
-  loadQueue: 0,
-  error: '',
-  status: 'boot',
-  booted: false,
-};
-
-const createActions = (dispatch: (action: Action) => void) => ({
-  loadStart: () => dispatch({ type: 'loadQueue', payload: 1 }),
-  loadComplete: () => dispatch({ type: 'loadQueue', payload: -1 }),
-  setError: (payload: string | Error) => dispatch({ type: 'error', payload }),
-  setStatus: (payload: AppStatus) => dispatch({ type: 'status', payload }),
-  setBooted: () => dispatch({ type: 'booted' }),
-  dispatch,
-});
-
-function reducer(state: State, { type, payload }: Action): State {
-  switch (type) {
-    case 'loadQueue':
-      return {
-        ...state,
-        loadQueue: state.loadQueue + payload,
-      };
-    case 'error':
-      return {
-        ...state,
-        error: payload,
-        status: 'error',
-      };
-    case 'status':
-      return {
-        ...state,
-        status: payload,
-      };
-    case 'booted':
-      return {
-        ...state,
-        booted: true,
-      };
-  }
+export interface AppStateContext {
+  loadQueue: Signal<number>;
+  appError: Signal<string>;
+  appStatus: Signal<AppStatus>;
+  appBooted: Signal<boolean>;
+  isReady: ReadonlySignal<boolean>;
+  isLoading: ReadonlySignal<boolean>;
+  loadStart: () => void;
+  loadComplete: () => void;
+  setError: (error: string | Error) => void;
+  setStatus: (status: AppStatus) => void;
 }
 
 const AppStateContext = createContext<AppStateContext | undefined>(undefined);
@@ -69,7 +29,7 @@ const AppStateContext = createContext<AppStateContext | undefined>(undefined);
 export function useAppState() {
   const context = useContext(AppStateContext);
   if (context === undefined) {
-    throw new Error('useAppState must be used within a AppStateProvider');
+    throw new Error('useI18n must be used within a I18nProvider');
   }
   return context;
 }
@@ -77,22 +37,40 @@ export function useAppState() {
 export function AppStateProvider({
   children,
 }: { children: ComponentChildren }) {
-  const [appState, dispatch] = useReducer(reducer, initialState);
+  const loadQueue = useSignal(0);
+  const appError = useSignal<string>('');
+  const appStatus = useSignal<AppStatus>('boot');
+  const appBooted = useSignal(false);
 
-  const value = useMemo(
-    () => ({
-      $state: appState,
-      isReady: appState.loadQueue === 0 && appState.status === 'play',
-      showSplash: appState.status === 'splash',
-      isLoading: appState.loadQueue > 0,
-      isBooted: appState.booted,
-      ...createActions(dispatch),
-    }),
-    [appState],
-  );
+  const appState = {
+    loadQueue,
+    appError,
+    appStatus,
+    appBooted,
+    loadStart: () => {
+      loadQueue.value++;
+    },
+    loadComplete: () => {
+      loadQueue.value--;
+    },
+    setError: (error) => {
+      batch(() => {
+        appError.value = error.toString();
+        appStatus.value = 'error';
+      });
+    },
+    setStatus: (status: AppStatus) => {
+      appStatus.value = status;
+    },
+
+    isReady: computed(
+      () => loadQueue.value === 0 && appStatus.value === 'play',
+    ),
+    isLoading: computed(() => loadQueue.value > 0),
+  } satisfies AppStateContext;
 
   return (
-    <AppStateContext.Provider value={value}>
+    <AppStateContext.Provider value={appState}>
       {children}
     </AppStateContext.Provider>
   );

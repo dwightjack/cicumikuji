@@ -12,13 +12,17 @@ export interface SplashProps {
 }
 
 export function Splash({ onGrant, onDeny, permission, onStart }: SplashProps) {
-  const { setBooted } = useAppState();
   const { t } = useI18n();
-
+  const { appBooted, appStatus } = useAppState();
   function start() {
     onStart();
-    setBooted();
+    appBooted.value = true;
   }
+
+  if (appStatus.value !== 'splash') {
+    return null;
+  }
+
   return (
     <Container>
       <Title>{t('messages.title')}</Title>

@@ -55,19 +55,19 @@ export function Frame({ src, datetime, caption, videoUrl }: FrameProps) {
           <MainImage src={src} alt="" ref={imageInRef} />
         )}
 
-        <FigCaption ref={captionInRef} expanded={expanded}>
+        <FigCaption ref={captionInRef} expanded={expanded.value}>
           <p>
             <time dateTime={datetime}>{formatDate(Date.parse(datetime))}</time>
           </p>
           <p>
-            {!isLongCaption || expanded ? caption : shortCaption}{' '}
+            {!isLongCaption || expanded.value ? caption : shortCaption}{' '}
             {isLongCaption && (
               <ExpandCaption
                 aria-expanded={expanded}
                 type="button"
                 onClick={toggleExpanded}
               >
-                {expanded ? t('messages.close') : t('messages.show_more')}
+                {expanded.value ? t('messages.close') : t('messages.show_more')}
               </ExpandCaption>
             )}
           </p>
