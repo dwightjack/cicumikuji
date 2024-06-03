@@ -1,12 +1,11 @@
 import { styled } from 'goober';
 import { useEffect } from 'preact/hooks';
 import reload from '../assets/reload.png';
-import { useFetch } from '../hooks/fetch';
 import { useFramePreloader } from '../hooks/preloader';
-import { useWakeLock } from '../hooks/wakeLock';
 import { useI18n } from '../providers/i18n';
 import { POST_API_KEY } from '../shared/constants';
 import { AppRoot, GlobalStyles } from '../shared/theme';
+import { useFetch } from '../signals/fetch';
 import { useShake } from '../signals/shake';
 import type { FrameItem } from '../types';
 import { Button } from './Button/Button';
@@ -58,7 +57,6 @@ export function App() {
   }
 
   const { canShake, getShake, denyShake, bindShake } = useShake(reload);
-  const enableWakeLock = useWakeLock();
 
   useEffect(fetcher, []);
   useSignalEffect(() => {
@@ -67,10 +65,11 @@ export function App() {
 
   useSignalEffect(() => {
     if (appBooted.value === true) {
-      bindShake();
-      return enableWakeLock();
+      return bindShake();
     }
-    if (data.value) {
+  });
+  useSignalEffect(() => {
+    if (data.value && appStatus.value === 'boot') {
       setStatus('splash');
     }
   });
