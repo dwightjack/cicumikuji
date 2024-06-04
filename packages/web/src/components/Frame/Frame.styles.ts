@@ -2,7 +2,7 @@ import { styled } from 'goober';
 import { forwardRef } from 'preact/compat';
 import { randomInt } from '../../shared/utils';
 
-export const Figure = styled('figure')`
+export const Figure = styled('figure', forwardRef)`
   position: relative;
   inline-size: 100dvi;
   block-size: 100dvb;
@@ -15,7 +15,7 @@ export const Figure = styled('figure')`
   }
 `;
 
-export const MainImage = styled('img', forwardRef)`
+export const MainImage = styled('img')`
   inset: 0;
   inline-size: 100%;
   block-size: 100%;
@@ -29,7 +29,7 @@ export const MainImage = styled('img', forwardRef)`
     transform 300ms cubic-bezier(0.65, 0, 0.35, 1);
 `;
 
-export const BgImage = styled('img', forwardRef)`
+export const BgImage = styled('img')`
   inset: 0;
   inline-size: 100%;
   block-size: 100%;
@@ -49,7 +49,7 @@ export const ExpandCaption = styled('button')`
   text-decoration: underline;
 `;
 
-export const FigCaption = styled('figcaption', forwardRef)`
+export const FigCaption = styled('figcaption')`
   inset-block-end: 1rem;
   inset-inline-start: 1rem;
   z-index: 4;

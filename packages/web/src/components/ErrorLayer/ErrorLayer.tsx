@@ -1,13 +1,15 @@
+import { useAppState } from '../../providers/appState';
 import { useI18n } from '../../providers/i18n';
 import { Button } from '../Button/Button';
 import { Container, ErrorMessage, Title } from './ErrorLayer.styles';
 
-interface ErrorLayerProps {
-  message: string;
-}
-
-export function ErrorLayer({ message }: ErrorLayerProps) {
+export function ErrorLayer() {
   const { t } = useI18n();
+  const { appError } = useAppState();
+
+  if (!appError.value) {
+    return null;
+  }
   return (
     <Container>
       <Title>{t('messages.error')}</Title>
@@ -16,12 +18,8 @@ export function ErrorLayer({ message }: ErrorLayerProps) {
 
       <Button onClick={() => location.reload()}>{t('messages.reload')}</Button>
 
-      {message && (
-        <>
-          <p>{t('messages.error_detail')}</p>
-          <ErrorMessage>{message}</ErrorMessage>
-        </>
-      )}
+      <p>{t('messages.error_detail')}</p>
+      <ErrorMessage>{appError.value}</ErrorMessage>
     </Container>
   );
 }

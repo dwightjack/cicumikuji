@@ -1,20 +1,21 @@
 import { styled } from 'goober';
-import { useCallback, useEffect, useState } from 'preact/hooks';
+import { useEffect } from 'preact/hooks';
 import reload from '../assets/reload.png';
-import { useFetch } from '../hooks/fetch';
 import { useFramePreloader } from '../hooks/preloader';
-import { useShake } from '../hooks/shake';
-import { useWakeLock } from '../hooks/wakeLock';
-import { useAppState } from '../providers/appState';
 import { useI18n } from '../providers/i18n';
 import { POST_API_KEY } from '../shared/constants';
 import { AppRoot, GlobalStyles } from '../shared/theme';
+import { useFetch } from '../signals/fetch';
+import { useShake } from '../signals/shake';
 import type { FrameItem } from '../types';
 import { Button } from './Button/Button';
 import { ErrorLayer } from './ErrorLayer/ErrorLayer';
 import { Frame } from './Frame/Frame';
 import { Loader } from './Loader/Loader';
 import { Splash } from './Splash/Splash';
+
+import { useSignal, useSignalEffect } from '@preact/signals';
+import { useAppState } from '../providers/appState';
 
 export const Reloader = styled(Button)`
   position: absolute;
@@ -30,9 +31,8 @@ export const Reloader = styled(Button)`
 `;
 
 export function App() {
-  const { $state, isReady, showSplash, isLoading, isBooted, setStatus } =
-    useAppState();
-  const [node, setNode] = useState<FrameItem | null>(null);
+  const node = useSignal<FrameItem | null>(null);
+  const { isReady, isLoading, setStatus, appStatus, appBooted } = useAppState();
   const { locale, t } = useI18n();
   const frameLoader = useFramePreloader(5);
   const [data, fetcher] = useFetch<FrameItem[]>(
@@ -44,51 +44,49 @@ export function App() {
     },
   );
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  const reload = useCallback(() => {
-    if ($state.status !== 'play') {
+  function reload() {
+    if (appStatus.value !== 'play') {
       setStatus('play');
     }
 
-    frameLoader(data, node)
-      .then((n) => setNode(n))
+    frameLoader(data.value, node.value)
+      .then((n) => {
+        node.value = n;
+      })
       .catch(console.error);
-  }, [data, node]);
+  }
 
   const { canShake, getShake, denyShake, bindShake } = useShake(reload);
-  const enableWakeLock = useWakeLock();
 
   useEffect(fetcher, []);
-  useEffect(() => {
-    document.documentElement.lang = locale;
-  }, [locale]);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    setStatus('splash');
-  }, [data]);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    if (isBooted) {
-      bindShake();
-      return enableWakeLock();
+  useSignalEffect(() => {
+    document.documentElement.lang = locale.value;
+  });
+
+  useSignalEffect(() => {
+    if (appBooted.value === true) {
+      return bindShake();
     }
-  }, [isBooted]);
+  });
+  useSignalEffect(() => {
+    if (data.value && appStatus.value === 'boot') {
+      setStatus('splash');
+    }
+  });
 
   return (
     <AppRoot>
       {/* @ts-ignore */}
       <GlobalStyles />
-      {isLoading && <Loader />}
-      {$state.error && <ErrorLayer message={$state.error} />}
-      {showSplash && (
-        <Splash
-          onDeny={denyShake}
-          onGrant={getShake}
-          onStart={reload}
-          permission={canShake}
-        />
-      )}
-      {node && isReady && <Frame {...node} />}
+      {isLoading.value && <Loader />}
+      <ErrorLayer />
+      <Splash
+        onDeny={denyShake}
+        onGrant={getShake}
+        onStart={reload}
+        permission={canShake.value}
+      />
+      {node.value && isReady.value && <Frame {...node.value} />}
       <Reloader onClick={reload} aria-label={t('messages.reload')} />
     </AppRoot>
   );

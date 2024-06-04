@@ -1,5 +1,7 @@
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useSignalEffect } from '@preact/signals';
+import { useRef } from 'preact/hooks';
 import { useI18n } from '../../providers/i18n';
+import { useToggle } from '../../signals/toggle';
 import { Control, Root, VideoFrame } from './Video.styles';
 export interface VideoProps {
   src: string;
@@ -7,20 +9,20 @@ export interface VideoProps {
 }
 
 export function Video({ src, poster }: VideoProps) {
-  const [play, setPlay] = useState(false);
+  const [isPlaying, toggle] = useToggle();
   const videoRef = useRef<HTMLVideoElement>();
   const { t } = useI18n();
 
-  useEffect(() => {
+  useSignalEffect(() => {
     if (!videoRef.current) {
       return;
     }
-    if (play) {
+    if (isPlaying.value) {
       videoRef.current.play();
       return;
     }
     videoRef.current.pause();
-  }, [play, videoRef]);
+  });
   return (
     <Root>
       <VideoFrame
@@ -34,9 +36,11 @@ export function Video({ src, poster }: VideoProps) {
         <source src={src} type="video/mp4" />
       </VideoFrame>
       <Control
-        onClick={() => setPlay((v) => !v)}
-        isPlaying={play}
-        aria-label={play ? t('messages.pause_video') : t('messages.play_video')}
+        onClick={toggle}
+        isPlaying={isPlaying.value}
+        aria-label={
+          isPlaying.value ? t('messages.pause_video') : t('messages.play_video')
+        }
       />
     </Root>
   );

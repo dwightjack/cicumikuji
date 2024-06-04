@@ -30,7 +30,7 @@ export function Omikuji() {
   return (
     <Root>
       <Title>
-        {locale !== 'ja' && (
+        {locale.value !== 'ja' && (
           <Mark lang="ja">{t(`fortune.${type}`, '', 'ja')}</Mark>
         )}
         <span>{t(`fortune.${type}`)}</span>

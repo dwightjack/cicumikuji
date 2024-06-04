@@ -1,9 +1,12 @@
-import type { ShakePermission } from '../../hooks/shake';
+import { useEffect, useRef } from 'preact/hooks';
+import { useWakeLock } from '../../hooks/wakeLock';
 import { useAppState } from '../../providers/appState';
 import { useI18n } from '../../providers/i18n';
+import type { ShakePermission } from '../../signals/shake';
 import { Button } from '../Button/Button';
 import { LangSelect } from '../LangSelect/LangSelect';
 import { ButtonGroup, Container, Footer, Title } from './Splash.styles';
+
 export interface SplashProps {
   onGrant: () => void;
   onStart: () => void;
@@ -12,13 +15,26 @@ export interface SplashProps {
 }
 
 export function Splash({ onGrant, onDeny, permission, onStart }: SplashProps) {
-  const { setBooted } = useAppState();
   const { t } = useI18n();
+  const { appBooted, appStatus } = useAppState();
+  const enableWakeLock = useWakeLock();
+  const lockRef = useRef<() => void>();
 
-  function start() {
+  async function start() {
     onStart();
-    setBooted();
+    appBooted.value = true;
+    // WakeLock on iOS (using nosleep.js), must be initialized during a user interaction
+    lockRef.current = await enableWakeLock();
   }
+
+  useEffect(() => {
+    () => lockRef.current?.();
+  }, []);
+
+  if (appStatus.value !== 'splash') {
+    return null;
+  }
+
   return (
     <Container>
       <Title>{t('messages.title')}</Title>
