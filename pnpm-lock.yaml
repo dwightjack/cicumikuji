@@ -19,7 +19,7 @@ importers:
         version: 2.12.0(@parcel/core@2.12.0)
       lefthook:
         specifier: ^1.6.10
-        version: 1.6.14
+        version: 1.6.15
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -44,7 +44,7 @@ importers:
     dependencies:
       '@google-cloud/storage':
         specifier: ^7.11.1
-        version: 7.11.1
+        version: 7.11.2
       firebase-admin:
         specifier: 12.1.1
         version: 12.1.1
@@ -356,6 +356,10 @@ packages:
 
   '@google-cloud/storage@7.11.1':
     resolution: {integrity: sha512-tibLSvgw7nDohMyIelt26kBpJ59YGWA2Rzep++DFNzEzKaSuCSp56Se9iM13ZlM3j5nLzR21IBkpRN58CmvCIw==}
+    engines: {node: '>=14'}
+
+  '@google-cloud/storage@7.11.2':
+    resolution: {integrity: sha512-jJOrKyOdujfrSF8EJODW9yY6hqO4jSTk6eVITEj2gsD43BSXuDlnMlLOaBUQhXL29VGnSkxDgYl5tlFhA6LKSA==}
     engines: {node: '>=14'}
 
   '@grpc/grpc-js@1.10.8':
@@ -1188,8 +1192,8 @@ packages:
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
-  bignumber.js@9.1.0:
-    resolution: {integrity: sha512-4LwHK4nfDOraBCtst+wOWIHbu1vhvAPJK8g8nROd4iuc3PSEjWif/qwbkh8jwCJz6yDBvtU4KPynETgrfh7y3A==}
+  bignumber.js@9.1.2:
+    resolution: {integrity: sha512-2/mKyZH9K85bzOEfhXDBFZTGd1CTs+5IHpeFQo9luiBG7hghdC851Pj2WAhb6E3R6b9tZj/XKhbg4fum+Kepug==}
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -1380,6 +1384,15 @@ packages:
       supports-color:
         optional: true
 
+  debug@4.3.5:
+    resolution: {integrity: sha512-pt0bNEmneDIvdL1Xsd9oDQ/wrQRkXDT4AUWlNZNPKvW5x/jyO9VFXkJUP07vQ2upmw5PlaITaPKc31jK13V+jg==}
+    engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+
   decompress-response@6.0.0:
     resolution: {integrity: sha512-aW35yZM6Bb/4oJlZncMH2LCoZtJXTRxES17vE3hoRiowU2kWHaJKFkSBDnDR+cm9J+9QhXmREyIfv0pji9ejCQ==}
     engines: {node: '>=10'}
@@ -1521,8 +1534,8 @@ packages:
     resolution: {integrity: sha512-oX2ruAFQwf/Orj8m737Y5adxDQO0LAB7/S5MnxCdTNDd4p6BsyIVsv9JQsATbTSq8KHRpLwIHbVlUNatxd+1Ow==}
     engines: {node: '>=8.6.0'}
 
-  fast-xml-parser@4.3.6:
-    resolution: {integrity: sha512-M2SovcRxD4+vC493Uc2GZVcZaj66CCJhWurC4viynVSTvrpErCShNcDz1lAho6n9REQKvL/ll4A4/fw6Y9z8nw==}
+  fast-xml-parser@4.4.0:
+    resolution: {integrity: sha512-kLY3jFlwIYwBNDojclKsNAC12sfD6NwW74QB2CoNGPvtVxjliYehVunB3HYyNi+n4Tt1dAcgwYvmKF/Z18flqg==}
     hasBin: true
 
   fastq@1.17.1:
@@ -1839,48 +1852,48 @@ packages:
     resolution: {integrity: sha512-CfSrf4a0yj1n6WgPT6kQNQOopIGLkQzqSAXo05oKByaH7G3SiqW4a8jGox0p9whMXqO49H7ljgigivrMyycAVA==}
     engines: {node: '>=18'}
 
-  lefthook-darwin-arm64@1.6.14:
-    resolution: {integrity: sha512-CpeLfErvVo7zv4cFMNFjB36OHXytj9H+DyOG1g62LbApMWIC7HOPMQZ0x0QzNIqeRuvpiMst4XOkspQTJ8QYiw==}
+  lefthook-darwin-arm64@1.6.15:
+    resolution: {integrity: sha512-PQKFipNueV2i/W3XI+fDDwzV3YdnJ1AqwIP2BwDpzlSJtQQarsAG7lRvFdjkPGplVLqWoohTQa1/ooBmg+g3dw==}
     cpu: [arm64]
     os: [darwin]
 
-  lefthook-darwin-x64@1.6.14:
-    resolution: {integrity: sha512-IUjs7IYuNuKw2pbZP9dLYk9T19qnYKCIBLN58hXkWWFbViiJa+n4vUG4fgw6oBceK6enkvJpa/ma02yqg5Pxsw==}
+  lefthook-darwin-x64@1.6.15:
+    resolution: {integrity: sha512-dNAZp281EJ1vyovszftVO+uk/xJZbomrtfuQeZ3tAk8Xybu6b4+XSoBklH5eRfl46/TWUNVkSF5owYG6+ZtvIA==}
     cpu: [x64]
     os: [darwin]
 
-  lefthook-freebsd-arm64@1.6.14:
-    resolution: {integrity: sha512-FWg2HR0X9NQ0vVTU2iO36llKqyFyB60CFm/4GIUVkAWs7rhmOS/FG7C9pcl2jTDrLyMYMQpEvwwMQBWe6qCfcw==}
+  lefthook-freebsd-arm64@1.6.15:
+    resolution: {integrity: sha512-GWGt5jDLOcICjsoPZV4tFjjQJ3v9uNqHXg80QXx+Pb7HSqLFp3OnUEfjV2IO27lOln7+AMTF6WWigJl/NKllKw==}
     cpu: [arm64]
     os: [freebsd]
 
-  lefthook-freebsd-x64@1.6.14:
-    resolution: {integrity: sha512-qe/cgGUxMld1XcPhOBtthL/yVfP9KglBqFLXLkkpsg78wVo6nKCADEKWW+3+ofUZSnfpPVbx1435kWtp3NmfdA==}
+  lefthook-freebsd-x64@1.6.15:
+    resolution: {integrity: sha512-803r+OYRpY5CBa8LU83EINO+Mi5k7rfflApMJuEIzcH1pFlEjbLttGy2hJX19m1kTKzkz/HuzFl6znbkmZGttw==}
     cpu: [x64]
     os: [freebsd]
 
-  lefthook-linux-arm64@1.6.14:
-    resolution: {integrity: sha512-Iw1Av89sxkvxmi5WrHZkNB1lppzFlsRT7CdQ14ckN9xM6kTLnJLKoxKO/ez3WooSp9Yv3NROGAfUzMLCgok3cQ==}
+  lefthook-linux-arm64@1.6.15:
+    resolution: {integrity: sha512-4rATbRhhBj4VNnvAEGRXvQL+POO4xwdUdCc2aSBcKdRFnabYabWm9ebSp55id7nDt3mVf7FBKDCl7A3kzUxehQ==}
     cpu: [arm64]
     os: [linux]
 
-  lefthook-linux-x64@1.6.14:
-    resolution: {integrity: sha512-3taGa/Ge7SZMuG82Abu7YuYSWlbJBIT2ZIVA+YVA1lwI7kZsg9WQPAMvdob125EsS20Z6o0EfYAJPuALxD5Yww==}
+  lefthook-linux-x64@1.6.15:
+    resolution: {integrity: sha512-VhDL/po/EujilZKq14frjzOgApHrI1bNfghvuWkNz+5LGphe1/iSXV1DKDDOrGprl/vp2p+QUaJW8HMKBiKgTw==}
     cpu: [x64]
     os: [linux]
 
-  lefthook-windows-arm64@1.6.14:
-    resolution: {integrity: sha512-XRwJ9wLcMZiXucsQhbuj0yzvX34fVQrYg4gGOVWeb+quO8yYURRInzoYiXGH0iAdQJOUs0WSR5gdZ6lImFgkHg==}
+  lefthook-windows-arm64@1.6.15:
+    resolution: {integrity: sha512-0HcX/tPEktPjkFVrAIUXzlWIN5VhkBqbYl7xofWoYMjdYetFU2dvC2UDqp/ENVA/PxelszgTVLUVaI0RVJHDoA==}
     cpu: [arm64]
     os: [win32]
 
-  lefthook-windows-x64@1.6.14:
-    resolution: {integrity: sha512-qhRBdgk6GgvwGKKojSUieeGgnOTbFyLwj6RyMa5vTYoO10h0e8CE8LWpnM2niyKmB1jTL8Nu128IH50Vp1UT9w==}
+  lefthook-windows-x64@1.6.15:
+    resolution: {integrity: sha512-oBTfUbJRNOSuR1XsS5frGPCY8p74KXNVOuMX+Oun6kyBSutqe3kmafZ3nytbugJdzGx4bGfYxLISM8EoEkgThA==}
     cpu: [x64]
     os: [win32]
 
-  lefthook@1.6.14:
-    resolution: {integrity: sha512-IfnzdoZLRnQPm6OgwgH0JlwRK3Ojyn0dXL+JHqewbhDuGGIXqLrHAFK/29KvQK2knsGF4dzlajBvwjwPVY1aVA==}
+  lefthook@1.6.15:
+    resolution: {integrity: sha512-Jjsz5ln/khEBEWH0ZWtK4A14F5aIGk3iwfyHpqqnxpF79OQR8MYCUN2VzpTk5XgzbokMi/M7CJ17/LPAYBRUEw==}
     hasBin: true
 
   lightningcss-darwin-arm64@1.24.1:
@@ -2643,10 +2656,6 @@ packages:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
 
-  uuid@9.0.0:
-    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
-    hasBin: true
-
   uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
     hasBin: true
@@ -2926,7 +2935,29 @@ snapshots:
       abort-controller: 3.0.0
       async-retry: 1.3.3
       duplexify: 4.1.3
-      fast-xml-parser: 4.3.6
+      fast-xml-parser: 4.4.0
+      gaxios: 6.6.0
+      google-auth-library: 9.10.0
+      html-entities: 2.5.2
+      mime: 3.0.0
+      p-limit: 3.1.0
+      retry-request: 7.0.2
+      teeny-request: 9.0.0
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    optional: true
+
+  '@google-cloud/storage@7.11.2':
+    dependencies:
+      '@google-cloud/paginator': 5.0.2
+      '@google-cloud/projectify': 4.0.0
+      '@google-cloud/promisify': 4.0.0
+      abort-controller: 3.0.0
+      async-retry: 1.3.3
+      duplexify: 4.1.3
+      fast-xml-parser: 4.4.0
       gaxios: 6.6.0
       google-auth-library: 9.10.0
       html-entities: 2.5.2
@@ -4091,13 +4122,13 @@ snapshots:
 
   agent-base@6.0.2:
     dependencies:
-      debug: 4.3.4
+      debug: 4.3.5
     transitivePeerDependencies:
       - supports-color
 
   agent-base@7.1.1:
     dependencies:
-      debug: 4.3.4
+      debug: 4.3.5
     transitivePeerDependencies:
       - supports-color
 
@@ -4148,7 +4179,7 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  bignumber.js@9.1.0: {}
+  bignumber.js@9.1.2: {}
 
   binary-extensions@2.3.0: {}
 
@@ -4341,6 +4372,10 @@ snapshots:
     dependencies:
       ms: 2.1.2
 
+  debug@4.3.5:
+    dependencies:
+      ms: 2.1.2
+
   decompress-response@6.0.0:
     dependencies:
       mimic-response: 3.1.0
@@ -4522,7 +4557,7 @@ snapshots:
       merge2: 1.4.1
       micromatch: 4.0.5
 
-  fast-xml-parser@4.3.6:
+  fast-xml-parser@4.4.0:
     dependencies:
       strnum: 1.0.5
 
@@ -4755,21 +4790,21 @@ snapshots:
     dependencies:
       '@tootallnate/once': 2.0.0
       agent-base: 6.0.2
-      debug: 4.3.4
+      debug: 4.3.5
     transitivePeerDependencies:
       - supports-color
 
   https-proxy-agent@5.0.1:
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.4
+      debug: 4.3.5
     transitivePeerDependencies:
       - supports-color
 
   https-proxy-agent@7.0.4:
     dependencies:
       agent-base: 7.1.1
-      debug: 4.3.4
+      debug: 4.3.5
     transitivePeerDependencies:
       - supports-color
 
@@ -4838,7 +4873,7 @@ snapshots:
 
   json-bigint@1.0.0:
     dependencies:
-      bignumber.js: 9.1.0
+      bignumber.js: 9.1.2
 
   json-parse-even-better-errors@2.3.1: {}
 
@@ -4892,40 +4927,40 @@ snapshots:
 
   ky@1.2.4: {}
 
-  lefthook-darwin-arm64@1.6.14:
+  lefthook-darwin-arm64@1.6.15:
     optional: true
 
-  lefthook-darwin-x64@1.6.14:
+  lefthook-darwin-x64@1.6.15:
     optional: true
 
-  lefthook-freebsd-arm64@1.6.14:
+  lefthook-freebsd-arm64@1.6.15:
     optional: true
 
-  lefthook-freebsd-x64@1.6.14:
+  lefthook-freebsd-x64@1.6.15:
     optional: true
 
-  lefthook-linux-arm64@1.6.14:
+  lefthook-linux-arm64@1.6.15:
     optional: true
 
-  lefthook-linux-x64@1.6.14:
+  lefthook-linux-x64@1.6.15:
     optional: true
 
-  lefthook-windows-arm64@1.6.14:
+  lefthook-windows-arm64@1.6.15:
     optional: true
 
-  lefthook-windows-x64@1.6.14:
+  lefthook-windows-x64@1.6.15:
     optional: true
 
-  lefthook@1.6.14:
+  lefthook@1.6.15:
     optionalDependencies:
-      lefthook-darwin-arm64: 1.6.14
-      lefthook-darwin-x64: 1.6.14
-      lefthook-freebsd-arm64: 1.6.14
-      lefthook-freebsd-x64: 1.6.14
-      lefthook-linux-arm64: 1.6.14
-      lefthook-linux-x64: 1.6.14
-      lefthook-windows-arm64: 1.6.14
-      lefthook-windows-x64: 1.6.14
+      lefthook-darwin-arm64: 1.6.15
+      lefthook-darwin-x64: 1.6.15
+      lefthook-freebsd-arm64: 1.6.15
+      lefthook-freebsd-x64: 1.6.15
+      lefthook-linux-arm64: 1.6.15
+      lefthook-linux-x64: 1.6.15
+      lefthook-windows-arm64: 1.6.15
+      lefthook-windows-x64: 1.6.15
 
   lightningcss-darwin-arm64@1.24.1:
     optional: true
@@ -5600,7 +5635,7 @@ snapshots:
       https-proxy-agent: 5.0.1
       node-fetch: 2.7.0
       stream-events: 1.0.5
-      uuid: 9.0.0
+      uuid: 9.0.1
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -5700,8 +5735,6 @@ snapshots:
   utils-merge@1.0.1: {}
 
   uuid@8.3.2: {}
-
-  uuid@9.0.0: {}
 
   uuid@9.0.1: {}
 
