@@ -1,6 +1,5 @@
 import { styled } from 'goober';
 import { useEffect } from 'preact/hooks';
-import reload from '../assets/reload.png';
 import { useFramePreloader } from '../hooks/preloader';
 import { useI18n } from '../providers/i18n';
 import { POST_API_KEY } from '../shared/constants';
@@ -24,7 +23,7 @@ export const Reloader = styled(Button)`
   z-index: 3;
   inline-size: 3.5rem;
   aspect-ratio: 1;
-  background-image: url('${reload}');
+  background-image: url('/assets/reload.png');
   background-size: 70%;
   background-repeat: no-repeat;
   background-position: center;

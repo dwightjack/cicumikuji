@@ -4,8 +4,8 @@
 	"description": "",
 	"source": "src/index.html",
 	"scripts": {
-		"start": "parcel --port 8000",
-		"build": "parcel build",
+		"dev": "rsbuild dev --open",
+		"build": "rsbuild build",
 		"lint": "biome check src"
 	},
 	"author": "Marco Solazzi",
@@ -14,9 +14,10 @@
 		"preact/jsx-dev-runtime": "preact/jsx-runtime"
 	},
 	"devDependencies": {
+		"@rsbuild/core": "^0.7.9",
+		"@rsbuild/plugin-preact": "^0.7.9",
 		"@types/node": "^20.12.7",
 		"msw": "^2.2.13",
-		"parcel": "^2.12.0",
 		"typescript": "^5.4.2"
 	},
 	"dependencies": {
@@ -30,6 +31,6 @@
 		"shake.js": "1.2.2"
 	},
 	"msw": {
-		"workerDirectory": ["dist"]
+		"workerDirectory": ["public"]
 	}
 }
