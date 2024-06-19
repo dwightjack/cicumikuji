@@ -4,6 +4,6 @@
 
 ## Stack
 
-- [Preact](https://preactjs.com/) with [Parcel](https://parceljs.org/)
+- [Preact](https://preactjs.com/) with [Rsbuild](https://rsbuild.dev/)
 - [Goober](https://github.com/cristianbote/goober)
 - [MSW](https://mswjs.io/)
