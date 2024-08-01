@@ -10,7 +10,7 @@
 	"type": "module",
 	"devDependencies": {
 		"@types/node": "^20.12.7",
-		"typescript": "5.5.3"
+		"typescript": "5.5.4"
 	},
 	"private": true
 }
