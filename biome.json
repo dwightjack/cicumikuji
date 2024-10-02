@@ -17,7 +17,7 @@
 	},
 	"javascript": {
 		"formatter": {
-			"trailingComma": "all",
+			"trailingCommas": "all",
 			"semicolons": "always",
 			"quoteStyle": "single",
 			"indentStyle": "space",
