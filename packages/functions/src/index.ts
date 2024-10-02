@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
-import { onRequest } from 'firebase-functions/https';
+import { onRequest } from 'firebase-functions/v2/https';
 
 export interface Post {
   src: string;
