@@ -15,7 +15,7 @@
 	},
 	"devDependencies": {
 		"@rsbuild/core": "^1.0.0",
-		"@rsbuild/plugin-preact": "^0.7.9",
+		"@rsbuild/plugin-preact": "^1.0.2",
 		"@types/node": "^20.12.7",
 		"msw": "^2.2.13",
 		"typescript": "^5.4.2"
