@@ -23,11 +23,11 @@
 	"dependencies": {
 		"@preact/signals": "^1.2.3",
 		"csstype": "^3.0.10",
-		"goober": "2.1.14",
+		"goober": "2.1.16",
 		"idb-keyval": "6.2.1",
 		"ky": "1.7.2",
 		"nosleep.js": "0.12.0",
-		"preact": "10.24.1",
+		"preact": "10.24.3",
 		"shake.js": "1.2.2"
 	},
 	"msw": {
