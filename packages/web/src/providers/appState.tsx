@@ -1,9 +1,8 @@
 import {
-  type ReadonlySignal,
-  type Signal,
   batch,
   computed,
-  signal,
+  type ReadonlySignal,
+  type Signal,
   useSignal,
 } from '@preact/signals';
 import { type ComponentChildren, createContext } from 'preact';
@@ -36,7 +35,9 @@ export function useAppState() {
 
 export function AppStateProvider({
   children,
-}: { children: ComponentChildren }) {
+}: {
+  children: ComponentChildren;
+}) {
   const loadQueue = useSignal(0);
   const appError = useSignal<string>('');
   const appStatus = useSignal<AppStatus>('boot');

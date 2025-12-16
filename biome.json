@@ -1,10 +1,8 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.3.9/schema.json",
-	"organizeImports": {
-		"enabled": true
-	},
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"files": {
-		"ignore": [".vscode", "packages/web/public"]
+		"includes": ["**", "!**/.vscode", "!**/packages/web/public"]
 	},
 	"linter": {
 		"enabled": true,

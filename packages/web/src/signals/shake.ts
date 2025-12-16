@@ -1,5 +1,5 @@
 import { useSignal, useSignalEffect } from '@preact/signals';
-// @ts-ignore
+// @ts-expect-error
 import Shake from 'shake.js';
 
 export type ShakePermission = 'denied' | 'granted' | 'prompt' | null;
