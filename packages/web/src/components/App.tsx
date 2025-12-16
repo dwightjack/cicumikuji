@@ -1,6 +1,8 @@
+import { useSignal, useSignalEffect } from '@preact/signals';
 import { styled } from 'goober';
 import { useEffect } from 'preact/hooks';
 import { useFramePreloader } from '../hooks/preloader';
+import { useAppState } from '../providers/appState';
 import { useI18n } from '../providers/i18n';
 import { POST_API_KEY } from '../shared/constants';
 import { AppRoot, GlobalStyles } from '../shared/theme';
@@ -12,9 +14,6 @@ import { ErrorLayer } from './ErrorLayer/ErrorLayer';
 import { Frame } from './Frame/Frame';
 import { Loader } from './Loader/Loader';
 import { Splash } from './Splash/Splash';
-
-import { useSignal, useSignalEffect } from '@preact/signals';
-import { useAppState } from '../providers/appState';
 
 export const Reloader = styled(Button)`
   position: absolute;

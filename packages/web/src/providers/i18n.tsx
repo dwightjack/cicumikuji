@@ -43,7 +43,6 @@ export function useI18n() {
     formatDate,
   } = context.value;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const t = useCallback(
     function t(path: ObjectToPaths<Locale>, def = '', lang?: keyof LocaleDb) {
       return (path
@@ -60,7 +59,10 @@ export function useI18n() {
 export function I18nProvider({
   children,
   lang,
-}: { children: ComponentChildren; lang: keyof LocaleDb }) {
+}: {
+  children: ComponentChildren;
+  lang: keyof LocaleDb;
+}) {
   const locale = useSignal<keyof LocaleDb>(lang);
 
   const i18n = useComputed(() => {

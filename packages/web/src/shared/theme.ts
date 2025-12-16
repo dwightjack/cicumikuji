@@ -1,6 +1,6 @@
 import { setup, styled } from 'goober';
 import { createGlobalStyles } from 'goober/global';
-import { type JSX, h } from 'preact';
+import { h } from 'preact';
 
 setup(h);
 
