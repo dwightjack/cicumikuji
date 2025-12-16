@@ -21,7 +21,7 @@
 		"typescript": "^5.4.2"
 	},
 	"dependencies": {
-		"@preact/signals": "^1.2.3",
+		"@preact/signals": "^2.0.0",
 		"csstype": "^3.0.10",
 		"goober": "2.1.16",
 		"idb-keyval": "6.2.2",
