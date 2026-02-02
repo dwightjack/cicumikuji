@@ -1,10 +1,11 @@
-import { existsSync, readdirSync } from 'node:fs';
-import { readFile, readdir } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
 import { extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Storage } from '@google-cloud/storage';
 import admin from 'firebase-admin';
 import { getFirestore } from 'firebase-admin/firestore';
+
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 const serviceAccountFile = resolve(
