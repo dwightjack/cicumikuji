@@ -52,26 +52,26 @@ importers:
   packages/web:
     dependencies:
       '@preact/signals':
-        specifier: ^2.0.0
-        version: 2.5.1(preact@10.27.3)
+        specifier: ^2.6.2
+        version: 2.6.2(preact@10.28.3)
       csstype:
-        specifier: ^3.0.10
-        version: 3.1.3
+        specifier: ^3.2.3
+        version: 3.2.3
       goober:
         specifier: 2.1.18
-        version: 2.1.18(csstype@3.1.3)
+        version: 2.1.18(csstype@3.2.3)
       idb-keyval:
         specifier: 6.2.2
         version: 6.2.2
       ky:
-        specifier: 1.9.1
-        version: 1.9.1
+        specifier: 1.14.3
+        version: 1.14.3
       nosleep.js:
         specifier: 0.12.0
         version: 0.12.0
       preact:
-        specifier: 10.27.3
-        version: 10.27.3
+        specifier: 10.28.3
+        version: 10.28.3
       shake.js:
         specifier: 1.2.2
         version: 1.2.2
@@ -81,13 +81,13 @@ importers:
         version: 1.7.2
       '@rsbuild/plugin-preact':
         specifier: ^1.7.1
-        version: 1.7.1(@rsbuild/core@1.7.2)(preact@10.27.3)
+        version: 1.7.1(@rsbuild/core@1.7.2)(preact@10.28.3)
       '@types/node':
         specifier: ^22.0.0
         version: 22.18.13
       msw:
-        specifier: ^2.2.13
-        version: 2.11.6(@types/node@22.18.13)(typescript@5.9.3)
+        specifier: ^2.12.7
+        version: 2.12.7(@types/node@22.18.13)(typescript@5.9.3)
       typescript:
         specifier: ^5.4.2
         version: 5.9.3
@@ -367,11 +367,11 @@ packages:
     resolution: {integrity: sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg==}
     engines: {node: '>=8.0.0'}
 
-  '@preact/signals-core@1.12.1':
-    resolution: {integrity: sha512-BwbTXpj+9QutoZLQvbttRg5x3l5468qaV2kufh+51yha1c53ep5dY4kTuZR35+3pAZxpfQerGJiQqg34ZNZ6uA==}
+  '@preact/signals-core@1.12.2':
+    resolution: {integrity: sha512-5Yf8h1Ke3SMHr15xl630KtwPTW4sYDFkkxS0vQ8UiQLWwZQnrF9IKaVG1mN5VcJz52EcWs2acsc/Npjha/7ysA==}
 
-  '@preact/signals@2.5.1':
-    resolution: {integrity: sha512-VPjk5YFt7i11Fi4UK0tzaEe5xLwfhUxXL3l89ocxQ5aPz7bRo8M5+N73LjBMPklyXKYKz6YsNo4Smp8n6nplng==}
+  '@preact/signals@2.6.2':
+    resolution: {integrity: sha512-80PMfNS3d8t/J3cRNEJP14zRioWnavgqzX/+tsNGiCX6rpD26+eLkUQpa1sIeOERZMink+dAi34y0MJhg11LKQ==}
     peerDependencies:
       preact: '>= 10.25.0 || >=11.0.0-0'
 
@@ -699,8 +699,8 @@ packages:
     resolution: {integrity: sha512-tJtZBBHA6vjIAaF6EnIaq6laBBP9aq/Y3ouVJjEfoHbRBcHBAHYcMh/w8LDrk2PvIMMq8gmopa5D4V8RmbrxGw==}
     engines: {node: '>= 0.10'}
 
-  csstype@3.1.3:
-    resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
+  csstype@3.2.3:
+    resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
   debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
@@ -985,8 +985,8 @@ packages:
   jws@4.0.1:
     resolution: {integrity: sha512-EKI/M/yqPncGUUh44xz0PxSidXFr/+r0pA70+gIYhjv+et7yxM+s29Y+VGDkovRofQem0fs7Uvf4+YmAdyRduA==}
 
-  ky@1.9.1:
-    resolution: {integrity: sha512-WGzpBn57klhxsqRTEABAqF4tqTtqCuxoTIv9m6nIZtMMFTVcrHp7bRDWblzFIfqkb47+OhTztOgHn6A4xItmqg==}
+  ky@1.14.3:
+    resolution: {integrity: sha512-9zy9lkjac+TR1c2tG+mkNSVlyOpInnWdSMiue4F+kq8TwJSgv6o8jhLRg8Ho6SnZ9wOYUq/yozts9qQCfk7bIw==}
     engines: {node: '>=18'}
 
   lefthook-darwin-arm64@2.0.16:
@@ -1122,8 +1122,8 @@ packages:
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
-  msw@2.11.6:
-    resolution: {integrity: sha512-MCYMykvmiYScyUm7I6y0VCxpNq1rgd5v7kG8ks5dKtvmxRUUPjribX6mUoUNBbM5/3PhUyoelEWiKXGOz84c+w==}
+  msw@2.12.7:
+    resolution: {integrity: sha512-retd5i3xCZDVWMYjHEVuKTmhqY8lSsxujjVrZiGbbdoxxIBg5S7rCuYy/YQpfrTYIxpd/o0Kyb/3H+1udBMoYg==}
     engines: {node: '>=18'}
     hasBin: true
     peerDependencies:
@@ -1195,8 +1195,8 @@ packages:
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
-  preact@10.27.3:
-    resolution: {integrity: sha512-ZieIP3zQHiQsNF3BA+SNVS8dcuRIg/nsxlkFbCMBLS2L1Ww4Bkxd9n6Md2A1crfTZsEbQPADV0neYmh/EElgeQ==}
+  preact@10.28.3:
+    resolution: {integrity: sha512-tCmoRkPQLpBeWzpmbhryairGnhW9tKV6c6gr/w+RhoRoKEJwsjzipwp//1oCpGPOchvSLaAPlpcJi9MwMmoPyA==}
 
   proto3-json-serializer@2.0.2:
     resolution: {integrity: sha512-SAzp/O4Yh02jGdRc+uIrGoe87dkN/XtwxfZ4ZyafJHymd79ozp5VG5nyZ7ygqPM5+cpLDjjGnYFUkngonyDPOQ==}
@@ -1332,6 +1332,10 @@ packages:
   stubs@3.0.0:
     resolution: {integrity: sha512-PdHt7hHUJKxvTCgbKX9C1V/ftOcjJQgz8BZwNfV5c4B6dcGqlpelTbJ999jBGZ2jYiPAwcX5dP6oBwVlBlUbxw==}
 
+  tagged-tag@1.0.0:
+    resolution: {integrity: sha512-yEFYrVhod+hdNyx7g5Bnkkb0G6si8HJurOoOEgC8B/O0uXLHlaey/65KRv6cuWBNhBgHKAROVpc7QyYqE5gFng==}
+    engines: {node: '>=20'}
+
   teeny-request@9.0.0:
     resolution: {integrity: sha512-resvxdc6Mgb7YEThw6G6bExlXKkv6+YbuzGg9xuXxSgxJF7Ozs+o8Y9+2R3sArdWdW8nOokoQb1yrpFB0pQK2g==}
     engines: {node: '>=14'}
@@ -1357,9 +1361,9 @@ packages:
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
-  type-fest@4.41.0:
-    resolution: {integrity: sha512-TeTSQ6H5YHvpqVwBRcnLDCBnDOHWYu7IvGbHT6N8AOymcr9PJGjc1GTtiWZTYg0NCgYwvnYWEkVChQAr9bjfwA==}
-    engines: {node: '>=16'}
+  type-fest@5.4.3:
+    resolution: {integrity: sha512-AXSAQJu79WGc79/3e9/CR77I/KQgeY1AhNvcShIH4PTcGYyC4xv6H4R4AUOwkPS5799KlVDAu8zExeCrkGquiA==}
+    engines: {node: '>=20'}
 
   type-is@1.6.18:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
@@ -1739,16 +1743,16 @@ snapshots:
   '@opentelemetry/api@1.9.0':
     optional: true
 
-  '@preact/signals-core@1.12.1': {}
+  '@preact/signals-core@1.12.2': {}
 
-  '@preact/signals@2.5.1(preact@10.27.3)':
+  '@preact/signals@2.6.2(preact@10.28.3)':
     dependencies:
-      '@preact/signals-core': 1.12.1
-      preact: 10.27.3
+      '@preact/signals-core': 1.12.2
+      preact: 10.28.3
 
-  '@prefresh/core@1.5.9(preact@10.27.3)':
+  '@prefresh/core@1.5.9(preact@10.28.3)':
     dependencies:
-      preact: 10.27.3
+      preact: 10.28.3
 
   '@prefresh/utils@1.2.1': {}
 
@@ -1783,12 +1787,12 @@ snapshots:
       core-js: 3.47.0
       jiti: 2.6.1
 
-  '@rsbuild/plugin-preact@1.7.1(@rsbuild/core@1.7.2)(preact@10.27.3)':
+  '@rsbuild/plugin-preact@1.7.1(@rsbuild/core@1.7.2)(preact@10.28.3)':
     dependencies:
-      '@prefresh/core': 1.5.9(preact@10.27.3)
+      '@prefresh/core': 1.5.9(preact@10.28.3)
       '@prefresh/utils': 1.2.1
       '@rsbuild/core': 1.7.2
-      '@rspack/plugin-preact-refresh': 1.1.5(@prefresh/core@1.5.9(preact@10.27.3))(@prefresh/utils@1.2.1)
+      '@rspack/plugin-preact-refresh': 1.1.5(@prefresh/core@1.5.9(preact@10.28.3))(@prefresh/utils@1.2.1)
       '@swc/plugin-prefresh': 12.5.0
     transitivePeerDependencies:
       - preact
@@ -1857,9 +1861,9 @@ snapshots:
 
   '@rspack/lite-tapable@1.1.0': {}
 
-  '@rspack/plugin-preact-refresh@1.1.5(@prefresh/core@1.5.9(preact@10.27.3))(@prefresh/utils@1.2.1)':
+  '@rspack/plugin-preact-refresh@1.1.5(@prefresh/core@1.5.9(preact@10.28.3))(@prefresh/utils@1.2.1)':
     dependencies:
-      '@prefresh/core': 1.5.9(preact@10.27.3)
+      '@prefresh/core': 1.5.9(preact@10.28.3)
       '@prefresh/utils': 1.2.1
 
   '@swc/counter@0.1.3': {}
@@ -2069,7 +2073,7 @@ snapshots:
       object-assign: 4.1.1
       vary: 1.1.2
 
-  csstype@3.1.3: {}
+  csstype@3.2.3: {}
 
   debug@2.6.9:
     dependencies:
@@ -2288,9 +2292,9 @@ snapshots:
       dunder-proto: 1.0.1
       es-object-atoms: 1.1.1
 
-  goober@2.1.18(csstype@3.1.3):
+  goober@2.1.18(csstype@3.2.3):
     dependencies:
-      csstype: 3.1.3
+      csstype: 3.2.3
 
   google-auth-library@9.15.1:
     dependencies:
@@ -2441,7 +2445,7 @@ snapshots:
       jwa: 2.0.1
       safe-buffer: 5.2.1
 
-  ky@1.9.1: {}
+  ky@1.14.3: {}
 
   lefthook-darwin-arm64@2.0.16:
     optional: true
@@ -2540,7 +2544,7 @@ snapshots:
 
   ms@2.1.3: {}
 
-  msw@2.11.6(@types/node@22.18.13)(typescript@5.9.3):
+  msw@2.12.7(@types/node@22.18.13)(typescript@5.9.3):
     dependencies:
       '@inquirer/confirm': 5.1.21(@types/node@22.18.13)
       '@mswjs/interceptors': 0.40.0
@@ -2557,7 +2561,7 @@ snapshots:
       statuses: 2.0.2
       strict-event-emitter: 0.5.1
       tough-cookie: 6.0.0
-      type-fest: 4.41.0
+      type-fest: 5.4.3
       until-async: 3.0.2
       yargs: 17.7.2
     optionalDependencies:
@@ -2606,7 +2610,7 @@ snapshots:
 
   picocolors@1.1.1: {}
 
-  preact@10.27.3: {}
+  preact@10.28.3: {}
 
   proto3-json-serializer@2.0.2:
     dependencies:
@@ -2769,6 +2773,8 @@ snapshots:
 
   stubs@3.0.0: {}
 
+  tagged-tag@1.0.0: {}
+
   teeny-request@9.0.0:
     dependencies:
       http-proxy-agent: 5.0.0
@@ -2796,7 +2802,9 @@ snapshots:
 
   tslib@2.8.1: {}
 
-  type-fest@4.41.0: {}
+  type-fest@5.4.3:
+    dependencies:
+      tagged-tag: 1.0.0
 
   type-is@1.6.18:
     dependencies:
