@@ -23,7 +23,7 @@
 	"dependencies": {
 		"@preact/signals": "^2.0.0",
 		"csstype": "^3.0.10",
-		"goober": "2.1.16",
+		"goober": "2.1.18",
 		"idb-keyval": "6.2.2",
 		"ky": "1.9.1",
 		"nosleep.js": "0.12.0",
