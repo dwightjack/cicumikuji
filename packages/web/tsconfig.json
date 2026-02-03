@@ -7,10 +7,16 @@
 		"jsxImportSource": "preact",
 		"strict": true,
 		"skipLibCheck": true,
-		"isolatedModules": true,
+		"verbatimModuleSyntax": true,
 		"resolveJsonModule": true,
+		"moduleDetection": "force",
 		"moduleResolution": "bundler",
-		"useDefineForClassFields": true
+		"noEmit": true,
+		"useDefineForClassFields": true,
+		"allowImportingTsExtensions": true,
+		"noUncheckedSideEffectImports": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true
 	},
 	"include": ["src"]
 }

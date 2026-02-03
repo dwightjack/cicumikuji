@@ -10,27 +10,30 @@
 	},
 	"author": "Marco Solazzi",
 	"license": "MIT",
+	"type": "module",
 	"alias": {
 		"preact/jsx-dev-runtime": "preact/jsx-runtime"
 	},
 	"devDependencies": {
-		"@rsbuild/core": "^1.0.0",
-		"@rsbuild/plugin-preact": "^1.0.2",
+		"@rsbuild/core": "^1.7.2",
+		"@rsbuild/plugin-preact": "^1.7.1",
 		"@types/node": "^22.0.0",
-		"msw": "^2.2.13",
+		"msw": "^2.12.7",
 		"typescript": "^5.4.2"
 	},
 	"dependencies": {
-		"@preact/signals": "^2.0.0",
-		"csstype": "^3.0.10",
+		"@preact/signals": "^2.6.2",
+		"csstype": "^3.2.3",
 		"goober": "2.1.18",
 		"idb-keyval": "6.2.2",
-		"ky": "1.9.1",
+		"ky": "1.14.3",
 		"nosleep.js": "0.12.0",
-		"preact": "10.27.3",
+		"preact": "10.28.3",
 		"shake.js": "1.2.2"
 	},
 	"msw": {
-		"workerDirectory": ["public"]
+		"workerDirectory": [
+			"public"
+		]
 	}
 }

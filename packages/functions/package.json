@@ -1,18 +1,19 @@
 {
 	"name": "@cicumikuji/functions",
 	"scripts": {
-		"build": "tsup",
+		"build": "rslib build",
 		"lint": "biome check src",
 		"deploy": "firebase deploy --only functions",
 		"logs": "firebase functions:log"
 	},
-	"main": "lib/index.js",
+	"type": "module",
+	"main": "dist/index.js",
 	"dependencies": {
 		"firebase-admin": "13.6.0",
 		"firebase-functions": "7.0.5"
 	},
 	"devDependencies": {
-		"tsup": "^8.0.0",
+		"@rslib/core": "0.19.4",
 		"typescript": "5.9.3"
 	},
 	"private": true
