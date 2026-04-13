@@ -4,6 +4,18 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  default:
+    '@types/node':
+      specifier: 24.12.2
+      version: 24.12.2
+    firebase-admin:
+      specifier: 13.8.0
+      version: 13.8.0
+    typescript:
+      specifier: 5.9.3
+      version: 5.9.3
+
 pnpmfileChecksum: sha256-ZfwGjIvQgPR9mEJg5iihJauZ5iv1Ogj5lI/dgVj7pgI=
 
 importers:
@@ -14,19 +26,19 @@ importers:
         specifier: 2.4.11
         version: 2.4.11
       '@types/node':
-        specifier: 24.12.2
+        specifier: 'catalog:'
         version: 24.12.2
       lefthook:
         specifier: ^2.1.5
         version: 2.1.5
       typescript:
-        specifier: 5.9.3
+        specifier: 'catalog:'
         version: 5.9.3
 
   packages/functions:
     dependencies:
       firebase-admin:
-        specifier: 13.8.0
+        specifier: 'catalog:'
         version: 13.8.0
       firebase-functions:
         specifier: 7.2.5
@@ -36,7 +48,7 @@ importers:
         specifier: 0.21.0
         version: 0.21.0(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(core-js@3.47.0)(typescript@5.9.3)
       typescript:
-        specifier: 5.9.3
+        specifier: 'catalog:'
         version: 5.9.3
 
   packages/scripts:
@@ -45,14 +57,14 @@ importers:
         specifier: ^7.19.0
         version: 7.19.0
       firebase-admin:
-        specifier: 13.8.0
+        specifier: 'catalog:'
         version: 13.8.0
     devDependencies:
       '@types/node':
-        specifier: ^24.12.2
+        specifier: 'catalog:'
         version: 24.12.2
       typescript:
-        specifier: 5.9.3
+        specifier: 'catalog:'
         version: 5.9.3
 
   packages/web:
@@ -89,13 +101,13 @@ importers:
         specifier: ^1.7.1
         version: 1.7.2(@rsbuild/core@1.7.5)(preact@10.29.1)
       '@types/node':
-        specifier: ^24.12.2
+        specifier: 'catalog:'
         version: 24.12.2
       msw:
         specifier: ^2.13.2
         version: 2.13.2(@types/node@24.12.2)(typescript@5.9.3)
       typescript:
-        specifier: ^5.4.2
+        specifier: 'catalog:'
         version: 5.9.3
 
 packages:

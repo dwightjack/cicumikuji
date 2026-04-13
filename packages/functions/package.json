@@ -9,12 +9,12 @@
 	"type": "module",
 	"main": "dist/index.js",
 	"dependencies": {
-		"firebase-admin": "13.8.0",
+		"firebase-admin": "catalog:",
 		"firebase-functions": "7.2.5"
 	},
 	"devDependencies": {
 		"@rslib/core": "0.21.0",
-		"typescript": "5.9.3"
+		"typescript": "catalog:"
 	},
 	"private": true
 }
