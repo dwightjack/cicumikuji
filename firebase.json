@@ -4,7 +4,7 @@
 		"indexes": "firestore.indexes.json"
 	},
 	"functions": {
-		"runtime": "nodejs22",
+		"runtime": "nodejs24",
 		"predeploy": ["pnpm run functions:build"],
 		"ignore": [
 			"node_modules",
