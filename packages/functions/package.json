@@ -13,7 +13,7 @@
 		"firebase-functions": "7.2.5"
 	},
 	"devDependencies": {
-		"@rslib/core": "0.21.0",
+		"@rslib/core": "0.21.3",
 		"typescript": "catalog:"
 	},
 	"private": true
