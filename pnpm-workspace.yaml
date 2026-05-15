@@ -4,7 +4,7 @@ packages:
 catalog:
   typescript: 5.9.3
   '@types/node': 24.12.2
-  'firebase-admin': 13.8.0
+  'firebase-admin': 13.9.0
 
 allowBuilds:
   '@airbnb/node-memwatch': true
