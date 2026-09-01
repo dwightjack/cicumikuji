@@ -16,8 +16,6 @@ catalogs:
       specifier: 5.9.3
       version: 5.9.3
 
-pnpmfileChecksum: sha256-ZfwGjIvQgPR9mEJg5iihJauZ5iv1Ogj5lI/dgVj7pgI=
-
 importers:
 
   .:
@@ -98,8 +96,8 @@ importers:
         specifier: ^1.7.5
         version: 1.7.5
       '@rsbuild/plugin-preact':
-        specifier: ^1.7.1
-        version: 1.7.2(@rsbuild/core@1.7.5)(preact@10.29.1)
+        specifier: ^2.0.0
+        version: 2.1.0(@rsbuild/core@1.7.5)(preact@10.29.1)
       '@types/node':
         specifier: 'catalog:'
         version: 24.12.2
@@ -399,8 +397,8 @@ packages:
     peerDependencies:
       preact: '>= 10.25.0 || >=11.0.0-0'
 
-  '@prefresh/core@1.5.9':
-    resolution: {integrity: sha512-IKBKCPaz34OFVC+adiQ2qaTF5qdztO2/4ZPf4KsRTgjKosWqxVXmEbxCiUydYZRY8GVie+DQlKzQr9gt6HQ+EQ==}
+  '@prefresh/core@1.5.11':
+    resolution: {integrity: sha512-Ml00PP8jeHaADxfQqxUs4+M5JS+T5J26UnvPVfsrmlpGw2I3e9XtM0DMeuzkmvg+Tn7VdHSMpLBrDPG0iHoDqQ==}
     peerDependencies:
       preact: ^10.0.0 || ^11.0.0-0
 
@@ -452,10 +450,10 @@ packages:
       core-js:
         optional: true
 
-  '@rsbuild/plugin-preact@1.7.2':
-    resolution: {integrity: sha512-MHDpgrwmUp0Ktgem6A2Tih3xX7arGuKiUVkh4dDObE/UbWfJhyXcyq0q5gNaWVfqTgbVBHfL9bVy8jhzcY67TA==}
+  '@rsbuild/plugin-preact@2.1.0':
+    resolution: {integrity: sha512-wbxiOznh5vZhY3DdW9FlkhgSwhjt7xxfy/7mMALvUwreGUVjIVHNgQq5+1TI5+zI+mM+f09904awSF/Glq9vPg==}
     peerDependencies:
-      '@rsbuild/core': ^1.0.0 || ^2.0.0-0
+      '@rsbuild/core': ^2.0.0
     peerDependenciesMeta:
       '@rsbuild/core':
         optional: true
@@ -609,11 +607,15 @@ packages:
   '@rspack/lite-tapable@1.1.0':
     resolution: {integrity: sha512-E2B0JhYFmVAwdDiG14+DW0Di4Ze4Jg10Pc4/lILUrd5DRCaklduz2OvJ5HYQ6G+hd+WTzqQb3QnDNfK4yvAFYw==}
 
-  '@rspack/plugin-preact-refresh@1.1.5':
-    resolution: {integrity: sha512-1oXF8ovAF+XoMcZ1qjeJ+l28qXAnKmVulV8Q5/Q1bXDkfMBmvC10O94wpxojcIY/kdMrHIFTfWbUhm0qBcYeGA==}
+  '@rspack/plugin-preact-refresh@2.0.1':
+    resolution: {integrity: sha512-tQ3WRBVaJ5JVy4jQHaYpYqeQrPStc7WrIJlVMrY/2mJMe5D1Ma4EO6K7J0v4Zx3HZMoJ1xeaqfCI9E8UHFE9yQ==}
     peerDependencies:
       '@prefresh/core': ^1.5.0
       '@prefresh/utils': ^1.2.0
+      '@rspack/core': ^2.0.0
+    peerDependenciesMeta:
+      '@rspack/core':
+        optional: true
 
   '@swc/counter@0.1.3':
     resolution: {integrity: sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==}
@@ -621,8 +623,8 @@ packages:
   '@swc/helpers@0.5.21':
     resolution: {integrity: sha512-jI/VAmtdjB/RnI8GTnokyX7Ug8c+g+ffD6QRLa6XQewtnGyukKkKSk3wLTM3b5cjt1jNh9x0jfVlagdN2gDKQg==}
 
-  '@swc/plugin-prefresh@12.7.0':
-    resolution: {integrity: sha512-1d+YWDPdeHcxbK6WXwm+TYMDwKSsSzf6OoqFrBpUujr3XvE2ydK+egocGJS7Z8bhwIUD4bHst6CqZVO+v32o/Q==}
+  '@swc/plugin-prefresh@13.0.0':
+    resolution: {integrity: sha512-H/jPol2yvZ2mgFVmc1Doo3CDiwWoBxuq2s/SZgC5U77G+eDyrNXk8nPRhOSD8xwXeptmxws/hLSsAkpk8vIJng==}
 
   '@tootallnate/once@2.0.0':
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
@@ -1533,10 +1535,12 @@ packages:
 
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   vary@1.1.2:
@@ -1896,7 +1900,7 @@ snapshots:
       '@preact/signals-core': 1.14.1
       preact: 10.29.1
 
-  '@prefresh/core@1.5.9(preact@10.29.1)':
+  '@prefresh/core@1.5.11(preact@10.29.1)':
     dependencies:
       preact: 10.29.1
 
@@ -1944,15 +1948,16 @@ snapshots:
       - '@emnapi/runtime'
       - '@module-federation/runtime-tools'
 
-  '@rsbuild/plugin-preact@1.7.2(@rsbuild/core@1.7.5)(preact@10.29.1)':
+  '@rsbuild/plugin-preact@2.1.0(@rsbuild/core@1.7.5)(preact@10.29.1)':
     dependencies:
-      '@prefresh/core': 1.5.9(preact@10.29.1)
+      '@prefresh/core': 1.5.11(preact@10.29.1)
       '@prefresh/utils': 1.2.1
-      '@rspack/plugin-preact-refresh': 1.1.5(@prefresh/core@1.5.9(preact@10.29.1))(@prefresh/utils@1.2.1)
-      '@swc/plugin-prefresh': 12.7.0
+      '@rspack/plugin-preact-refresh': 2.0.1(@prefresh/core@1.5.11(preact@10.29.1))(@prefresh/utils@1.2.1)
+      '@swc/plugin-prefresh': 13.0.0
     optionalDependencies:
       '@rsbuild/core': 1.7.5
     transitivePeerDependencies:
+      - '@rspack/core'
       - preact
 
   '@rslib/core@0.21.0(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(core-js@3.47.0)(typescript@5.9.3)':
@@ -2083,9 +2088,9 @@ snapshots:
 
   '@rspack/lite-tapable@1.1.0': {}
 
-  '@rspack/plugin-preact-refresh@1.1.5(@prefresh/core@1.5.9(preact@10.29.1))(@prefresh/utils@1.2.1)':
+  '@rspack/plugin-preact-refresh@2.0.1(@prefresh/core@1.5.11(preact@10.29.1))(@prefresh/utils@1.2.1)':
     dependencies:
-      '@prefresh/core': 1.5.9(preact@10.29.1)
+      '@prefresh/core': 1.5.11(preact@10.29.1)
       '@prefresh/utils': 1.2.1
 
   '@swc/counter@0.1.3': {}
@@ -2094,7 +2099,7 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@swc/plugin-prefresh@12.7.0':
+  '@swc/plugin-prefresh@13.0.0':
     dependencies:
       '@swc/counter': 0.1.3
 
