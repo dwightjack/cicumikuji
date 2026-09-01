@@ -15,7 +15,7 @@
 		"preact/jsx-dev-runtime": "preact/jsx-runtime"
 	},
 	"devDependencies": {
-		"@rsbuild/core": "^1.7.5",
+		"@rsbuild/core": "^2.0.0",
 		"@rsbuild/plugin-preact": "^1.7.1",
 		"@types/node": "catalog:",
 		"msw": "^2.13.2",
