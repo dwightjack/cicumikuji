@@ -10,10 +10,10 @@
 	"main": "dist/index.js",
 	"dependencies": {
 		"firebase-admin": "catalog:",
-		"firebase-functions": "7.2.5"
+		"firebase-functions": "7.3.2"
 	},
 	"devDependencies": {
-		"@rslib/core": "0.21.0",
+		"@rslib/core": "0.23.2",
 		"typescript": "catalog:"
 	},
 	"private": true
