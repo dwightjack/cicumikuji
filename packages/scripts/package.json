@@ -5,7 +5,7 @@
 		"lint": "biome check ."
 	},
 	"dependencies": {
-		"@google-cloud/storage": "^7.19.0",
+		"@google-cloud/storage": "^8.0.0",
 		"firebase-admin": "catalog:"
 	},
 	"type": "module",
