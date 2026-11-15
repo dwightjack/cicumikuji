@@ -17,7 +17,7 @@
 		"pnpm": ">=12.17.0"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.4.11",
+		"@biomejs/biome": "2.4.16",
 		"@types/node": "catalog:",
 		"lefthook": "^2.1.5",
 		"typescript": "catalog:"
